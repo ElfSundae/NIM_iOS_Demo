@@ -1,5 +1,26 @@
 # 网易云信 iOS Demo App
 
+### Setup Xcode Project
+
+```sh
+# generate Xcode project and install CocoaPods dependencies
+./scripts/setup.sh
+
+open NIMDemo.xcworkspace
+```
+
+### Update Official Source Code
+
+```sh
+./scripts/update-source.sh
+```
+
+### TODO
+
+- [ ] Generate targets `NotificationScene`, `NotificationService`
+
+### References
+
 - [云信 IM 开发文档](https://dev.yunxin.163.com/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E6%96%B0%E6%89%8B%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97)
 - [Demo 源码下载](https://yunxin.163.com/im-sdk-demo)
 - [NIM Demo 源码导读](https://dev.yunxin.163.com/docs/product/%E9%80%9A%E7%94%A8/Demo%E6%BA%90%E7%A0%81%E5%AF%BC%E8%AF%BB/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AFDemo/iOS%E6%BA%90%E7%A0%81%E5%AF%BC%E8%AF%BB)
