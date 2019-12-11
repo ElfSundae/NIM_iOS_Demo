@@ -1,0 +1,84 @@
+PODS:
+  - CocoaLumberjack (3.6.0):
+    - CocoaLumberjack/Core (= 3.6.0)
+  - CocoaLumberjack/Core (3.6.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
+  - FLAnimatedImage (1.0.12)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - M80AttributedLabel (1.9.9)
+  - NIMKit/Core_Free (2.12.10):
+    - FLAnimatedImage
+    - M80AttributedLabel
+    - SDWebImage
+    - Toast
+    - TZImagePickerController
+  - NIMKit/Full_Free (2.12.10):
+    - NIMKit/Core_Free
+    - NIMSDK (~> 7.0.3)
+  - NIMSDK (7.0.3)
+  - Reachability (3.2)
+  - SDWebImage (5.4.0):
+    - SDWebImage/Core (= 5.4.0)
+  - SDWebImage/Core (5.4.0)
+  - SDWebImageFLPlugin (0.3.0):
+    - FLAnimatedImage (>= 1.0.11)
+    - SDWebImage/Core (~> 5.0)
+  - SSZipArchive (1.8.1)
+  - SVProgressHUD (2.2.5)
+  - Toast (3.1.0)
+  - TZImagePickerController (3.2.8)
+
+DEPENDENCIES:
+  - CocoaLumberjack (~> 3.2)
+  - Crashlytics
+  - Fabric
+  - FMDB (~> 2.7)
+  - NIMKit/Full_Free (~> 2.12)
+  - Reachability (~> 3.2)
+  - SDWebImageFLPlugin
+  - SSZipArchive (~> 1.8)
+  - SVProgressHUD (~> 2.1)
+  - Toast (~> 3.0)
+
+SPEC REPOS:
+  trunk:
+    - CocoaLumberjack
+    - Crashlytics
+    - Fabric
+    - FLAnimatedImage
+    - FMDB
+    - M80AttributedLabel
+    - NIMKit
+    - NIMSDK
+    - Reachability
+    - SDWebImage
+    - SDWebImageFLPlugin
+    - SSZipArchive
+    - SVProgressHUD
+    - Toast
+    - TZImagePickerController
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: 78b0c238666f4f58db069738ec176f4519557516
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
+  NIMKit: ea5b162259e69c99619c891fc5bb72e98d9ec12a
+  NIMSDK: 76dfea3b739f837db806e6fc02113dab8ec97d4a
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
+  SDWebImageFLPlugin: cf3f4ae49f249dd785129346fd61bbc8433a88cf
+  SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
+  TZImagePickerController: 4b0a5d3abe6351b6c9ec52c7be0fa9a5bbca23f6
+
+PODFILE CHECKSUM: c337abbc59851b89e4f277717c20b0133935b53a
+
+COCOAPODS: 1.8.4
