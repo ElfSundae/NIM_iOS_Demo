@@ -1,0 +1,61 @@
+name: NIMDemo
+options:
+  createIntermediateGroups: true
+attributes:
+  CLASSPREFIX: NTES
+  ORGANIZATIONNAME: Netease
+targets:
+  NIMDemo:
+    type: application
+    platform: iOS
+    deploymentTarget: 9.0
+    sources:
+      - path: NIMDemo
+        excludes:
+          - "**/*.{framework,a}"
+          - "Supporting Files/Files"
+          - "Supporting Files/*.{xcconfig,sh}"
+          - "Classes/**/*Robot*.{h,m,xib}"
+          - "Classes/**/NTESContactViewController.xib"
+      - path: NIMDemo/Supporting Files/Files
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.netease.NIM.demo
+        INFOPLIST_FILE: NIMDemo/Supporting Files/Info.plist
+        GCC_PREFIX_HEADER: NIMDemo/NIMDemo-Prefix.pch
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: LaunchImage
+        OTHER_LDFLAGS: >
+          $(inherited)
+          -l"SPaySDK"
+          -l"WeChatSDK"
+        LIBRARY_SEARCH_PATHS: >
+          $(inherited)
+          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK"
+          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/WXSDK"
+        HEADER_SEARCH_PATHS: >
+          $(inherited)
+          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK/include"
+          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/WXSDK"
+      configs:
+        Debug:
+          XCCONFIG_BUNDLE_NAME: 网易云信开发版
+          CODE_SIGN_ENTITLEMENTS: NIMDemo/Supporting Files/NIMDev.entitlements
+        Release:
+          XCCONFIG_BUNDLE_NAME: 云信 Demo
+          CODE_SIGN_ENTITLEMENTS: NIMDemo/Supporting Files/NIMPro.entitlements
+    dependencies:
+      - framework: NIMDemo/Classes/Vendors/AlipaySDK/AlipaySDK.framework
+        embed: false
+      - sdk: CoreMotion.framework
+      - framework: NIMDemo/Classes/Vendors/RedPacket/JrmfPacketKit.framework
+        embed: false
+      - framework: NIMDemo/Classes/Vendors/RedPacket/JrmfWalletKit.framework
+        embed: false
+      - framework: NIMDemo/Classes/Vendors/RedPacket/JYangToolKit.framework
+        embed: false
+    requiresObjCLinking: true
+    postBuildScripts:
+      - script: '"${PODS_ROOT}/Fabric/run" d395159c291c627c9d4ff9139bf8f0a700b98732 67e6161c740f31f9fbe224ccde008e034af47dfdaa04c97cc8f46111d523cb76'
+        name: Run Fabric
