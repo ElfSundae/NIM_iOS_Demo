@@ -63,3 +63,4 @@ pod update
 # xcodeproj show ~/working/NIM_iOS_Demo/NIMDemo.xcodeproj > ~/Desktop/my
 
 # diff -u ~/Desktop/official ~/Desktop/my > ~/Desktop/diff.patch
+# opendiff working/official  working/my
