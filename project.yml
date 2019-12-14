@@ -1,4 +1,3 @@
-# TODO: Generate targets `NotificationScene`, `NotificationService`
 name: NIM
 options:
   createIntermediateGroups: true
@@ -9,7 +8,7 @@ targets:
   NIM:
     type: application
     platform: iOS
-    deploymentTarget: 9.0
+    deploymentTarget: "9.0"
     sources:
       - path: NIMDemo
         excludes:
@@ -27,15 +26,15 @@ targets:
         GCC_PREFIX_HEADER: NIMDemo/NIMDemo-Prefix.pch
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: LaunchImage
-        OTHER_LDFLAGS: >
+        OTHER_LDFLAGS: >-
           $(inherited)
           -l"SPaySDK"
           -l"WeChatSDK"
-        LIBRARY_SEARCH_PATHS: >
+        LIBRARY_SEARCH_PATHS: >-
           $(inherited)
           "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK"
           "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/WXSDK"
-        HEADER_SEARCH_PATHS: >
+        HEADER_SEARCH_PATHS: >-
           $(inherited)
           "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK/include"
           "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/WXSDK"
