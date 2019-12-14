@@ -1,11 +1,12 @@
-name: NIMDemo
+# TODO: Generate targets `NotificationScene`, `NotificationService`
+name: NIM
 options:
   createIntermediateGroups: true
 attributes:
   CLASSPREFIX: NTES
   ORGANIZATIONNAME: Netease
 targets:
-  NIMDemo:
+  NIM:
     type: application
     platform: iOS
     deploymentTarget: 9.0
@@ -48,14 +49,25 @@ targets:
     dependencies:
       - framework: NIMDemo/Classes/Vendors/AlipaySDK/AlipaySDK.framework
         embed: false
-      - sdk: CoreMotion.framework
       - framework: NIMDemo/Classes/Vendors/RedPacket/JrmfPacketKit.framework
         embed: false
       - framework: NIMDemo/Classes/Vendors/RedPacket/JrmfWalletKit.framework
         embed: false
       - framework: NIMDemo/Classes/Vendors/RedPacket/JYangToolKit.framework
         embed: false
+      - sdk: CFNetwork.framework
+      - sdk: CoreMotion.framework
+      - sdk: CoreText.framework
+      - sdk: Security.framework
+      - sdk: CallKit.framework
+        weak: true
+      - sdk: UserNotifications.framework
+        weak: true
+      - sdk: UserNotificationsUI.framework
+        weak: true
     requiresObjCLinking: true
     postBuildScripts:
       - script: '"${PODS_ROOT}/Fabric/run" d395159c291c627c9d4ff9139bf8f0a700b98732 67e6161c740f31f9fbe224ccde008e034af47dfdaa04c97cc8f46111d523cb76'
         name: Run Fabric
+        runOnlyWhenInstalling: true
+
