@@ -70,4 +70,3 @@ targets:
       - script: '"${PODS_ROOT}/Fabric/run" d395159c291c627c9d4ff9139bf8f0a700b98732 67e6161c740f31f9fbe224ccde008e034af47dfdaa04c97cc8f46111d523cb76'
         name: Run Fabric
         runOnlyWhenInstalling: true
-

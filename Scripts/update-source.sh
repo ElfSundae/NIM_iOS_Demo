@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+# Update source code from Netease official project.
+
 URL='https://yx-web-nosdn.netease.im/package/1575456096/NIM_iOS_Demo_v7.0.3.zip?download=NIM_iOS_Demo_v7.0.3.zip'
 
 WORKING=working
@@ -51,16 +53,3 @@ fi
 xcodegen
 
 pod update
-
-# TODO: Compare generated project with the official project
-# Show diff patch:
-
-# cd official
-# xcodeproj sort ~/Downloads/NIM_iOS_Demo_v7.0.3/NIMDemo/NIM.xcodeproj
-# xcodeproj show ~/Downloads/NIM_iOS_Demo_v7.0.3/NIMDemo/NIM.xcodeproj > ~/Desktop/official
-
-# xcodeproj sort ~/working/NIM_iOS_Demo/NIMDemo.xcodeproj
-# xcodeproj show ~/working/NIM_iOS_Demo/NIMDemo.xcodeproj > ~/Desktop/my
-
-# diff -u ~/Desktop/official ~/Desktop/my > ~/Desktop/diff.patch
-# opendiff working/official  working/my
