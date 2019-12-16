@@ -1,7 +1,9 @@
 name: NIM
 options:
   createIntermediateGroups: true
-  groupSortPosition: none
+  usesTabs: false
+  indentWidth: 4
+  tabWidth: 4
 attributes:
   CLASSPREFIX: NTES
   ORGANIZATIONNAME: Netease
