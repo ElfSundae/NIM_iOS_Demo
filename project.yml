@@ -1,17 +1,21 @@
 name: NIM
+
 options:
   createIntermediateGroups: true
   usesTabs: false
   indentWidth: 4
   tabWidth: 4
+  deploymentTarget:
+    iOS: '9.0'
+
 attributes:
   CLASSPREFIX: NTES
   ORGANIZATIONNAME: Netease
+
 targets:
   NIM:
     type: application
     platform: iOS
-    deploymentTarget: "9.0"
     sources:
       - path: NIMDemo
         excludes:
@@ -28,10 +32,7 @@ targets:
         INFOPLIST_FILE: NIMDemo/Supporting Files/Info.plist
         GCC_PREFIX_HEADER: NIMDemo/NIMDemo-Prefix.pch
         ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: LaunchImage
-        OTHER_LDFLAGS: >-
-          $(inherited)
-          -l"SPaySDK"
-          -l"WeChatSDK"
+        OTHER_LDFLAGS: '$(inherited) -lSPaySDK -lWeChatSDK'
         LIBRARY_SEARCH_PATHS: >-
           $(inherited)
           "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK"
@@ -66,7 +67,6 @@ targets:
         weak: true
       - sdk: UserNotificationsUI.framework
         weak: true
-    requiresObjCLinking: true
     postBuildScripts:
       - script: '"${PODS_ROOT}/Fabric/run" d395159c291c627c9d4ff9139bf8f0a700b98732 67e6161c740f31f9fbe224ccde008e034af47dfdaa04c97cc8f46111d523cb76'
         name: Run Fabric
