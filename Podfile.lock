@@ -10,16 +10,16 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - M80AttributedLabel (1.9.9)
-  - NIMKit/Core_Free (2.12.10):
+  - NIMKit/Core_Free (2.12.11):
     - FLAnimatedImage
     - M80AttributedLabel
     - SDWebImage
     - Toast
     - TZImagePickerController
-  - NIMKit/Full_Free (2.12.10):
+  - NIMKit/Full_Free (2.12.11):
     - NIMKit/Core_Free
-    - NIMSDK (~> 7.0.3)
-  - NIMSDK (7.0.3)
+    - NIMSDK (~> 7.1.0)
+  - NIMSDK (7.1.0)
   - Reachability (3.2)
   - SDWebImage (5.4.0):
     - SDWebImage/Core (= 5.4.0)
@@ -69,8 +69,8 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
-  NIMKit: ea5b162259e69c99619c891fc5bb72e98d9ec12a
-  NIMSDK: 76dfea3b739f837db806e6fc02113dab8ec97d4a
+  NIMKit: a828528ff14f9f6cd70eb14e28f025b4ee481867
+  NIMSDK: 41768aa97a09dcadde661fb52ce151a504dc9585
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
   SDWebImageFLPlugin: cf3f4ae49f249dd785129346fd61bbc8433a88cf

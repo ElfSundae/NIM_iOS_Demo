@@ -523,6 +523,7 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
 - (void)fillUserSetting:(NIMNetCallOption *)option
 {
     option.autoRotateRemoteVideo = [[NTESBundleSetting sharedConfig] videochatAutoRotateRemoteVideo];
+    option.remoteViewoShowType = NIMNetCallRemoteVideoShowTypeYuvData;
     
     NIMNetCallServerRecord *serverRecord = [[NIMNetCallServerRecord alloc] init];
     serverRecord.enableServerAudioRecording     = [[NTESBundleSetting sharedConfig] serverRecordAudio];
