@@ -58,6 +58,7 @@
 
 - (void)setMembers:(NSArray *)members
 {
+    _members = members;
     NSMutableDictionary *tmp = [NSMutableDictionary dictionary];
     NSString *me = [[NIMSDK sharedSDK].loginManager currentAccount];
     for (id<NTESGroupMemberProtocol>member in members) {

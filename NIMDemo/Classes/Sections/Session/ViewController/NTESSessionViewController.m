@@ -66,15 +66,19 @@
 #import "NTESMergeForwardSession.h"
 #import "NTESSessionMultiRetweetContentView.h"
 #import "NTESMergeMessageViewController.h"
+#import "NTESMessageRetrieveResultVC.h"
+#import "NIMCommonTableData.h"
 
 @interface NTESSessionViewController ()
 <UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
+UISearchControllerDelegate,
 NIMSystemNotificationManagerDelegate,
 NIMMediaManagerDelegate,
 NTESTimerHolderDelegate,
 NIMEventSubscribeManagerDelegate,
-NIMTeamCardViewControllerDelegate>
+NIMTeamCardViewControllerDelegate,
+UISearchBarDelegate>
 
 
 @property (nonatomic,strong)    NTESCustomSysNotificationSender *notificaionSender;
@@ -88,6 +92,8 @@ NIMTeamCardViewControllerDelegate>
 @property (nonatomic,strong)    NTESMulSelectFunctionBar *mulSelectedSureBar;
 @property (nonatomic,strong)    UIButton *mulSelectCancelBtn;
 @property (nonatomic,strong)    NTESMergeForwardSession *mergeForwardSession;
+@property (nonatomic,strong)    UISearchController * searchController;
+@property (nonatomic,strong)    NTESMessageRetrieveResultVC * resultVC;
 @end
 
 
@@ -124,6 +130,7 @@ NIMTeamCardViewControllerDelegate>
     
     //批量转发
     _mergeForwardSession = [[NTESMergeForwardSession alloc] init];
+//    [self setupSearchVC];
 }
 
 - (void)dealloc
@@ -161,6 +168,47 @@ NIMTeamCardViewControllerDelegate>
     }
     return _sessionConfig;
 }
+
+- (void)setupSearchVC
+{
+    self.resultVC = (NTESMessageRetrieveResultVC *)self.searchController.searchResultsController;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSString * keyword = searchBar.text;
+    NIMMessageServerRetrieveOption * option = [[NIMMessageServerRetrieveOption alloc] init];
+    option.keyword = keyword;
+    [[NIMSDK sharedSDK].conversationManager retrieveServerMessages:self.session
+                                                            option:option
+                                                            result:^(NSError * _Nullable error,
+                                                                     NSArray<NIMMessage *> * _Nullable messages)
+    {
+        NSMutableArray * datas = [NSMutableArray array];
+        
+        for (NIMMessage * message in messages)
+        {
+            NSDictionary * row = @{
+                Title : keyword.length == 0 ? @"" : keyword,
+                ExtraInfo : message,
+                RowHeight : @(50),
+                CellAction : @"",
+                CellClass : @"NTESKeyWordMessageCell",
+            };
+            [datas addObject:row];
+        }
+        NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+
+        dict[RowContent] = datas;
+        
+        self.resultVC.datas = [NIMCommonTableSection sectionsWithData:@[dict]];
+        [self.resultVC.tableView reloadData];
+    }];
+}
+
+
 
 #pragma mark - NIMTeamCardViewControllerDelegate
 - (void)NIMTeamCardVCDidSetTop:(BOOL)isTop {
@@ -211,7 +259,9 @@ NIMTeamCardViewControllerDelegate>
 }
 
 
-#pragma mark - NIMChatManagerDelegate
+#pragma mark - UISearchControllerDelegate
+
+
 
 - (void)onNTESTimerFired:(NTESTimerHolder *)holder
 {
@@ -296,7 +346,6 @@ NIMTeamCardViewControllerDelegate>
     }
     [super sendMessage:message];
 }
-
 
 #pragma mark - 石头剪子布
 - (void)onTapMediaItemJanKenPon:(NIMMediaItem *)item
@@ -528,6 +577,9 @@ NIMTeamCardViewControllerDelegate>
         //插入一条 Tip 提示
         NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:@"消息已发送，但对方拒收"];
         [[NIMSDK sharedSDK].conversationManager saveMessage:tip forSession:self.session completion:nil];
+    } else if (error.code == NIMRemoteErrorCodeTeamBlackList) {
+        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:@"您已被禁言"];
+        [[NIMSDK sharedSDK].conversationManager saveMessage:tip forSession:self.session completion:nil];
     }
     [super sendMessage:message didCompleteWithError:error];
 }
@@ -613,9 +665,11 @@ NIMTeamCardViewControllerDelegate>
     }
     else if([eventName isEqualToString:NIMDemoEventNameOpenRedPacket])
     {
-        NIMCustomObject *object = event.messageModel.message.messageObject;
-        NTESRedPacketAttachment *attachment = (NTESRedPacketAttachment *)object.attachment;
-        [[NTESRedPacketManager sharedManager] openRedPacket:attachment.redPacketId from:event.messageModel.message.from session:self.session];
+        //红包功能因合作终止，暂时关闭
+//        NIMCustomObject *object = event.messageModel.message.messageObject;
+//        NTESRedPacketAttachment *attachment = (NTESRedPacketAttachment *)object.attachment;
+//        [[NTESRedPacketManager sharedManager] openRedPacket:attachment.redPacketId from:event.messageModel.message.from session:self.session];
+        [self.view makeToast:@"红包功能暂时关闭" duration:1.5 position:CSToastPositionCenter];
         handled = YES;
     }
     else if([eventName isEqualToString:NTESShowRedPacketDetailEvent])
@@ -1282,6 +1336,24 @@ NIMTeamCardViewControllerDelegate>
         _mulSelectCancelBtn = cancelBtn;
     }
     return _mulSelectCancelBtn;
+}
+
+
+- (UISearchController *)searchController
+{
+    if (!_searchController)
+    {
+        NTESMessageRetrieveResultVC * resultVC = [[NTESMessageRetrieveResultVC alloc] init];
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:resultVC];
+        _searchController.delegate = self;
+        _searchController.dimsBackgroundDuringPresentation = YES;
+        _searchController.obscuresBackgroundDuringPresentation = YES;
+        _searchController.hidesNavigationBarDuringPresentation = YES;
+        _searchController.searchBar.delegate = self;
+        resultVC.searchBar = _searchController.searchBar;
+
+    }
+    return _searchController;
 }
 
 @end

@@ -26,6 +26,9 @@
 #import "NIMContactSelectViewController.h"
 #import "NTESUserUtil.h"
 #import "NTESBundleSetting.h"
+#import "UIView+NTES.h"
+//#import "NTESContactSearchResultVC.h"
+#import "NTESContactSearchViewController.h"
 
 static const NSString *contactCellUtilIcon   = @"icon";
 static const NSString *contactCellUtilVC     = @"vc";
@@ -35,11 +38,12 @@ static const NSString *contactCellUtilUid    = @"uid";
 static const NSString *contactCellUtilSelectorName = @"selName";
 
 @interface NTESContactViewController ()<NIMUserManagerDelegate,
-NIMSystemNotificationManagerDelegate,
-NTESContactUtilCellDelegate,
-NIMContactDataCellDelegate,
-NIMLoginManagerDelegate,
-NIMEventSubscribeManagerDelegate> {
+                                        NIMSystemNotificationManagerDelegate,
+                                        NTESContactUtilCellDelegate,
+                                        NIMContactDataCellDelegate,
+                                        NIMLoginManagerDelegate,
+                                        NIMEventSubscribeManagerDelegate,
+                                        NTESContactSearchDelegate> {
     UIRefreshControl *_refreshControl;
     NTESGroupedContacts *_contacts;
 }
@@ -49,13 +53,6 @@ NIMEventSubscribeManagerDelegate> {
 @end
 
 @implementation NTESContactViewController
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -74,17 +71,11 @@ NIMEventSubscribeManagerDelegate> {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.searchIgoreCase = YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
-    self.tableView.delegate       = self;
-    self.tableView.dataSource     = self;
-    UIEdgeInsets separatorInset   = self.tableView.separatorInset;
-    separatorInset.right          = 0;
-    self.tableView.separatorInset = separatorInset;
-    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
-    self.tableView.tableFooterView = [UIView new];
-    
+    self.definesPresentationContext = YES;//保证搜索结果页可以正常推出
+
     [self prepareData];
     
     [[NIMSDK sharedSDK].systemNotificationManager addDelegate:self];
@@ -99,18 +90,26 @@ NIMEventSubscribeManagerDelegate> {
     [teamBtn setImage:[UIImage imageNamed:@"icon_tinfo_normal"] forState:UIControlStateNormal];
     [teamBtn setImage:[UIImage imageNamed:@"icon_tinfo_pressed"] forState:UIControlStateHighlighted];
     [teamBtn sizeToFit];
+    teamBtn.size = CGSizeMake(teamBtn.width + 4.0, 40.0);
     UIBarButtonItem *teamItem = [[UIBarButtonItem alloc] initWithCustomView:teamBtn];
-    self.navigationItem.rightBarButtonItem = teamItem;
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchBtn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside];
+    [searchBtn setImage:[UIImage imageNamed:@"btn_search"] forState:UIControlStateNormal];
+    [searchBtn sizeToFit];
+    searchBtn.size = CGSizeMake(searchBtn.width + 4.0, 40.0);
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    
+    self.navigationItem.rightBarButtonItems = @[teamItem, searchItem];
 }
 
 - (void)prepareData{
-    
     
     _contacts = [[NTESGroupedContacts alloc] init];
     
     self.navigationItem.title = @"通讯录";
     [self setUpNavItem];
-    
+
     NSArray *utils = [self groupAbove];
     //构造显示的数据模型
     NTESContactUtilItem *contactUtil = [[NTESContactUtilItem alloc] init];
@@ -133,7 +132,7 @@ NIMEventSubscribeManagerDelegate> {
 - (NSArray *)groupAbove
 {
     //原始数据
-    
+
     NSInteger systemCount = [[[NIMSDK sharedSDK] systemNotificationManager] allUnreadCount];
     NSMutableArray *utils =
     [@[
@@ -181,7 +180,7 @@ NIMEventSubscribeManagerDelegate> {
 }
 
 - (void)onOpera:(id)sender{
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"添加好友",@"创建高级群",@"创建讨论组",@"搜索高级群", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"添加好友",@"创建高级群",@"创建讨论组",@"搜索高级群",nil];
     __weak typeof(self) wself = self;
     NSString *currentUserId = [[NIMSDK sharedSDK].loginManager currentAccount];
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
@@ -236,7 +235,7 @@ NIMEventSubscribeManagerDelegate> {
                 break;
             }
             case 3:
-                vc = [[NTESSearchTeamViewController alloc] initWithNibName:nil bundle:nil];
+                vc = [[NTESSearchTeamViewController alloc] initWithTeamType:NIMTeamTypeAdvanced];
                 break;
             default:
                 break;
@@ -247,6 +246,11 @@ NIMEventSubscribeManagerDelegate> {
     }];
 }
 
+- (void)searchAction:(id)sender {
+    NTESContactSearchViewController *vc = [[NTESContactSearchViewController alloc] init];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -347,6 +351,15 @@ NIMEventSubscribeManagerDelegate> {
     }
 }
 
+#pragma mark - NTESContactSearchDelegate
+- (BOOL)disableSearchTeam {
+    return _disableSearchTeam;
+}
+
+- (BOOL)ignoreCase {
+    return _searchIgoreCase;
+}
+
 #pragma mark - NIMContactDataCellDelegate
 - (void)onPressAvatar:(NSString *)memberId{
     [self enterPersonalCard:memberId];
@@ -429,14 +442,11 @@ NIMEventSubscribeManagerDelegate> {
     [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 }
 
-
-
 #pragma mark - Private
 - (void)enterPersonalCard:(NSString *)userId{
     NTESPersonalCardViewController *vc = [[NTESPersonalCardViewController alloc] initWithUserId:userId];
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 - (void)presentMemberSelector:(ContactSelectFinishBlock) block{
     NSMutableArray *users = [[NSMutableArray alloc] init];
@@ -454,6 +464,21 @@ NIMEventSubscribeManagerDelegate> {
     //回调处理
     vc.finshBlock = block;
     [vc show];
+}
+
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.delegate       = self;
+        _tableView.dataSource     = self;
+        UIEdgeInsets separatorInset   = self.tableView.separatorInset;
+        separatorInset.right          = 0;
+        _tableView.separatorInset = separatorInset;
+        _tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+        _tableView.tableFooterView = [UIView new];
+    }
+    return _tableView;
 }
 
 @end

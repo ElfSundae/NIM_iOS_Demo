@@ -65,11 +65,11 @@
                                       normalImage:[UIImage imageNamed:@"btn_whiteboard_invite_normal"]
                                     selectedImage:[UIImage imageNamed:@"btn_whiteboard_invite_pressed"]
                                             title:@"白板"];
-    
-    NIMMediaItem *redPacket  = [NIMMediaItem item:@"onTapMediaItemRedPacket:"
-                                      normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
-                                    selectedImage:[UIImage imageNamed:@"icon_redpacket_pressed"]
-                                            title:@"红包"];
+    //红包功能因合作终止，暂时关闭
+//    NIMMediaItem *redPacket  = [NIMMediaItem item:@"onTapMediaItemRedPacket:"
+//                                      normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
+//                                    selectedImage:[UIImage imageNamed:@"icon_redpacket_pressed"]
+//                                            title:@"红包"];
     
     NIMMediaItem *teamReceipt  = [NIMMediaItem item:@"onTapMediaItemTeamReceipt:"
                                       normalImage:[UIImage imageNamed:@"icon_team_receipt_normal"]
@@ -88,11 +88,11 @@
     }
     else if(_session.sessionType == NIMSessionTypeTeam || _session.sessionType == NIMSessionTypeSuperTeam)
     {
-        items = @[janKenPon,teamMeeting,fileTrans,tip,teamReceipt,redPacket];
+        items = @[janKenPon,teamMeeting,fileTrans,tip,teamReceipt];
     }
     else
     {
-        items = @[janKenPon,audioChat,videoChat,fileTrans,snapChat,whiteBoard,tip,redPacket];
+        items = @[janKenPon,audioChat,videoChat,fileTrans,snapChat,whiteBoard,tip];
     }
     
 

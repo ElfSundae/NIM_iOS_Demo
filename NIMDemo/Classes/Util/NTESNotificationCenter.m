@@ -200,6 +200,12 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
         if ([vc isKindOfClass:[NTESSessionViewController class]]
             && [vc.session.sessionId isEqualToString:notification.session.sessionId]) {
             NIMMessageModel *model = [vc uiDeleteMessage:notification.message];
+            if (notification.notificationType == NIMRevokeMessageNotificationTypeP2POneWay ||
+                notification.notificationType == NIMRevokeMessageNotificationTypeTeamOneWay)
+            {
+                break;
+            }
+            
             if (model) {
                 [vc uiInsertMessages:@[tipMessage]];
             }
@@ -208,9 +214,14 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
     }
     
     // saveMessage 方法执行成功后会触发 onRecvMessages: 回调，但是这个回调上来的 NIMMessage 时间为服务器时间，和界面上的时间有一定出入，所以要提前先在界面上插入一个和被删消息的界面时间相符的 Tip, 当触发 onRecvMessages: 回调时，组件判断这条消息已经被插入过了，就会忽略掉。
-    [[NIMSDK sharedSDK].conversationManager saveMessage:tipMessage
-                                             forSession:notification.session
-                                             completion:nil];
+    if (notification.notificationType != NIMRevokeMessageNotificationTypeP2POneWay &&
+        notification.notificationType != NIMRevokeMessageNotificationTypeTeamOneWay)
+    {
+        [[NIMSDK sharedSDK].conversationManager saveMessage:tipMessage
+                                                 forSession:notification.session
+                                                 completion:nil];
+    }
+    
 }
 
 
@@ -346,6 +357,9 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
                                                                                             peerID:caller
                                                                                              types:types
                                                                                               info:info];
+        if (@available(iOS 13, *)) {
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
         [self presentModelViewController:vc];
     }
 }

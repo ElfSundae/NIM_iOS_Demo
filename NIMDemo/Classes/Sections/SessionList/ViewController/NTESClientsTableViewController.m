@@ -124,7 +124,46 @@ NSString *Identifier = @"client_cell";
 
 
 #pragma mark - NIMLoginManagerDelegate
-- (void)onMultiLoginClientsChanged{
+- (void)onMultiLoginClientsChangedWithType:(NIMMultiLoginType)type {
+    
+    NSArray *clents = [[[NIMSDK sharedSDK] loginManager] currentLoginClients];
+    
+    switch (type) {
+        case NIMMultiLoginTypeInit:
+        {
+            self.clients = clents;
+            break;
+        }
+        case NIMMultiLoginTypeLogin:
+        {
+            NSMutableArray *addClient = [NSMutableArray array];
+            for (NIMLoginClient *newClient in clents) {
+                
+                BOOL isExist = NO;
+                for (NIMLoginClient *oldClient in self.clients) {
+                    if (oldClient.type == newClient.type &&
+                        [oldClient.os isEqualToString:newClient.os] &&
+                        oldClient.timestamp == newClient.timestamp) {
+                        isExist = YES;
+                        break;
+                    }
+                }
+                if (isExist != NO) {
+                    [addClient addObject:newClient];
+                }
+                DDLogInfo(@"有其他端下线");
+            }
+            break;
+        }
+        case NIMMultiLoginTypeLogout:
+        {
+            DDLogInfo(@"有其他端登陆");
+            break;
+        }
+        default:
+            break;
+    }
+
     self.clients = [[[NIMSDK sharedSDK] loginManager] currentLoginClients];
     if (self.clients.count) {
         [self reload];
@@ -133,9 +172,21 @@ NSString *Identifier = @"client_cell";
                                          duration:2
                                          position:CSToastPositionCenter];
         [self.navigationController popViewControllerAnimated:YES];
-
     }
 }
+
+//- (void)onMultiLoginClientsChanged{
+//    self.clients = [[[NIMSDK sharedSDK] loginManager] currentLoginClients];
+//    if (self.clients.count) {
+//        [self reload];
+//    }else{
+//        [self.navigationController.view makeToast:@"已没有其他设备连接"
+//                                         duration:2
+//                                         position:CSToastPositionCenter];
+//        [self.navigationController popViewControllerAnimated:YES];
+//
+//    }
+//}
 
 #pragma mark - 旋转处理 (iOS7)
 

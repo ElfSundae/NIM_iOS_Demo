@@ -37,50 +37,69 @@
 - (IBAction)onJionTeamBtnClick:(id)sender {
     __weak typeof(self) wself = self;
     if(self.joinTeam.joinMode == NIMTeamJoinModeNoAuth) {
-        [self joinTeam:self.joinTeam.teamId withMessage:@""];
+        [self didApplyToTeamWithMessage:@""];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"输入验证信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert showAlertWithCompletionHandler:^(NSInteger index) {
             NSString *message = [alert textFieldAtIndex:0].text ? : @"";
-            [wself joinTeam:wself.joinTeam.teamId withMessage:message];
+            [wself didApplyToTeamWithMessage:message];
         }];
     }
     
 }
 
-- (void)joinTeam:(NSString *)teamId withMessage:(NSString *)message {
-    [SVProgressHUD show];
-    
-    [[NIMSDK sharedSDK].teamManager applyToTeam:self.joinTeam.teamId message:message completion:^(NSError *error,NIMTeamApplyStatus applyStatus) {
-        [SVProgressHUD dismiss];
-        if (!error) {
-            switch (applyStatus) {
-                case NIMTeamApplyStatusAlreadyInTeam:{
-                    NIMSession *session = [NIMSession session:self.joinTeam.teamId type:NIMSessionTypeTeam];
-                    NTESSessionViewController * vc = [[NTESSessionViewController alloc] initWithSession:session];
-                    [self.navigationController pushViewController:vc animated:YES];
-                    break;
+- (void)handleApplyToTeam:(NSError *)error status:(NIMTeamApplyStatus)status {
+    if (!error) {
+        switch (status) {
+            case NIMTeamApplyStatusAlreadyInTeam:{
+                NIMSession *session = nil;
+                if (_joinTeam.type == NIMTeamTypeSuper) {
+                    session = [NIMSession session:self.joinTeam.teamId type:NIMSessionTypeSuperTeam];
+                } else {
+                    session = [NIMSession session:self.joinTeam.teamId type:NIMSessionTypeTeam];
                 }
-                case NIMTeamApplyStatusWaitForPass:
-                    [self.view makeToast:@"申请成功，等待验证" duration:2.0 position:CSToastPositionCenter];
-                default:
-                    break;
+                NTESSessionViewController * vc = [[NTESSessionViewController alloc] initWithSession:session];
+                [self.navigationController pushViewController:vc animated:YES];
+                break;
             }
-        }else{
-            DDLogDebug(@"Jion team failed: %@", error.localizedDescription);
-            switch (error.code) {
-                case NIMRemoteErrorCodeTeamAlreadyIn:
-                    [self.view makeToast:@"已经在群里" duration:2.0 position:CSToastPositionCenter];
-                    break;
-                default:
-                    [self.view makeToast:@"群申请失败" duration:2.0 position:CSToastPositionCenter];
-                    break;
-            }
+            case NIMTeamApplyStatusWaitForPass:
+                [self.view makeToast:@"申请成功，等待验证" duration:2.0 position:CSToastPositionCenter];
+            default:
+                break;
         }
-        DDLogDebug(@"Jion team status: %zd", applyStatus);
-    }];
+    }else{
+        DDLogDebug(@"Jion team failed: %@", error.localizedDescription);
+        switch (error.code) {
+            case NIMRemoteErrorCodeTeamAlreadyIn:
+                [self.view makeToast:@"已经在群里" duration:2.0 position:CSToastPositionCenter];
+                break;
+            default:
+                [self.view makeToast:@"群申请失败" duration:2.0 position:CSToastPositionCenter];
+                break;
+        }
+    }
+    DDLogDebug(@"Jion team status: %zd", status);
+}
 
+- (void)didApplyToTeamWithMessage:(NSString *)message {
+    [SVProgressHUD show];
+    __weak typeof(self) weakSelf = self;
+    if (_joinTeam.type == NIMTeamTypeSuper) {
+        [[NIMSDK sharedSDK].superTeamManager applyToTeam:self.joinTeam.teamId
+                                                 message:message
+                                              completion:^(NSError *error,NIMTeamApplyStatus applyStatus) {
+            [SVProgressHUD dismiss];
+            [weakSelf handleApplyToTeam:error status:applyStatus];
+        }];
+    } else {
+        [[NIMSDK sharedSDK].teamManager applyToTeam:self.joinTeam.teamId
+                                            message:message
+                                         completion:^(NSError *error,NIMTeamApplyStatus applyStatus) {
+            [SVProgressHUD dismiss];
+            [weakSelf handleApplyToTeam:error status:applyStatus];
+        }];
+    }
 }
 
 @end

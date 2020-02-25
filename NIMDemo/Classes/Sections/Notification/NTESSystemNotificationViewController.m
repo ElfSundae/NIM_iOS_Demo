@@ -174,6 +174,28 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
             }];
             break;
         }
+        case NIMSystemNotificationTypeSuperTeamApply:{
+            [[NIMSDK sharedSDK].superTeamManager passApplyToTeam:notification.targetID userId:notification.sourceID completion:^(NSError *error, NIMTeamApplyStatus applyStatus) {
+                if (!error) {
+                    [wself.navigationController.view makeToast:@"同意成功"
+                                                      duration:2
+                                                      position:CSToastPositionCenter];
+                    notification.handleStatus = NotificationHandleTypeOk;
+                    [wself.tableView reloadData];
+                }else {
+                    if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                        [wself.navigationController.view makeToast:@"网络问题，请重试"
+                                                          duration:2
+                                                          position:CSToastPositionCenter];
+                    } else {
+                        notification.handleStatus = NotificationHandleTypeOutOfDate;
+                    }
+                    [wself.tableView reloadData];
+                    DDLogDebug(@"%@",error.localizedDescription);
+                }
+            }];
+            break;
+        }
         case NIMSystemNotificationTypeTeamInvite:{
             [[NIMSDK sharedSDK].teamManager acceptInviteWithTeam:notification.targetID invitorId:notification.sourceID completion:^(NSError *error) {
                 if (!error) {
@@ -202,6 +224,35 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
             }];
         }
             break;
+        case NIMSystemNotificationTypeSuperTeamInvite:
+        {
+            [[NIMSDK sharedSDK].superTeamManager acceptInviteWithTeam:notification.targetID invitorId:notification.sourceID completion:^(NSError *error) {
+                if (!error) {
+                    [wself.navigationController.view makeToast:@"接受成功"
+                                                      duration:2
+                                                      position:CSToastPositionCenter];
+                    notification.handleStatus = NotificationHandleTypeOk;
+                    [wself.tableView reloadData];
+                }else {
+                    if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                        [wself.navigationController.view makeToast:@"网络问题，请重试"
+                                                          duration:2
+                                                          position:CSToastPositionCenter];
+                    }
+                    else if (error.code == NIMRemoteErrorCodeTeamNotExists) {
+                        [wself.navigationController.view makeToast:@"群不存在"
+                                                          duration:2
+                                                          position:CSToastPositionCenter];
+                    }
+                    else {
+                        notification.handleStatus = NotificationHandleTypeOutOfDate;
+                    }
+                    [wself.tableView reloadData];
+                    DDLogDebug(@"%@",error.localizedDescription);
+                }
+            }];
+            break;
+        }
         case NIMSystemNotificationTypeFriendAdd:
         {
             NIMUserRequest *request = [[NIMUserRequest alloc] init];
@@ -258,7 +309,28 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
             }];
         }
            break;
-
+        case NIMSystemNotificationTypeSuperTeamApply:{
+            [[NIMSDK sharedSDK].superTeamManager rejectApplyToTeam:notification.targetID userId:notification.sourceID rejectReason:@"" completion:^(NSError *error) {
+                if (!error) {
+                    [wself.navigationController.view makeToast:@"拒绝成功"
+                                                      duration:2
+                                                      position:CSToastPositionCenter];
+                    notification.handleStatus = NotificationHandleTypeNo;
+                    [wself.tableView reloadData];
+                }else {
+                    if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                        [wself.navigationController.view makeToast:@"网络问题，请重试"
+                                                          duration:2
+                                                          position:CSToastPositionCenter];
+                    } else {
+                        notification.handleStatus = NotificationHandleTypeOutOfDate;
+                    }
+                    [wself.tableView reloadData];
+                    DDLogDebug(@"%@",error.localizedDescription);
+                }
+            }];
+            break;
+        }
         case NIMSystemNotificationTypeTeamInvite:{
             [[NIMSDK sharedSDK].teamManager rejectInviteWithTeam:notification.targetID invitorId:notification.sourceID rejectReason:@"" completion:^(NSError *error) {
                 if (!error) {
@@ -285,9 +357,36 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
                     DDLogDebug(@"%@",error.localizedDescription);
                 }
             }];
-
         }
             break;
+        case NIMSystemNotificationTypeSuperTeamInvite:{
+            [[NIMSDK sharedSDK].superTeamManager rejectInviteWithTeam:notification.targetID invitorId:notification.sourceID rejectReason:@"" completion:^(NSError *error) {
+                if (!error) {
+                    [wself.navigationController.view makeToast:@"拒绝成功"
+                                                      duration:2
+                                                      position:CSToastPositionCenter];
+                    notification.handleStatus = NotificationHandleTypeNo;
+                    [wself.tableView reloadData];
+                }else {
+                    if(error.code == NIMRemoteErrorCodeTimeoutError) {
+                        [wself.navigationController.view makeToast:@"网络问题，请重试"
+                                                          duration:2
+                                                          position:CSToastPositionCenter];
+                    }
+                    else if (error.code == NIMRemoteErrorCodeTeamNotExists) {
+                        [wself.navigationController.view makeToast:@"群不存在"
+                                                          duration:2
+                                                          position:CSToastPositionCenter];
+                    }
+                    else {
+                        notification.handleStatus = NotificationHandleTypeOutOfDate;
+                    }
+                    [wself.tableView reloadData];
+                    DDLogDebug(@"%@",error.localizedDescription);
+                }
+            }];
+            break;
+        }
         case NIMSystemNotificationTypeFriendAdd:
         {
             NIMUserRequest *request = [[NIMUserRequest alloc] init];

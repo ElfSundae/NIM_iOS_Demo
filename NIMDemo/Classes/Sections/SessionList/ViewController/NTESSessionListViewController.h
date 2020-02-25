@@ -12,4 +12,8 @@
 
 @property (nonatomic,strong) UILabel *emptyTipLabel;
 
+@property (nonatomic,strong) UILabel *titleLabel;
+
+- (void)setUpNavItem;
+
 @end

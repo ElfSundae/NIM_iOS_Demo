@@ -7,8 +7,8 @@
 //
 
 #import "NTESTeamReceiptDetailViewController.h"
-#import "NIMTeamCardHeaderCell.h"
-#import "NIMCardMemberItem.h"
+#import "NIMCardHeaderCell.h"
+#import "NIMTeamCardMemberItem.h"
 #import "SVProgressHUD.h"
 #import "UIView+Toast.h"
 
@@ -57,8 +57,8 @@ static NSString * const collectionReadCellReuseId   = @"collectionReadCellReuseI
     self.readUsers.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:241.0/255.0 blue:245.0/255.0 alpha:1];
     self.unreadUsers.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:241.0/255.0 blue:245.0/255.0 alpha:1];
     
-    [self.readUsers registerClass:[NIMTeamCardHeaderCell class] forCellWithReuseIdentifier:collectionReadCellReuseId];
-    [self.unreadUsers registerClass:[NIMTeamCardHeaderCell class] forCellWithReuseIdentifier:collectionReadCellReuseId];
+    [self.readUsers registerClass:[NIMCardHeaderCell class] forCellWithReuseIdentifier:collectionReadCellReuseId];
+    [self.unreadUsers registerClass:[NIMCardHeaderCell class] forCellWithReuseIdentifier:collectionReadCellReuseId];
     
     [self request];
     [self refreshOnSegment:self.segmentControl];
@@ -89,14 +89,15 @@ static NSString * const collectionReadCellReuseId   = @"collectionReadCellReuseI
                 NIMTeamMember *member = [[NIMSDK sharedSDK].teamManager teamMember:userId inTeam:detail.sessionId];
                 if (member)
                 {
-                    NIMTeamCardMemberItem *item = [[NIMTeamCardMemberItem alloc] initWithTeamId:detail.sessionId
-                                                                                         member:member];
+                    NIMTeamCardMemberItem *item = [[NIMTeamCardMemberItem alloc] initWithMember:member
+                                                                                       teamType:NIMTeamTypeAdvanced];
                     [weakSelf.readMembers addObject:item];
                 }
                 else
                 {
                     //群成员异常，可能是被踢了
-                    NIMUserCardMemberItem *item = [[NIMUserCardMemberItem alloc] initWithTeamMember:member];
+                    NIMTeamCardMemberItem *item = [[NIMTeamCardMemberItem alloc] initWithMember:member
+                                                                                       teamType:NIMTeamTypeAdvanced];
                     [weakSelf.readMembers addObject:item];
                 }
                 
@@ -106,13 +107,14 @@ static NSString * const collectionReadCellReuseId   = @"collectionReadCellReuseI
                 NIMTeamMember *member = [[NIMSDK sharedSDK].teamManager teamMember:userId inTeam:detail.sessionId];
                 if (member)
                 {
-                    NIMTeamCardMemberItem *item = [[NIMTeamCardMemberItem alloc] initWithTeamId:detail.sessionId
-                                                                                         member:member];
+                    NIMTeamCardMemberItem *item = [[NIMTeamCardMemberItem alloc] initWithMember:member
+                                                                                       teamType:NIMTeamTypeAdvanced];
                     [weakSelf.unreadMembers addObject:item];
                 }
                 else
                 {
-                    NIMUserCardMemberItem *item = [[NIMUserCardMemberItem alloc] initWithTeamMember:member];
+                    NIMTeamCardMemberItem *item = [[NIMTeamCardMemberItem alloc] initWithMember:member
+                                                                                       teamType:NIMTeamTypeAdvanced];
                     [weakSelf.unreadMembers addObject:item];
                 }
             }
@@ -156,7 +158,7 @@ static NSString * const collectionReadCellReuseId   = @"collectionReadCellReuseI
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NIMTeamCardHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionReadCellReuseId forIndexPath:indexPath];
+    NIMCardHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionReadCellReuseId forIndexPath:indexPath];
     id<NIMKitCardHeaderData> data = [self dataAtIndexPath:indexPath collectionView:collectionView];
     [cell refreshData:data];
     return cell;

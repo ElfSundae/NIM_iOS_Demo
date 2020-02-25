@@ -16,6 +16,7 @@
 
 @property (nonatomic,strong) NIMSession *session;
 
+
 @end
 
 @implementation NTESTeamReceiptSendViewController
@@ -46,11 +47,14 @@
 
 - (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     self.sendTextView.frame = CGRectMake(0, 64.0, self.view.width, 179.0);
     if (@available(iOS 11.0, *))
     {
         self.sendTextView.top += 20;
     }
+    CGFloat height = _sendButton.top - 16.0 - _sendTextView.top;
+    self.sendTextView.height = height;
 }
 
 - (IBAction)hideKeyboard:(id)sender
@@ -92,6 +96,7 @@
         _sendTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.width, 179.0)];
         _sendTextView.font = [UIFont systemFontOfSize:14.0];
         _sendTextView.textColor = [UIColor blackColor];
+        _sendTextView.delegate = self;
     }
     return _sendTextView;
 }

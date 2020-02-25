@@ -431,14 +431,14 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
 
 - (void)onControl:(UInt64)callID from:(NSString *)user type:(NIMNetCallControlType)control
 {
-    if (callID == self.meeting.callID)
-    {
-        DDLogInfo(@"on receive control command %zd from %@",control,user);
-        if (control == NIMNetCallControlTypeCloseVideo)
-        {
-            [self onUserVideoDataTimeout:user];
-        }
-    }
+//    if (callID == self.meeting.callID)
+//    {
+//        DDLogInfo(@"on receive control command %zd from %@",control,user);
+//        if (control == NIMNetCallControlTypeCloseVideo)
+//        {
+//            [self onUserVideoDataTimeout:user];
+//        }
+//    }
 }
 
 #pragma mark - NTESTimerHolderDelegate

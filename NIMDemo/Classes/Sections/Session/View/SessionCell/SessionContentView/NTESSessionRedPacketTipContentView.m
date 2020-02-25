@@ -10,6 +10,7 @@
 #import "JRMFHeader.h"
 #import "NTESRedPacketTipAttachment.h"
 #import "UIView+NTES.h"
+#import "UIImage+NIMKit.h"
 #import "NTESCustomAttachmentDefines.h"
 
 @interface NTESSessionRedPacketTipContentView()<M80AttributedLabelDelegate>
@@ -58,9 +59,9 @@
 
 - (UIImage *)chatBubbleImageForState:(UIControlState)state outgoing:(BOOL)outgoing
 {
-    NSString *name = [[[NIMKit sharedKit] resourceBundleName] stringByAppendingPathComponent:@"icon_session_time_bg"];
+    UIImage *image = [UIImage nim_imageInKit:@"icon_session_time_bg"];
     UIEdgeInsets insets = UIEdgeInsetsFromString(@"{8,20,8,20}");
-    return [[UIImage imageNamed:name] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+    return [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 }
 
 - (void)layoutSubviews

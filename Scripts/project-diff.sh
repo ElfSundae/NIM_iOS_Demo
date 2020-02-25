@@ -5,7 +5,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-PROJECT1=working/NIM_iOS_Demo_v7.0.3/NIMDemo/NIM.xcodeproj
+PROJECT1=working/NIM_iOS_Demo_v7.2.0/NIMDemo/NIM.xcodeproj
 PROJECT2=NIM.xcodeproj
 
 WORKING=working/diff

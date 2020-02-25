@@ -102,7 +102,6 @@
     
     NIMMemebrGroupData *groupData = [[NIMMemebrGroupData alloc] init];
     groupData.userId = _session.sessionId;
-    groupData.isMyUserId = [_session.sessionId isEqualToString:[NIMSDK sharedSDK].loginManager.currentAccount];
     [self.headerView refreshDatas:@[groupData] operators:CardHeaderOpeatorAdd];
     [self.headerView setTitle:@"创建讨论组" forOperator:CardHeaderOpeatorAdd];
     CGSize size = [self.headerView sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];

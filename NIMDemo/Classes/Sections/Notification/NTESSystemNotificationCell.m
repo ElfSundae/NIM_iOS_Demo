@@ -100,6 +100,30 @@
             self.detailTextLabel.text = [NSString stringWithFormat:@"拒绝了群 %@ 邀请", team.teamName];
         }
             break;
+        case NIMSystemNotificationTypeSuperTeamApply:
+        {
+            NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"申请加入超大群 %@", team.teamName];
+            break;
+        }
+        case NIMSystemNotificationTypeSuperTeamApplyReject:
+        {
+            NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"超大群 %@ 拒绝你加入", team.teamName];
+            break;
+        }
+        case NIMSystemNotificationTypeSuperTeamInvite:
+        {
+            NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"超大群 %@ 邀请你加入 attach:%@", team.teamName, self.notification.notifyExt ? : @""];
+            break;
+        }
+        case NIMSystemNotificationTypeSuperTeamIviteReject:
+        {
+            NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"拒绝了超大群 %@ 邀请", team.teamName];
+            break;
+        }
         case NIMSystemNotificationTypeFriendAdd:
         {
             NSString *text = @"未知请求";
@@ -152,7 +176,9 @@
     BOOL handled = self.notification.handleStatus != 0;
     BOOL needHandle = NO;
     if (type == NIMSystemNotificationTypeTeamApply ||
-        type == NIMSystemNotificationTypeTeamInvite) {
+        type == NIMSystemNotificationTypeTeamInvite ||
+        type == NIMSystemNotificationTypeSuperTeamApply ||
+        type == NIMSystemNotificationTypeSuperTeamInvite) {
         needHandle = YES;
     }
     if (type == NIMSystemNotificationTypeFriendAdd) {

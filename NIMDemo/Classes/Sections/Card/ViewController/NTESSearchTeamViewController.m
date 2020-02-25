@@ -11,7 +11,9 @@
 #import "UIView+Toast.h"
 #import "NTESJionTeamViewController.h"
 
+
 @interface NTESSearchTeamViewController () <UITextFieldDelegate>
+@property (nonatomic, assign) NIMTeamType teamType;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 
 @end
@@ -31,25 +33,45 @@
     
 }
 
+- (instancetype)initWithTeamType:(NIMTeamType)teamType {
+    if (self = [super init]) {
+        _teamType = teamType;
+    }
+    return self;
+}
+
 #pragma mark - UITextFieldDelegate
+- (void)hanldFetchTeamInfo:(NSError *)error team:(NIMTeam *)team {
+    if(!error) {
+        NTESJionTeamViewController *vc = [[NTESJionTeamViewController alloc] initWithNibName:nil bundle:nil];
+        vc.joinTeam = team;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        [self.view makeToast:error.localizedDescription
+                    duration:2
+                    position:CSToastPositionCenter];
+        DDLogDebug(@"Fetch team info failed: %@", error.localizedDescription);
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.textField endEditing:YES];
     [SVProgressHUD show];
-    [[NIMSDK sharedSDK].teamManager fetchTeamInfo:textField.text completion:^(NSError *error, NIMTeam *team) {
-        [SVProgressHUD dismiss];
-        if(!error) {
-            NTESJionTeamViewController *vc = [[NTESJionTeamViewController alloc] initWithNibName:nil bundle:nil];
-            vc.joinTeam = team;
-            [self.navigationController pushViewController:vc animated:YES];
-        } else {
-            [self.view makeToast:error.localizedDescription
-                        duration:2
-                        position:CSToastPositionCenter];
-            DDLogDebug(@"Fetch team info failed: %@", error.localizedDescription);
-        }
-    }];
+    __weak typeof(self) weakSelf = self;
+    if (_teamType == NIMTeamTypeSuper) {
+        [[NIMSDK sharedSDK].superTeamManager fetchTeamInfo:textField.text
+                                                completion:^(NSError * _Nullable error, NIMTeam * _Nullable team) {
+            [SVProgressHUD dismiss];
+            [weakSelf hanldFetchTeamInfo:error team:team];
+        }];
+    } else {
+        [[NIMSDK sharedSDK].teamManager fetchTeamInfo:textField.text
+                                           completion:^(NSError *error, NIMTeam *team) {
+            [SVProgressHUD dismiss];
+            [weakSelf hanldFetchTeamInfo:error team:team];
 
+        }];
+    }
     return YES;
 }
 

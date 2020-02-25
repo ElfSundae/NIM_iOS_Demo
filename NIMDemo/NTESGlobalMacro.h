@@ -12,10 +12,12 @@
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 #define IOS11            ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 11.0)
+#define IOS10Lower            ([[[UIDevice currentDevice] systemVersion] doubleValue] < 10.0)
 #define UIScreenWidth                              [UIScreen mainScreen].bounds.size.width
 #define UIScreenHeight                             [UIScreen mainScreen].bounds.size.height
 #define UISreenWidthScale   UIScreenWidth / 320
-
+#define IsiPhoneX (UIScreenHeight == 812.0f || UIScreenHeight == 896.0f)
+#define UITabbarHeight (IsiPhoneX ? 49 + 35 : 49)
 
 #define UICommonTableBkgColor UIColorFromRGB(0xe4e7ec)
 #define Message_Font_Size   14        // 普通聊天文字大小

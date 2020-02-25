@@ -16,11 +16,12 @@
 #import "NTESSessionUtil.h"
 #import "NTESPersonalCardViewController.h"
 #import "NTESMessageUtil.h"
+#import "NTESSessionServiceListVC.h"
+#import "NTESSessionSearchViewController.h"
+
 #define SessionListTitle @"云信 Demo"
 
 @interface NTESSessionListViewController ()<NIMLoginManagerDelegate,NTESListHeaderDelegate,NIMEventSubscribeManagerDelegate,UIViewControllerPreviewingDelegate>
-
-@property (nonatomic,strong) UILabel *titleLabel;
 
 @property (nonatomic,strong) NTESListHeader *header;
 
@@ -66,6 +67,7 @@
     
     NSString *userID = [[[NIMSDK sharedSDK] loginManager] currentAccount];
     self.navigationItem.titleView  = [self titleView:userID];
+    self.definesPresentationContext = YES;
     [self setUpNavItem];
 }
 
@@ -75,8 +77,16 @@
     [moreBtn setImage:[UIImage imageNamed:@"icon_sessionlist_more_normal"] forState:UIControlStateNormal];
     [moreBtn setImage:[UIImage imageNamed:@"icon_sessionlist_more_pressed"] forState:UIControlStateHighlighted];
     [moreBtn sizeToFit];
+    moreBtn.size = CGSizeMake(moreBtn.width + 4.0, 40.0);
     UIBarButtonItem *moreItem = [[UIBarButtonItem alloc] initWithCustomView:moreBtn];
-    self.navigationItem.rightBarButtonItem = moreItem;
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchBtn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside];
+    [searchBtn setImage:[UIImage imageNamed:@"btn_search"] forState:UIControlStateNormal];
+    [searchBtn sizeToFit];
+    searchBtn.size = CGSizeMake(searchBtn.width + 4.0, 40.0);
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    self.navigationItem.rightBarButtonItems = @[moreItem, searchItem];
 }
 
 - (void)refresh{
@@ -104,10 +114,17 @@
            [[NIMSDK sharedSDK].conversationManager deleteAllMessages:option];
     }];
     
+    UIAlertAction *allServerSessions = [UIAlertAction actionWithTitle:@"查看云端会话"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * _Nonnull action) {
+        NTESSessionServiceListVC * vc = [[NTESSessionServiceListVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消"
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
-    return @[markAllMessagesReadAction, cleanAllMessagesAction, cancel].mutableCopy;
+    return @[markAllMessagesReadAction, cleanAllMessagesAction, allServerSessions, cancel].mutableCopy;
 }
 
 - (void)more:(id)sender
@@ -123,6 +140,12 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
+- (void)searchAction:(id)sender {
+    NTESSessionSearchViewController *searchVC = [[NTESSessionSearchViewController alloc] init];
+    searchVC.recentSessions = self.recentSessions;
+    [self.navigationController pushViewController:searchVC animated:YES];
+}
+
 - (void)onSelectedRecent:(NIMRecentSession *)recent atIndexPath:(NSIndexPath *)indexPath{
     NTESSessionViewController *vc = [[NTESSessionViewController alloc] initWithSession:recent.session];
     [self.navigationController pushViewController:vc animated:YES];
@@ -136,7 +159,6 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
-
 
 - (void)onDeleteRecentAtIndexPath:(NIMRecentSession *)recent atIndexPath:(NSIndexPath *)indexPath
 {
@@ -312,12 +334,6 @@
     return @[delete,top];
 }
 
-- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    // All tasks are handled by blocks defined in editActionsForRowAtIndexPath, however iOS8 requires this method to enable editing
-}
-
-
 #pragma mark - NIMEventSubscribeManagerDelegate
 
 - (void)onRecvSubscribeEvents:(NSArray *)events
@@ -431,7 +447,6 @@
             [content insertAttributedString:atTip atIndex:0];
         }
     }
-    
 }
 
 @end

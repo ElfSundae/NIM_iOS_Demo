@@ -10,4 +10,6 @@
 
 @interface NTESSearchTeamViewController : UIViewController
 
+- (instancetype)initWithTeamType:(NIMTeamType)teamType;
+
 @end

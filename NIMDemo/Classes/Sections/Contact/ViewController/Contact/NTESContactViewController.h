@@ -10,6 +10,10 @@
 
 @interface NTESContactViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
+@property (nonatomic,assign) BOOL disableSearchTeam;
+
+@property (nonatomic,assign) BOOL searchIgoreCase;
+
 @property(nonatomic, strong) UITableView *tableView;
 
 @end
