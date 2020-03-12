@@ -58,7 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"设置";
+    self.navigationItem.title = @"设置".ntes_localized;
     self.view.backgroundColor = [UIColor whiteColor];
     [self buildData];
     __weak typeof(self) wself = self;
@@ -97,7 +97,7 @@
     NSString *noDisturbingEnd   = [NSString stringWithFormat:@"%02zd:%02zd",setting.noDisturbingEndH,setting.noDisturbingEndM];
     
     NSInteger customNotifyCount = [[NTESCustomNotificationDB sharedInstance] unreadCount];
-    NSString *customNotifyText  = [NSString stringWithFormat:@"自定义系统通知 (%zd)",customNotifyCount];
+    NSString *customNotifyText  = [NSString stringWithFormat:@"%@ (%zd)",@"自定义系统通知".ntes_localized,customNotifyCount];
 
     NSString *uid = [[NIMSDK sharedSDK].loginManager currentAccount];
     NSArray *data = @[
@@ -118,7 +118,7 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title         : @"我的钱包",
+                                      Title         : @"我的钱包".ntes_localized,
                                       CellAction    : @"onTouchMyWallet:",
                                       ShowAccessory : @(YES),
                                       },
@@ -128,17 +128,17 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                            @{
-                                              Title      :@"消息提醒",
-                                              DetailTitle:disableRemoteNotification ? @"未开启" : @"已开启",
+                                              Title      :@"消息提醒".ntes_localized,
+                                              DetailTitle:disableRemoteNotification ? @"未开启".ntes_localized : @"已开启".ntes_localized,
                                             },
                                         ],
-                          FooterTitle:@"在iPhone的“设置- 通知中心”功能，找到应用程序“云信”，可以更改云信新消息提醒设置"
+                          FooterTitle:@"在iPhone的“设置- 通知中心”功能，找到应用程序“云信”，可以更改云信新消息提醒设置".ntes_localized
                         },
                         @{
                           HeaderTitle:@"",
                           RowContent :@[
                                           @{
-                                              Title        : @"通知显示详情",
+                                              Title        : @"通知显示详情".ntes_localized,
                                               CellClass    : @"NTESSettingSwitcherCell",
                                               ExtraInfo    : @(setting.type == NIMPushNotificationDisplayTypeDetail? YES : NO),
                                               CellAction   : @"onActionShowPushDetailSetting:",
@@ -151,8 +151,8 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                        @{
-                                          Title      :@"免打扰",
-                                          DetailTitle:enableNoDisturbing ? [NSString stringWithFormat:@"%@到%@",noDisturbingStart,noDisturbingEnd] : @"未开启",
+                                          Title      :@"免打扰".ntes_localized,
+                                          DetailTitle:enableNoDisturbing ? [NSString stringWithFormat:@"%@%@%@",noDisturbingStart,@"到".ntes_localized,noDisturbingEnd] : @"未开启".ntes_localized,
                                           CellAction :@"onActionNoDisturbingSetting:",
                                           ShowAccessory : @(YES)
                                         },
@@ -163,15 +163,15 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                         @{
-                                          Title      :@"查看日志",
+                                          Title      :@"查看日志".ntes_localized,
                                           CellAction :@"onTouchShowLog:",
                                           },
                                         @{
-                                            Title      :@"上传日志",
+                                            Title      :@"上传日志".ntes_localized,
                                             CellAction :@"onTouchUploadLog:",
                                             },
                                         @{
-                                            Title      :@"清理缓存",
+                                            Title      :@"清理缓存".ntes_localized,
                                             CellAction :@"onTouchCleanCache:",
                                             },
                                         @{
@@ -179,17 +179,17 @@
                                             CellAction :@"onTouchCustomNotify:",
                                           },
                                         @{
-                                            Title      :@"音视频网络探测",
+                                            Title      :@"音视频网络探测".ntes_localized,
                                             CellAction :@"onTouchNetDetect:",
                                             },
                                         @{
-                                            Title      :@"本地消息迁移",
+                                            Title      :@"本地消息迁移".ntes_localized,
                                             CellAction :@"onTouchMigrateMessages:",
                                             ShowAccessory : @(YES),
                                             
                                             },
                                         @{
-                                            Title      :@"关于",
+                                            Title      :@"关于".ntes_localized,
                                             CellAction :@"onTouchAbout:",
                                           },
                                       ],
@@ -199,7 +199,7 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                           @{
-                                              Title        : @"注销",
+                                              Title        : @"注销".ntes_localized,
                                               CellClass    : @"NTESColorButtonCell",
                                               CellAction   : @"logoutCurrentAccount:",
                                               ExtraInfo    : @(ColorButtonCellStyleRed),
@@ -242,7 +242,7 @@
     [[NIMSDK sharedSDK].apnsManager updateApnsSetting:setting completion:^(NSError * _Nullable error) {
         if (error)
         {
-            [wself.view makeToast:@"更新失败" duration:2.0 position:CSToastPositionCenter];
+            [wself.view makeToast:@"更新失败".ntes_localized duration:2.0 position:CSToastPositionCenter];
             switcher.on = !switcher.on;
         }
     }];
@@ -250,7 +250,7 @@
 
 
 - (void)onTouchShowLog:(id)sender{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"查看日志" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"查看 DEMO 配置",@"查看 SDK 日志",@"查看网络通话日志",@"查看网络探测日志",@"查看 Demo 日志", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"查看日志".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"查看 DEMO 配置".ntes_localized,@"查看 SDK 日志".ntes_localized,@"查看网络通话日志".ntes_localized,@"查看网络探测日志".ntes_localized,@"查看 Demo 日志".ntes_localized, nil];
     [actionSheet showInView:self.view completionHandler:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -287,7 +287,7 @@
 
         if (error || !urlString)
         {
-            [strongSelf.view makeToast:@"上传日志失败" duration:3.0 position:CSToastPositionCenter];
+            [strongSelf.view makeToast:@"上传日志失败".ntes_localized duration:3.0 position:CSToastPositionCenter];
             [SVProgressHUD dismiss];
             return;
         }
@@ -297,11 +297,11 @@
             [SVProgressHUD dismiss];
             if (error || !urlString)
             {
-                [strongSelf.view makeToast:@"上传日志失败" duration:3.0 position:CSToastPositionCenter];
+                [strongSelf.view makeToast:@"上传日志失败".ntes_localized duration:3.0 position:CSToastPositionCenter];
                 return;
             }
             [UIPasteboard generalPasteboard].string = urlString;
-            [strongSelf.view makeToast:@"上传日志成功,URL已复制到剪切板中" duration:3.0 position:CSToastPositionCenter];
+            [strongSelf.view makeToast:@"上传日志成功,URL已复制到剪切板中".ntes_localized duration:3.0 position:CSToastPositionCenter];
         }];
     }];
 }
@@ -309,8 +309,8 @@
 
 - (void)onTouchCleanCache:(id)sender
 {
-    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"" message:@"清除后，图片、视频等多媒体消息需要重新下载查看。确定清除？" preferredStyle:UIAlertControllerStyleActionSheet];
-    [[vc addAction:@"清除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"" message:@"清除后，图片、视频等多媒体消息需要重新下载查看。确定清除？".ntes_localized preferredStyle:UIAlertControllerStyleActionSheet];
+    [[vc addAction:@"清除".ntes_localized style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         NIMResourceQueryOption *option = [[NIMResourceQueryOption alloc] init];
         option.timeInterval = 0;
         [SVProgressHUD show];
@@ -318,20 +318,20 @@
             [SVProgressHUD dismiss];
             if (error)
             {
-                UIAlertController *result = [UIAlertController alertControllerWithTitle:@"" message:@"清除失败！" preferredStyle:UIAlertControllerStyleAlert];
-                [result addAction:@"确定" style:UIAlertActionStyleCancel handler:nil];
+                UIAlertController *result = [UIAlertController alertControllerWithTitle:@"" message:@"清除失败！".ntes_localized preferredStyle:UIAlertControllerStyleAlert];
+                [result addAction:@"确定".ntes_localized style:UIAlertActionStyleCancel handler:nil];
                 [result show];
             }
             else
             {
                 CGFloat freeMB = (CGFloat)freeBytes / 1000 / 1000;
-                UIAlertController *result = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"成功清理了%.2fMB磁盘空间",freeMB] preferredStyle:UIAlertControllerStyleAlert];
-                [result addAction:@"确定" style:UIAlertActionStyleCancel handler:nil];
+                UIAlertController *result = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"%@%.2fMB%@",@"成功清理了".ntes_localized, freeMB, @"磁盘空间".ntes_localized] preferredStyle:UIAlertControllerStyleAlert];
+                [result addAction:@"确定".ntes_localized style:UIAlertActionStyleCancel handler:nil];
                 [result show];
             }
         }];
     }]
-     addAction:@"取消" style:UIAlertActionStyleCancel handler:nil];
+     addAction:@"取消".ntes_localized style:UIAlertActionStyleCancel handler:nil];
     
     [vc show];
 }
@@ -363,7 +363,7 @@
 }
 
 - (void)logoutCurrentAccount:(id)sender{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"退出当前帐号？" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"退出当前帐号？".ntes_localized message:nil delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确定".ntes_localized, nil];
     [alert showAlertWithCompletionHandler:^(NSInteger alertIndex) {
         switch (alertIndex) {
             case 1:

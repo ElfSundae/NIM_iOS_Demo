@@ -35,7 +35,7 @@
 - (void)setUpNavItem
 {
     [super setUpNavItem];
-    self.titleLabel.text = @"云端会话列表";
+    self.titleLabel.text = @"云端会话列表".ntes_localized;
     self.navigationItem.rightBarButtonItems = nil;
 }
 
@@ -85,8 +85,8 @@
     if (!_moreButton) {
         _moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_moreButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
-        [_moreButton setTitle:@"加载更多" forState:UIControlStateNormal];
-        [_moreButton setTitle:@"没有更多会话了" forState:UIControlStateSelected];
+        [_moreButton setTitle:@"加载更多".ntes_localized forState:UIControlStateNormal];
+        [_moreButton setTitle:@"没有更多会话了".ntes_localized forState:UIControlStateSelected];
         _moreButton.frame = CGRectMake(0, 0, self.view.frame.size.width, 50);
         _moreButton.titleLabel.font = [UIFont systemFontOfSize:14];
         [_moreButton addTarget:self

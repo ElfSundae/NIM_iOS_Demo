@@ -89,13 +89,13 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
 +(NSString*)weekdayStr:(NSInteger)dayOfWeek
 {
     static NSDictionary *daysOfWeekDict = nil;
-    daysOfWeekDict = @{@(1):@"星期日",
-                       @(2):@"星期一",
-                       @(3):@"星期二",
-                       @(4):@"星期三",
-                       @(5):@"星期四",
-                       @(6):@"星期五",
-                       @(7):@"星期六",};
+    daysOfWeekDict = @{@(1):@"星期日".ntes_localized,
+                       @(2):@"星期一".ntes_localized,
+                       @(3):@"星期二".ntes_localized,
+                       @(4):@"星期三".ntes_localized,
+                       @(5):@"星期四".ntes_localized,
+                       @(6):@"星期五".ntes_localized,
+                       @(7):@"星期六".ntes_localized,};
     return [daysOfWeekDict objectForKey:@(dayOfWeek)];
 }
 
@@ -151,11 +151,11 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
     }
     else if(nowDateComponents.day == (msgDateComponents.day+1))//昨天
     {
-        result = showDetail?  [[NSString alloc] initWithFormat:@"昨天%@ %zd:%02d",result,hour,(int)msgDateComponents.minute] : @"昨天";
+        result = showDetail?  [[NSString alloc] initWithFormat:@"%@%@ %zd:%02d",@"昨天".ntes_localized, result,hour,(int)msgDateComponents.minute] : @"昨天".ntes_localized;
     }
     else if(nowDateComponents.day == (msgDateComponents.day+2)) //前天
     {
-        result = showDetail? [[NSString alloc] initWithFormat:@"前天%@ %zd:%02d",result,hour,(int)msgDateComponents.minute] : @"前天";
+        result = showDetail? [[NSString alloc] initWithFormat:@"%@%@ %zd:%02d",@"前天".ntes_localized, result,hour,(int)msgDateComponents.minute] : @"前天".ntes_localized;
     }
     else if([nowDate timeIntervalSinceDate:msgDate] < 7 * OnedayTimeIntervalValue)//一周内
     {
@@ -176,19 +176,19 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
     NSString *showPeriodOfTime = @"";
     if (totalMin > 0 && totalMin <= 5 * 60)
     {
-        showPeriodOfTime = @"凌晨";
+        showPeriodOfTime = @"凌晨".ntes_localized;
     }
     else if (totalMin > 5 * 60 && totalMin < 12 * 60)
     {
-        showPeriodOfTime = @"上午";
+        showPeriodOfTime = @"上午".ntes_localized;
     }
     else if (totalMin >= 12 * 60 && totalMin <= 18 * 60)
     {
-        showPeriodOfTime = @"下午";
+        showPeriodOfTime = @"下午".ntes_localized;
     }
     else if ((totalMin > 18 * 60 && totalMin <= (23 * 60 + 59)) || totalMin == 0)
     {
-        showPeriodOfTime = @"晚上";
+        showPeriodOfTime = @"晚上".ntes_localized;
     }
     return showPeriodOfTime;
 }
@@ -243,7 +243,7 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
     NSString *tip = @"";
     do {
         if (!notification || ![notification isKindOfClass:[NIMRevokeMessageNotification class]]) {
-            tip = @"你";
+            tip = @"你".ntes_localized;
             break;
         }
         //
@@ -256,13 +256,13 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
         tip = [self tipTitleFromMessageRevokeNotificationP2P:notification];
     } while (false);
     
-    return [NSString stringWithFormat:@"%@撤回了一条消息", tip];
+    return [NSString stringWithFormat:@"%@%@", tip, @"撤回了一条消息".ntes_localized];
 }
 
 + (NSString *)tipTitleFromMessageRevokeNotificationP2P:(NIMRevokeMessageNotification *)notification {
     NSString *fromUid = notification.messageFromUserId;
     BOOL fromMe = [fromUid isEqualToString:[[NIMSDK sharedSDK].loginManager currentAccount]];
-    return fromMe ? @"你" : @"对方";
+    return fromMe ? @"你".ntes_localized : @"对方".ntes_localized;
 }
 
 + (NSString *)tipTitleFromMessageRevokeNotificationTeam:(NIMRevokeMessageNotification *)notification {
@@ -276,7 +276,7 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
         
         // 自己撤回自己的
         if (revokeBySender && fromMe) {
-            tipTitle = @"你";
+            tipTitle = @"你".ntes_localized;
             break;
         }
         
@@ -299,10 +299,10 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
         }
         // 被群主/管理员撤回的
         if (member.type == NIMTeamMemberTypeOwner) {
-            tipTitle = [@"群主" stringByAppendingString:info.showName];
+            tipTitle = [@"群主".ntes_localized stringByAppendingString:info.showName];
         }
         else if (member.type == NIMTeamMemberTypeManager) {
-            tipTitle = [@"管理员" stringByAppendingString:info.showName];
+            tipTitle = [@"管理员".ntes_localized stringByAppendingString:info.showName];
         }
     } while (false);
     
@@ -457,14 +457,14 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
             default:
             {
                 NSString *clientName = [self resolveOnlineClientName:client];
-                state = [NSString stringWithFormat:@"%@在线",clientName];
+                state = [NSString stringWithFormat:@"%@ %@", clientName, @"在线".ntes_localized];
                 break;
             }
         }
     }
     else
     {
-        state = @"离线";
+        state = @"离线".ntes_localized;
     }
     return state;
 }
@@ -500,7 +500,7 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
 + (NSString *)resolveOnlineState:(NSString *)ext client:(NIMLoginClientType)client detail:(BOOL)detail
 {
     NSString *clientName = [self resolveOnlineClientName:client];
-    NSString *state = [NSString stringWithFormat:@"%@在线",clientName];
+    NSString *state = [NSString stringWithFormat:@"%@ %@",clientName,@"在线".ntes_localized];
     NSDictionary *dict = [ext nimkit_jsonDict];
     if (dict) {
         
@@ -514,25 +514,25 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
                     client == NIMLoginClientTypemacOS)
                 {
                     //桌面端不显示网络状态，只显示端
-                    return [NSString stringWithFormat:@"%@在线",clientName];
+                    return [NSString stringWithFormat:@"%@ %@",clientName,@"在线".ntes_localized];
                 }
                 else
                 {
                     //移动端在会话列表显示网络状态，在会话内（detail）优先显示端+网络状态
                     if (detail)
                     {
-                        return [NSString stringWithFormat:@"%@ - %@ 在线",clientName,netState];
+                        return [NSString stringWithFormat:@"%@ - %@ %@",clientName,netState, @"在线".ntes_localized];
                     }
                     else
                     {
-                        return [NSString stringWithFormat:@"%@ 在线",netState];
+                        return [NSString stringWithFormat:@"%@ %@",netState,@"在线".ntes_localized];
                     }
                 }
             }
             case NTESOnlineStateBusy:
-                return @"忙碌";
+                return @"忙碌".ntes_localized;
             case NTESOnlineStateLeave:
-                return @"离开";
+                return @"离开".ntes_localized;
             default:
                 break;
         }
@@ -542,25 +542,25 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
 
 + (NSString *)formatAutoLoginMessage:(NSError *)error
 {
-    NSString *message = [NSString stringWithFormat:@"自动登录失败 %@",error];
+    NSString *message = [NSString stringWithFormat:@"%@ %@",@"自动登录失败".ntes_localized, error];
     NSString *domain = error.domain;
     NSInteger code = error.code;
     if ([domain isEqualToString:NIMLocalErrorDomain])
     {
         if (code == NIMLocalErrorCodeAutoLoginRetryLimit)
         {
-            message = @"自动登录错误次数超限，请检查网络后重试";
+            message = @"自动登录错误次数超限，请检查网络后重试".ntes_localized;
         }
     }
     else if([domain isEqualToString:NIMRemoteErrorDomain])
     {
         if (code == NIMRemoteErrorCodeInvalidPass)
         {
-            message = @"密码错误";
+            message = @"密码错误".ntes_localized;
         }
         else if(code == NIMRemoteErrorCodeExist)
         {
-            message = @"当前已经其他设备登录，请使用手动模式登录";
+            message = @"当前已经其他设备登录，请使用手动模式登录".ntes_localized;
         }
     }
     return message;

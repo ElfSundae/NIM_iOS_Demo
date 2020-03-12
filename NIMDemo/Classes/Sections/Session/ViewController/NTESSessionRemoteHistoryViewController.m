@@ -47,7 +47,7 @@
 }
 
 - (NSString *)sessionTitle{
-    return @"云消息记录";
+    return @"云消息记录".ntes_localized;
 }
 
 - (NSString *)sessionSubTitle
@@ -75,7 +75,7 @@
 #pragma mark - NTESRemoteSessionDelegate
 - (void)fetchRemoteDataError:(NSError *)error{
     if (error) {
-        [self.view makeToast:@"获取消息失败" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"获取消息失败".ntes_localized duration:2.0 position:CSToastPositionCenter];
     }
 }
 

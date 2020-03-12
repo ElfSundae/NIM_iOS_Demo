@@ -45,7 +45,7 @@
              [NIMMediaItem item:@"onTapMediaItemJanKenPon:"
                     normalImage:[UIImage imageNamed:@"icon_jankenpon_normal"]
                   selectedImage:[UIImage imageNamed:@"icon_jankenpon_pressed"]
-                          title:@"石头剪刀布"]];
+                          title:@"石头剪刀布".ntes_localized]];
 }
 
 

@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpNav];
-    self.navigationItem.title = @"设置邮箱";
+    self.navigationItem.title = @"设置邮箱".ntes_localized;
     __weak typeof(self) wself = self;
     NSString *userId = [[NIMSDK sharedSDK].loginManager currentAccount];
     self.email = [[NIMSDK sharedSDK].userManager userInfo:userId].userInfo.email;
@@ -71,15 +71,15 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"邮箱";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
+    self.navigationItem.title = @"邮箱".ntes_localized;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 }
 
 - (void)onDone:(id)sender{
     [self.view endEditing:YES];
     if (self.email.length > self.inputLimit) {
-        [self.view makeToast:@"邮箱过长" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"邮箱过长".ntes_localized duration:2.0 position:CSToastPositionCenter];
         return;
     }
     [SVProgressHUD show];
@@ -90,9 +90,9 @@
             UINavigationController *nav = wself.navigationController;
             [nav popViewControllerAnimated:YES];
             UIViewController *vc = nav.topViewController;
-            [vc.view makeToast:@"邮箱设置成功" duration:2.0 position:CSToastPositionCenter];
+            [vc.view makeToast:@"邮箱设置成功".ntes_localized duration:2.0 position:CSToastPositionCenter];
         }else{
-            [wself.view makeToast:@"邮箱设置失败，请重试"
+            [wself.view makeToast:@"邮箱设置失败，请重试".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }

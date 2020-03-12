@@ -50,9 +50,9 @@ NTES_USE_CLEAR_BAR
     [super viewDidLoad];
     self.usernameTextField.tintColor = [UIColor whiteColor];
     NSDictionary *attrs = @{NSForegroundColorAttributeName: UIColorFromRGBA(0xffffff, .6f)};
-    self.usernameTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入帐号" attributes:attrs];
+    self.usernameTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入帐号".ntes_localized attributes:attrs];
     self.passwordTextField.tintColor = [UIColor whiteColor];
-    self.passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入密码" attributes:attrs];
+    self.passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入密码".ntes_localized attributes:attrs];
     UIButton *pwdClearButton = [self.passwordTextField valueForKey:@"_clearButton"];
     [pwdClearButton setImage:[UIImage imageNamed:@"login_icon_clear"] forState:UIControlStateNormal];
     UIButton *userNameClearButton = [self.usernameTextField valueForKey:@"_clearButton"];
@@ -74,7 +74,7 @@ NTES_USE_CLEAR_BAR
 - (void)configNav{
     self.navigationItem.title = @"";
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [loginBtn setTitle:@"完成".ntes_localized forState:UIControlStateNormal];
     loginBtn.titleLabel.font = [UIFont systemFontOfSize:15.f];
     [loginBtn setTitleColor:UIColorFromRGB(0x2294ff) forState:UIControlStateNormal];
     
@@ -154,7 +154,7 @@ NTES_USE_CLEAR_BAR
                                       }
                                       else
                                       {
-                                          NSString *toast = [NSString stringWithFormat:@"登录失败 code: %zd",error.code];
+                                          NSString *toast = [NSString stringWithFormat:@"%@ code: %zd",@"登录失败".ntes_localized, error.code];
                                           [self.view makeToast:toast duration:2.0 position:CSToastPositionCenter];
                                       }
                                   }];
@@ -169,7 +169,7 @@ NTES_USE_CLEAR_BAR
 - (void)prepareShowLog:(UILongPressGestureRecognizer *)gesuture{
     if (gesuture.state == UIGestureRecognizerStateBegan) {
         __weak typeof(self) wself = self;
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"查看SDK日志",@"查看Demo日志", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"查看SDK日志".ntes_localized,@"查看Demo日志".ntes_localized, nil];
         [actionSheet showInView:self.view completionHandler:^(NSInteger index) {
             switch (index) {
                 case 0:
@@ -209,7 +209,7 @@ NTES_USE_CLEAR_BAR
     if (self.logo.bottom > self.navigationController.navigationBar.bottom) {
         self.logo.bottom = self.navigationController.navigationBar.bottom;
         self.logo.alpha  = 0;
-        self.navigationItem.title = @"登录";
+        self.navigationItem.title = @"登录".ntes_localized;
     }
     [UIView commitAnimations];
 }

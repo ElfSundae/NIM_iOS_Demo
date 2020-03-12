@@ -34,10 +34,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"发送已读回执消息";
+    self.navigationItem.title = @"发送已读回执消息".ntes_localized;
 
     [self.view addSubview:self.sendTextView];
-    self.sendTextView.placeholder   = @"请输入内容";
+    self.sendTextView.placeholder   = @"请输入内容".ntes_localized;
     self.sendTextView.returnKeyType = UIReturnKeyDone;
     self.sendTextView.delegate = self;
     
@@ -74,7 +74,7 @@
         [self.navigationController popViewControllerAnimated:YES];
         
         [[NIMSDK sharedSDK].chatManager sendMessage:message toSession:self.session error:nil];
-        [self.navigationController.topViewController.view makeToast:@"已发送" duration:2.0 position:CSToastPositionCenter];
+        [self.navigationController.topViewController.view makeToast:@"已发送".ntes_localized duration:2.0 position:CSToastPositionCenter];
     }
 }
 

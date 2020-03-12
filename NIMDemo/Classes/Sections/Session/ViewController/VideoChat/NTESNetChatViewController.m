@@ -198,7 +198,7 @@ NTES_FORBID_INTERACTIVE_POP
             });
         }else{
             if (error) {
-                [wself.navigationController.view makeToast:@"连接失败"
+                [wself.navigationController.view makeToast:@"连接失败".ntes_localized
                                                   duration:2
                                                   position:CSToastPositionCenter];
             }else{
@@ -257,7 +257,7 @@ NTES_FORBID_INTERACTIVE_POP
                 NSTimeInterval delay = 10.f; //10秒后判断下房间
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if (wself.chatRoom.count == 1) {
-                        [wself.navigationController.view makeToast:@"通话失败"
+                        [wself.navigationController.view makeToast:@"通话失败".ntes_localized
                                                           duration:2
                                                           position:CSToastPositionCenter];
                         [wself hangup];
@@ -265,7 +265,7 @@ NTES_FORBID_INTERACTIVE_POP
                 });
         }else{
             wself.chatRoom = nil;
-            [wself.navigationController.view makeToast:@"连接失败"
+            [wself.navigationController.view makeToast:@"连接失败".ntes_localized
                                               duration:2
                                               position:CSToastPositionCenter];
             [wself dismiss:nil];
@@ -381,7 +381,7 @@ NTES_FORBID_INTERACTIVE_POP
     if (audioConversationOn) {
         records++;
         if (!self.callInfo.audioConversation) {
-            toastText =@"语音对话开始失败";
+            toastText =@"语音对话开始失败".ntes_localized;
         }
     }
     //自己音视频
@@ -390,11 +390,11 @@ NTES_FORBID_INTERACTIVE_POP
         if (![self startLocalRecording]) {
             if(isVideo)
             {
-                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音视频开始失败":@",自己音视频开始失败"];
+                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音视频开始失败".ntes_localized:@",自己音视频开始失败".ntes_localized];
             }
             else
             {
-                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音频开始失败":@",自己音频开始失败"];
+                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音频开始失败".ntes_localized:@",自己音频开始失败".ntes_localized];
             }
             
         }
@@ -407,11 +407,11 @@ NTES_FORBID_INTERACTIVE_POP
         records++;
         if (![self startOtherSideRecording]) {
             if (isVideo) {
-                toastText =[toastText stringByAppendingString:[toastText isEqualToString:@""] ?@"对方音视频开始失败":@",对方音视频开始失败"];
+                toastText =[toastText stringByAppendingString:[toastText isEqualToString:@""] ?@"对方音视频开始失败".ntes_localized:@",对方音视频开始失败".ntes_localized];
             }
             else
             {
-                toastText =[toastText stringByAppendingString:[toastText isEqualToString:@""] ?@"对方音频开始失败":@",对方音频开始失败"];
+                toastText =[toastText stringByAppendingString:[toastText isEqualToString:@""] ?@"对方音频开始失败".ntes_localized:@",对方音频开始失败".ntes_localized];
             }
 
         }
@@ -423,7 +423,7 @@ NTES_FORBID_INTERACTIVE_POP
     //判断是否需要提示
     if (![toastText isEqualToString:@""]) {
         if ([toastText componentsSeparatedByString:@","].count == records) {
-            [self.view makeToast:@"开始录制失败"
+            [self.view makeToast:@"开始录制失败".ntes_localized
                         duration:2
                         position:CSToastPositionCenter];
         }
@@ -447,11 +447,11 @@ NTES_FORBID_INTERACTIVE_POP
         records++;
         if (![self stopLocalRecording]) {
             if (isVideo) {
-                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音视频结束失败":@",自己音视频结束失败"];
+                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音视频结束失败".ntes_localized:@",自己音视频结束失败".ntes_localized];
             }
             else
             {
-                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音频结束失败":@",自己音频结束失败"];
+                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"自己音频结束失败".ntes_localized:@",自己音频结束失败".ntes_localized];
             }
 
         }
@@ -461,11 +461,11 @@ NTES_FORBID_INTERACTIVE_POP
         records++;
         if (![self stopOtherSideRecording]) {
             if (isVideo) {
-                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"对方音视频结束失败":@",对方音视频结束失败"];
+                toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"对方音视频结束失败".ntes_localized:@",对方音视频结束失败".ntes_localized];
             }
             else
             {
-                 toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"对方音频结束失败":@",对方音频结束失败"];
+                 toastText = [toastText stringByAppendingString: [toastText isEqualToString:@""] ?@"对方音频结束失败".ntes_localized:@",对方音频结束失败".ntes_localized];
             }
 
         }
@@ -473,7 +473,7 @@ NTES_FORBID_INTERACTIVE_POP
     //判断是否要提示
     if (![toastText isEqualToString:@""]) {
         if ([toastText componentsSeparatedByString:@","].count == records) {
-            [self.view makeToast:@"结束录制失败"
+            [self.view makeToast:@"结束录制失败".ntes_localized
                         duration:3
                         position:CSToastPositionCenter];
         }
@@ -593,12 +593,12 @@ NTES_FORBID_INTERACTIVE_POP
             break;
         }
         case NIMNetCallControlTypeStartRecord:
-            [self.view makeToast:@"对方开始了录制"
+            [self.view makeToast:@"对方开始了录制".ntes_localized
                         duration:1
                         position:CSToastPositionCenter];
             break;
         case NIMNetCallControlTypeStopRecord:
-            [self.view makeToast:@"对方结束了录制"
+            [self.view makeToast:@"对方结束了录制".ntes_localized
                         duration:1
                         position:CSToastPositionCenter];
             break;
@@ -611,7 +611,7 @@ NTES_FORBID_INTERACTIVE_POP
     if (self.callInfo.callID == callID) {
         if (!accepted) {
             self.chatRoom = nil;
-            [self.navigationController.view makeToast:@"对方拒绝接听"
+            [self.navigationController.view makeToast:@"对方拒绝接听".ntes_localized
                                              duration:2
                                              position:CSToastPositionCenter];
             [self playHangUpRing];
@@ -648,7 +648,7 @@ NTES_FORBID_INTERACTIVE_POP
 
 - (void)onResponsedByOther:(UInt64)callID
                   accepted:(BOOL)accepted{
-    [self.view.window makeToast:@"已在其他端处理"
+    [self.view.window makeToast:@"已在其他端处理".ntes_localized
                        duration:2
                        position:CSToastPositionCenter];
     [self dismiss:nil];
@@ -691,7 +691,7 @@ NTES_FORBID_INTERACTIVE_POP
     
     if (self.callInfo.callID == callID) {
         
-        [self.view makeToast:[NSString stringWithFormat:@"录制发生错误: %zd", error.code]
+        [self.view makeToast:[NSString stringWithFormat:@"%@: %zd", @"录制发生错误".ntes_localized, error.code]
                     duration:2
                     position:CSToastPositionCenter];
 
@@ -739,7 +739,7 @@ NTES_FORBID_INTERACTIVE_POP
     }
     else if(holder == self.calleeResponseTimer) {
         if (!_calleeResponsed) {
-            [self.navigationController.view makeToast:@"接听超时"
+            [self.navigationController.view makeToast:@"接听超时".ntes_localized
                                               duration:2
                                               position:CSToastPositionCenter];
             [self response:NO];
@@ -756,9 +756,9 @@ NTES_FORBID_INTERACTIVE_POP
     if (videoStatus == AVAuthorizationStatusRestricted
         || videoStatus == AVAuthorizationStatusDenied) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"相机权限受限,无法视频聊天"
+                                                        message:@"相机权限受限,无法视频聊天".ntes_localized
                                                        delegate:nil
-                                              cancelButtonTitle:@"确定"
+                                              cancelButtonTitle:@"确定".ntes_localized
                                               otherButtonTitles:nil];
         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
             if (result) {
@@ -771,9 +771,9 @@ NTES_FORBID_INTERACTIVE_POP
     if (audioStatus == AVAuthorizationStatusRestricted
         || audioStatus == AVAuthorizationStatusDenied ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"麦克风权限受限,无法聊天"
+                                                        message:@"麦克风权限受限,无法聊天".ntes_localized
                                                        delegate:nil
-                                              cancelButtonTitle:@"确定"
+                                              cancelButtonTitle:@"确定".ntes_localized
                                               otherButtonTitles:nil];
         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
             if (result) {
@@ -791,9 +791,9 @@ NTES_FORBID_INTERACTIVE_POP
                     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
                     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"相机权限受限,无法视频聊天"
+                                                                        message:@"相机权限受限,无法视频聊天".ntes_localized
                                                                        delegate:nil
-                                                              cancelButtonTitle:@"确定"
+                                                              cancelButtonTitle:@"确定".ntes_localized
                                                               otherButtonTitles:nil];
                         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
                             if (result) {
@@ -808,9 +808,9 @@ NTES_FORBID_INTERACTIVE_POP
                 }
                 else {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:@"麦克风权限受限,无法聊天"
+                                                                    message:@"麦克风权限受限,无法聊天".ntes_localized
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"确定"
+                                                          cancelButtonTitle:@"确定".ntes_localized
                                                           otherButtonTitles:nil];
                     [alert showAlertWithCompletionHandler:^(NSInteger idx) {
                         if (result) {
@@ -844,7 +844,7 @@ NTES_FORBID_INTERACTIVE_POP
             {
                 //没有权限
                 dispatch_async_main_safe(^{
-                                             [wself.navigationController.view makeToast:@"保存失败,没有相册权限"
+                                             [wself.navigationController.view makeToast:@"保存失败,没有相册权限".ntes_localized
                                                                                duration:3
                                                                                position:CSToastPositionCenter];
                                          });
@@ -890,13 +890,13 @@ NTES_FORBID_INTERACTIVE_POP
 
 - (void)checkVideoSaveToAlbum:(NSError *)error
 {
-    NSString *toast = _recordWillStopForLackSpace ? @"你的手机内存不足，录制已结束\n" : @"录制已结束\n";
+    NSString *toast = _recordWillStopForLackSpace ? [@"你的手机内存不足，录制已结束".ntes_localized stringByAppendingString:@"\n"] : [@"录制已结束".ntes_localized stringByAppendingString:@"\n"];
     
     if (error) {
-        toast = [NSString stringWithFormat:@"%@保存至系统相册失败:%zd", toast, error.code];
+        toast = [NSString stringWithFormat:@"%@%@:%zd", toast, @"保存至系统相册失败".ntes_localized,error.code];
     }
     else {
-        toast = [toast stringByAppendingString:@"录制文件已保存至系统相册"];
+        toast = [toast stringByAppendingString:@"录制文件已保存至系统相册".ntes_localized];
     }
     
     if (!self.callInfo.localRecording&&!self.callInfo.otherSideRecording&&_successRecords==1) {
@@ -927,7 +927,7 @@ NTES_FORBID_INTERACTIVE_POP
 - (void)fillUserSetting:(NIMNetCallOption *)option
 {
     option.autoRotateRemoteVideo = [[NTESBundleSetting sharedConfig] videochatAutoRotateRemoteVideo];
-    option.remoteViewoShowType =  NIMNetCallRemoteVideoShowTypeYuvData;
+    option.remoteViewoShowType =  [NTESBundleSetting sharedConfig].enableSdkRemoteRender ? NIMNetCallRemoteVideoShowTypeLocalView : NIMNetCallRemoteVideoShowTypeYuvData;
 
     NIMNetCallServerRecord *serverRecord = [[NIMNetCallServerRecord alloc] init];
     serverRecord.enableServerAudioRecording     = [[NTESBundleSetting sharedConfig] serverRecordAudio];

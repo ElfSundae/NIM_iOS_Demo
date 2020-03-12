@@ -42,7 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"聊天信息";
+    self.navigationItem.title = @"聊天信息".ntes_localized;
     __weak typeof(self) wself = self;
     self.delegator = [[NIMCommonTableDelegate alloc] initWithTableData:^NSArray *{
         return wself.data;
@@ -74,7 +74,7 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title         : @"消息提醒",
+                                      Title         : @"消息提醒".ntes_localized,
                                       CellClass     : @"NTESSettingSwitcherCell",
                                       RowHeight     : @(50),
                                       CellAction    : @"onActionNeedNotifyValueChange:",
@@ -82,7 +82,7 @@
                                       ForbidSelect  : @(YES)
                                       },
                                   @{
-                                      Title         : @"聊天置顶",
+                                      Title         : @"聊天置顶".ntes_localized,
                                       CellClass     : @"NTESSettingSwitcherCell",
                                       RowHeight     : @(50),
                                       CellAction    : @"onActionNeedTopValueChange:",
@@ -103,7 +103,7 @@
     NIMMemebrGroupData *groupData = [[NIMMemebrGroupData alloc] init];
     groupData.userId = _session.sessionId;
     [self.headerView refreshDatas:@[groupData] operators:CardHeaderOpeatorAdd];
-    [self.headerView setTitle:@"创建讨论组" forOperator:CardHeaderOpeatorAdd];
+    [self.headerView setTitle:@"创建讨论组".ntes_localized forOperator:CardHeaderOpeatorAdd];
     CGSize size = [self.headerView sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
     self.headerView.size = size;
     self.tableView.tableHeaderView = self.headerView;
@@ -117,7 +117,7 @@
     [[NIMSDK sharedSDK].userManager updateNotifyState:switcher.on forUser:self.session.sessionId completion:^(NSError *error) {
         [SVProgressHUD dismiss];
         if (error) {
-            [wself.view makeToast:@"操作失败"duration:2.0f position:CSToastPositionCenter];
+            [wself.view makeToast:@"操作失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
             [wself refresh];
         }
     }];
@@ -164,7 +164,7 @@
     NSString *uid = [[NIMSDK sharedSDK].loginManager currentAccount];
     NSArray *users = [@[uid] arrayByAddingObjectsFromArray:selectedContacts];
     NIMCreateTeamOption *option = [[NIMCreateTeamOption alloc] init];
-    option.name = @"讨论组";
+    option.name = @"讨论组".ntes_localized;
     option.type = NIMTeamTypeNormal;
     __weak typeof(self) wself = self;
     [SVProgressHUD show];
@@ -180,7 +180,7 @@
                                             NTESSessionViewController *vc = [[NTESSessionViewController alloc] initWithSession:session];
                                             [nav pushViewController:vc animated:YES];
                                         }else{
-                                            [wself.view makeToast:@"创建讨论组失败" duration:2.0 position:CSToastPositionCenter];
+                                            [wself.view makeToast:@"创建讨论组失败".ntes_localized duration:2.0 position:CSToastPositionCenter];
                                         }
                                     }];
 }

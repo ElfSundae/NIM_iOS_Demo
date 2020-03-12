@@ -93,7 +93,7 @@
                            NTESNotifyID : @(NTESTeamMeetingCall),
                            NTESTeamMeetingMembers : members,
                            NTESTeamMeetingTeamId  : teamId,
-                           NTESTeamMeetingTeamName  : team.teamName? team.teamName : @"群组",
+                           NTESTeamMeetingTeamName  : team.teamName? team.teamName : @"群组".ntes_localized,
                            NTESTeamMeetingName    : roomName,
                            NTESTeamMeetingType    : @(teamType)
                           };
@@ -109,7 +109,7 @@
     option.session = [NIMSession session:teamId type:NIMSessionTypeTeam];
     NIMKitInfo *me = [[NIMKit sharedKit] infoByUser:[NIMSDK sharedSDK].loginManager.currentAccount option:option];
     
-    notification.apnsContent = [NSString stringWithFormat:@"%@正在呼叫您",me.showName];
+    notification.apnsContent = [NSString stringWithFormat:@"%@%@",me.showName,@"正在呼叫您".ntes_localized];
     NIMCustomSystemNotificationSetting *setting = [[NIMCustomSystemNotificationSetting alloc] init];
     setting.apnsEnabled  = YES;
     notification.setting = setting;

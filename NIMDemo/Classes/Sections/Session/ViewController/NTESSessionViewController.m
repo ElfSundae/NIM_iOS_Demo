@@ -248,7 +248,7 @@ UISearchBarDelegate>
                                                                error:nil];
         if ([dict jsonInteger:NTESNotifyID] == NTESCommandTyping && self.session.sessionType == NIMSessionTypeP2P && [notification.sender isEqualToString:self.session.sessionId])
         {
-            [self refreshSessionTitle:@"正在输入..."];
+            [self refreshSessionTitle:@"正在输入...".ntes_localized];
             [_titleTimer startTimer:5
                            delegate:self
                             repeats:NO];
@@ -272,7 +272,7 @@ UISearchBarDelegate>
 - (NSString *)sessionTitle
 {
     if ([self.session.sessionId isEqualToString:[NIMSDK sharedSDK].loginManager.currentAccount]) {
-        return  @"我的电脑";
+        return  @"我的电脑".ntes_localized;
     }
     return [super sessionTitle];
 }
@@ -317,7 +317,7 @@ UISearchBarDelegate>
         NIMLocalAntiSpamCheckResult *result = [[NIMSDK sharedSDK].antispamManager checkLocalAntispam:checkOption error:&error];
         if (error)
         {
-            [self.view makeToast:@"本地反垃圾失败"];
+            [self.view makeToast:@"本地反垃圾失败".ntes_localized];
         }
         else
         {
@@ -328,7 +328,7 @@ UISearchBarDelegate>
                     message.text = result.content;
                     break;
                 case NIMAntiSpamResultLocalForbidden:
-                    [self.view makeToast:@"** 该消息被屏蔽 **"];
+                    [self.view makeToast:@"** 该消息被屏蔽 **".ntes_localized];
                     return;
                 case NIMAntiSpamResultServerForbidden:
                 {
@@ -467,9 +467,9 @@ UISearchBarDelegate>
     UIActionSheet *sheet;
     BOOL isCamraAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     if (isCamraAvailable) {
-        sheet = [[UIActionSheet alloc] initWithTitle:@"请选择" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册中选取",@"拍照",nil];
+        sheet = [[UIActionSheet alloc] initWithTitle:@"请选择".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"从相册中选取".ntes_localized,@"拍照".ntes_localized,nil];
     }else{
-        sheet = [[UIActionSheet alloc] initWithTitle:@"请选择" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册中选取",nil];
+        sheet = [[UIActionSheet alloc] initWithTitle:@"请选择".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"从相册中选取".ntes_localized,nil];
     }
     __weak typeof(self) wself = self;
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
@@ -534,7 +534,7 @@ UISearchBarDelegate>
 #pragma mark - 提示消息
 - (void)onTapMediaItemTip:(NIMMediaItem *)item
 {
-    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:nil message:@"输入提醒" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:nil message:@"输入提醒".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确定".ntes_localized, nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert showAlertWithCompletionHandler:^(NSInteger index) {
         switch (index) {
@@ -575,7 +575,7 @@ UISearchBarDelegate>
         [[NIMSDK sharedSDK].conversationManager updateMessage:message forSession:self.session completion:nil];
         
         //插入一条 Tip 提示
-        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:@"消息已发送，但对方拒收"];
+        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:@"消息已发送，但对方拒收".ntes_localized];
         [[NIMSDK sharedSDK].conversationManager saveMessage:tip forSession:self.session completion:nil];
     } else if (error.code == NIMRemoteErrorCodeTeamBlackList) {
         NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:@"您已被禁言"];
@@ -587,7 +587,7 @@ UISearchBarDelegate>
 #pragma mark - 录音事件
 - (void)onRecordFailed:(NSError *)error
 {
-    [self.view makeToast:@"录音失败" duration:2 position:CSToastPositionCenter];
+    [self.view makeToast:@"录音失败".ntes_localized duration:2 position:CSToastPositionCenter];
 }
 
 - (BOOL)recordFileCanBeSend:(NSString *)filepath
@@ -601,7 +601,7 @@ UISearchBarDelegate>
 
 - (void)showRecordFileNotSendReason
 {
-    [self.view makeToast:@"录音时间太短" duration:0.2f position:CSToastPositionCenter];
+    [self.view makeToast:@"录音时间太短".ntes_localized duration:0.2f position:CSToastPositionCenter];
 }
 
 #pragma mark - Cell事件
@@ -761,6 +761,7 @@ UISearchBarDelegate>
     item.name           = [object displayName];
     item.itemId         = [message messageId];
     item.size           = [object size];
+    item.imagePath      = [object path];
     
     NIMSession *session = [self isMemberOfClass:[NTESSessionViewController class]]? self.session : nil;
     
@@ -844,21 +845,21 @@ UISearchBarDelegate>
 
 - (NSMutableArray *)setupAlertActions {
     __weak typeof(self) weakSelf = self;
-    UIAlertAction *cloudMessageAction = [UIAlertAction actionWithTitle:@"云消息记录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cloudMessageAction = [UIAlertAction actionWithTitle:@"云消息记录".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NTESSessionRemoteHistoryViewController *vc = [[NTESSessionRemoteHistoryViewController alloc] initWithSession:weakSelf.session];
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     
-    UIAlertAction *searchLocalMessageAction = [UIAlertAction actionWithTitle:@"搜索本地消息记录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *searchLocalMessageAction = [UIAlertAction actionWithTitle:@"搜索本地消息记录".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NTESSessionLocalHistoryViewController *vc = [[NTESSessionLocalHistoryViewController alloc] initWithSession:weakSelf.session];
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
     
-    UIAlertAction *cleanLocalMessageAction = [UIAlertAction actionWithTitle:@"清空本地聊天记录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cleanLocalMessageAction = [UIAlertAction actionWithTitle:@"清空本地聊天记录".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf showDeleteSureVC];
     }];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消".ntes_localized style:UIAlertActionStyleCancel handler:nil];
 
     return @[cloudMessageAction,
              searchLocalMessageAction,
@@ -868,7 +869,7 @@ UISearchBarDelegate>
 
 - (void)showDeleteSureVC {
     __weak typeof(self) weakSelf = self;
-    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         BOOL removeRecentSession = [NTESBundleSetting sharedConfig].removeSessionWhenDeleteMessages;
         BOOL removeTable = [NTESBundleSetting sharedConfig].dropTableWhenDeleteMessages;
         NIMDeleteMessagesOption *option = [[NIMDeleteMessagesOption alloc] init];
@@ -877,10 +878,10 @@ UISearchBarDelegate>
         [[NIMSDK sharedSDK].conversationManager deleteAllmessagesInSession:weakSelf.session
                                                                     option:option];
     }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消"
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消".ntes_localized
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"确定清空聊天记录？" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"确定清空聊天记录？".ntes_localized message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [sheet addAction:sure];
     [sheet addAction:cancel];
     [self presentViewController:sheet animated:YES completion:nil];
@@ -889,7 +890,7 @@ UISearchBarDelegate>
 - (void)enterHistory:(id)sender{
     [self.view endEditing:YES];
     
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"选择操作"
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"选择操作".ntes_localized
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
     NSMutableArray *actions = [self setupAlertActions];
@@ -951,20 +952,20 @@ UISearchBarDelegate>
     }
     
     if ([NTESSessionUtil canMessageBeForwarded:message]) {
-        [items addObject:[[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)]];
-        [items addObject:[[UIMenuItem alloc] initWithTitle:@"多选" action:@selector(multiSelect:)]];
+        [items addObject:[[UIMenuItem alloc] initWithTitle:@"转发".ntes_localized action:@selector(forwardMessage:)]];
+        [items addObject:[[UIMenuItem alloc] initWithTitle:@"多选".ntes_localized action:@selector(multiSelect:)]];
     }
     
     if ([NTESSessionUtil canMessageBeRevoked:message]) {
-        [items addObject:[[UIMenuItem alloc] initWithTitle:@"撤回" action:@selector(revokeMessage:)]];
+        [items addObject:[[UIMenuItem alloc] initWithTitle:@"撤回".ntes_localized action:@selector(revokeMessage:)]];
     }
     
     if (message.messageType == NIMMessageTypeAudio) {
-        [items addObject:[[UIMenuItem alloc] initWithTitle:@"转文字" action:@selector(audio2Text:)]];
+        [items addObject:[[UIMenuItem alloc] initWithTitle:@"转文字".ntes_localized action:@selector(audio2Text:)]];
     }
     
     if ([NTESSessionUtil canMessageBeCanceled:message]) {
-        [items addObject:[[UIMenuItem alloc] initWithTitle:@"取消上传" action:@selector(cancelMessage:)]];
+        [items addObject:[[UIMenuItem alloc] initWithTitle:@"取消上传".ntes_localized action:@selector(cancelMessage:)]];
     }
     
     return items;
@@ -990,12 +991,39 @@ UISearchBarDelegate>
                      completion:nil];
 }
 
+- (void)deleteMsg:(id)sender
+{
+    NIMMessage *message    = [self messageForMenu];
+    BOOL deleteFromServer = [NTESBundleSetting sharedConfig].isDeleteMsgFromServer;
+    if (deleteFromServer)
+    {
+        __weak typeof(self) wSelf = self;
+        [[NIMSDK sharedSDK].conversationManager deleteMessageFromServer:message
+                                                                    ext:@"扩展字段"
+                                                             completion:^(NSError * _Nullable error)
+        {
+            if (error)
+            {
+                return;
+            }
+            
+            [wSelf uiDeleteMessage:message];
+        }];
+    }
+    else
+    {
+        [self uiDeleteMessage:message];
+        [[NIMSDK sharedSDK].conversationManager deleteMessage:message];
+    }
+    
+}
+
 #pragma mark - 转发
 - (void)doMergerForwardToSession:(NIMSession *)session {
     __weak typeof(self) weakSelf = self;
     NTESMergeForwardTask *task = [_mergeForwardSession forwardTaskWithMessages:_selectedMessages process:nil completion:^(NSError * _Nonnull error, NIMMessage * _Nonnull message) {
         if (error) {
-            NSString *msg = [NSString stringWithFormat:@"消息合并转发失败：%zd", error.code];
+            NSString *msg = [NSString stringWithFormat:@"%@：%zd",@"消息合并转发失败".ntes_localized, error.code];
             [weakSelf.view makeToast:msg duration:2.0 position:CSToastPositionCenter];
         } else {
             [weakSelf forwardMessage:message toSession:session];
@@ -1054,7 +1082,7 @@ UISearchBarDelegate>
 }
 
 - (void)selectForwardSessionCompletion:(void (^)(NIMSession *targetSession))completion {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择会话类型" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"个人", @"群组", @"超大群组", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择会话类型".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"个人".ntes_localized, @"群组".ntes_localized, @"超大群组".ntes_localized, nil];
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
         switch (index) {
             case 0:{
@@ -1109,24 +1137,27 @@ UISearchBarDelegate>
 - (void)revokeMessage:(id)sender
 {
     NIMMessage *message = [self messageForMenu];
-    // 如果需要撤回的时候能附带 apns 通知，可以填上 apnsContent 和 apnsPayload 字段
-    message.apnsContent = nil;
-    message.apnsPayload = nil;
     
     __weak typeof(self) weakSelf = self;
-    //
-    [[NIMSDK sharedSDK].chatManager revokeMessage:message completion:^(NSError * _Nullable error) {
+    NSDictionary *payload = @{
+        @"apns-collapse-id": message.messageId,
+    };
+ 
+    [[NIMSDK sharedSDK].chatManager revokeMessage:message
+                                      apnsContent:@"撤回一条消息"
+                                      apnsPayload:payload
+                                  shouldBeCounted:![[NTESBundleSetting sharedConfig] isIgnoreRevokeMessageCount]
+                                         completion:^(NSError * _Nullable error)
+    {
         if (error) {
             if (error.code == NIMRemoteErrorCodeDomainExpireOld) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送时间超过2分钟的消息，不能被撤回" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送时间超过2分钟的消息，不能被撤回".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
                 [alert show];
-            }else{
+            } else {
                 DDLogError(@"revoke message eror code %zd",error.code);
-                [weakSelf.view makeToast:@"消息撤回失败，请重试" duration:2.0 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
             }
-        }
-        else
-        {
+        } else {
             NIMMessageModel *model = [self uiDeleteMessage:message];
             NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:nil]];
             tip.timestamp = model.messageTime;
@@ -1156,8 +1187,8 @@ UISearchBarDelegate>
     else {
         DDLogWarn(@"unknown session type %zd", session.sessionType);
     }
-    NSString *tip = [NSString stringWithFormat:@"确认转发给 %@ ?",name];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认转发" message:tip delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    NSString *tip = [NSString stringWithFormat:@"%@ %@ ?", @"确认转发给".ntes_localized, name];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认转发".ntes_localized message:tip delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确认".ntes_localized, nil];
     
     __weak typeof(self) weakSelf = self;
     [alert showAlertWithCompletionHandler:^(NSInteger index) {
@@ -1171,10 +1202,10 @@ UISearchBarDelegate>
             }
             
             if (error) {
-                NSString *msg = [NSString stringWithFormat:@"转发失败.code:%zd", error.code];
+                NSString *msg = [NSString stringWithFormat:@"%@.code:%zd", @"转发失败".ntes_localized, error.code];
                 [weakSelf.view makeToast:msg duration:2.0 position:CSToastPositionCenter];
             } else {
-                [weakSelf.view makeToast:@"已发送" duration:2.0 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:@"已发送".ntes_localized duration:2.0 position:CSToastPositionCenter];
             }
         }
     }];
@@ -1193,13 +1224,13 @@ UISearchBarDelegate>
     
     if (![[Reachability reachabilityForInternetConnection] isReachable])
     {
-        [self.view makeToast:@"请检查网络" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"请检查网络".ntes_localized duration:2.0 position:CSToastPositionCenter];
         result = NO;
     }
     NSString *currentAccount = [[NIMSDK sharedSDK].loginManager currentAccount];
     if (self.session.sessionType == NIMSessionTypeP2P && [currentAccount isEqualToString:self.session.sessionId])
     {
-        [self.view makeToast:@"不能和自己通话哦" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"不能和自己通话哦".ntes_localized duration:2.0 position:CSToastPositionCenter];
         result = NO;
     }
     if (self.session.sessionType == NIMSessionTypeTeam)
@@ -1208,7 +1239,7 @@ UISearchBarDelegate>
         NSInteger memberNumber = team.memberNumber;
         if (memberNumber < 2)
         {
-            [self.view makeToast:@"无法发起，群人数少于2人" duration:2.0 position:CSToastPositionCenter];
+            [self.view makeToast:@"无法发起，群人数少于2人".ntes_localized duration:2.0 position:CSToastPositionCenter];
             result = NO;
         }
     }
@@ -1218,7 +1249,7 @@ UISearchBarDelegate>
         NSInteger memberNumber = team.memberNumber;
         if (memberNumber < 2)
         {
-            [self.view makeToast:@"无法发起，群人数少于2人" duration:2.0 position:CSToastPositionCenter];
+            [self.view makeToast:@"无法发起，群人数少于2人".ntes_localized duration:2.0 position:CSToastPositionCenter];
             result = NO;
         }
     }
@@ -1327,7 +1358,7 @@ UISearchBarDelegate>
     if (!_mulSelectCancelBtn) {
         UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [cancelBtn addTarget:self action:@selector(cancelSelected:) forControlEvents:UIControlEventTouchUpInside];
-        [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+        [cancelBtn setTitle:@"取消".ntes_localized forState:UIControlStateNormal];
         [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         cancelBtn.frame = CGRectMake(0, 0, 48, 40);
         UIEdgeInsets titleInsets = cancelBtn.titleEdgeInsets;

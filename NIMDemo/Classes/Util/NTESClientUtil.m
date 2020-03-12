@@ -15,12 +15,12 @@
         case NIMLoginClientTypeAOS:
         case NIMLoginClientTypeiOS:
         case NIMLoginClientTypeWP:
-            return @"移动";
+            return @"移动".ntes_localized;
         case NIMLoginClientTypePC:
         case NIMLoginClientTypemacOS:
-            return @"电脑";
+            return @"电脑".ntes_localized;
         case NIMLoginClientTypeWeb:
-            return @"网页";
+            return @"网页".ntes_localized;
         default:
             return @"";
     }

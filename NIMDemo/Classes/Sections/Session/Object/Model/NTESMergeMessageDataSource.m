@@ -42,7 +42,7 @@
                               password:attachment.password
                             completion:^(NSError * _Nullable error, NSMutableArray<NIMMessage *> * _Nullable messages) {
             if (error) {
-                msg = [NSString stringWithFormat:@"文件解码错误。error:%zd", error.code];
+                msg = [NSString stringWithFormat:@"%@。error:%zd",@"文件解码错误".ntes_localized, error.code];
             }  else {
                 [weakSelf checkAttachmentState:messages];
                 weakSelf.items = [weakSelf itemsWithMessages:messages];
@@ -55,14 +55,14 @@
         __weak typeof(self) weakSelf = self;
         [[NIMSDK sharedSDK].resourceManager download:fileUrl filepath:filePath progress:nil completion:^(NSError * _Nullable error) {
             if (error) {
-                msg = [NSString stringWithFormat:@"附件下载错误。error:%zd", error.code];
+                msg = [NSString stringWithFormat:@"%@。error:%zd",@"附件下载错误".ntes_localized, error.code];
             } else {
                 [weakSelf.serialization decode:filePath
                                        encrypt:attachment.encrypted
                                       password:attachment.password
                                     completion:^(NSError * _Nullable error, NSMutableArray<NIMMessage *> * _Nullable messages) {
                     if (error) {
-                        msg = [NSString stringWithFormat:@"文件解码错误。error:%zd", error.code];
+                        msg = [NSString stringWithFormat:@"%@。error:%zd",@"文件解码错误".ntes_localized, error.code];
                     } else {
                         [weakSelf checkAttachmentState:messages];
                         weakSelf.items = [weakSelf itemsWithMessages:messages];

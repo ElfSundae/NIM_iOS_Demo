@@ -63,4 +63,6 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #define STRONG_SELF(strongSelf) __strong __typeof(&*weakSelf) strongSelf = weakSelf;
 
 
+
+#define NTESLocalizedString(key) NSLocalizedString((key),nil)
 #endif

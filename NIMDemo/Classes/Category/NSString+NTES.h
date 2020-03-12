@@ -20,6 +20,8 @@
 
 - (NSString *)tokenByPassword;
 
+- (NSString *)ntes_localized;
+
 + (NSString *)randomStringWithLength:(NSUInteger)length;
 
 @end

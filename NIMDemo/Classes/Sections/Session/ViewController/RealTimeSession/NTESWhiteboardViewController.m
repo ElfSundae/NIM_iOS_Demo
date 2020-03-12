@@ -145,12 +145,12 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
     if (_isCaller) {
         [self switchToCallerView];
         [self requestRTS];
-        [_hintTextLabel setText:@"正在邀请对方, 请稍后"];
+        [_hintTextLabel setText:@"正在邀请对方, 请稍后".ntes_localized];
         _callerWaitingTimer = [[NTESTimerHolder alloc] init];
         [_callerWaitingTimer startTimer:CallerWaitSeconds delegate:self repeats:NO];
     }
     else {
-        [_hintTextLabel setText:@"对方发起白板演示"];
+        [_hintTextLabel setText:@"对方发起白板演示".ntes_localized];
         [self switchToCalleeView];
     }
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -198,7 +198,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
     _mute = !_mute;
     [self updateButton];
     [[NIMAVChatSDK sharedSDK].rtsManager setMute:_mute];
-    [[NIMAVChatSDK sharedSDK].rtsManager sendRTSControl:_mute ? @"关闭了声音" : @"打开了声音" forSession:_sessionID];
+    [[NIMAVChatSDK sharedSDK].rtsManager sendRTSControl:_mute ? @"关闭了声音".ntes_localized : @"打开了声音".ntes_localized forSession:_sessionID];
 }
 - (IBAction)onSpeakerButtonPressed:(id)sender {
     _speaker = !_speaker;
@@ -207,7 +207,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
 }
 - (IBAction)onCloseButtonPressed:(id)sender {
     
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"退出后, 你将不再接收白板演示的消息内容" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"退出后, 你将不再接收白板演示的消息内容".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"退出".ntes_localized, nil];
     __weak typeof(self) wself = self;
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
         if (index != sheet.cancelButtonIndex) {
@@ -242,7 +242,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
 {
     if (!accepted) {
         DDLogInfo(@"RTSDemo: peer rejected");
-        [self makeToast:@"对方拒绝了本次请求"];
+        [self makeToast:@"对方拒绝了本次请求".ntes_localized];
         [self dismiss];
     }
     else {
@@ -256,7 +256,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
 {
     DDLogInfo(@"RTSDemo: peer terminated, session id %@, current session id %@", sessionID, _sessionID);
     if (sessionID == _sessionID) {
-        [self makeToast:@"对方已离开"];
+        [self makeToast:@"对方已离开".ntes_localized];
         [self termimateRTS];
         if ([[NTESDevice currentDevice] isInBackground]) {
             [self dismiss];
@@ -271,7 +271,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
                      accepted:(BOOL)accepted
 {
     DDLogInfo(@"RTSDemo: responsed by other");
-    [self makeToast:[NSString stringWithFormat:@"已在其他端%@", accepted ? @"接受" : @"拒绝"]];
+    [self makeToast:[NSString stringWithFormat:@"%@%@", @"已在其他端".ntes_localized, accepted ? @"接受".ntes_localized : @"拒绝".ntes_localized]];
     _needTerminateRTS = NO;
     [self dismissAfter:2];
 
@@ -289,7 +289,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
             [_sendCmdsTimer startTimer:SendCmdIntervalSeconds delegate:self repeats:YES];
         }
         else {
-            DDLogInfo(@"已断开连接: %zd", error.code);
+            DDLogInfo(@"%@: %zd", @"已断开连接".ntes_localized, error.code);
             [self termimateRTS];
             [self dismissAfter:1];
         }
@@ -300,7 +300,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
             [[NIMAVChatSDK sharedSDK].rtsManager setMute:_mute];
         }
         else {
-            DDLogInfo(@"已断开音频服务: %zd", error.code);
+            DDLogInfo(@"%@: %zd", @"已断开音频服务".ntes_localized, error.code);
         }
         if (![_footerView isHidden]) {
             [_muteButton setHidden:!_audioConnected];
@@ -414,7 +414,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
         [self sendCmds];
     }
     else if (holder == _callerWaitingTimer) {
-        [self makeToast:@"对方未接受请求"];
+        [self makeToast:@"对方未接受请求".ntes_localized];
         [self termimateRTS];
         [self dismissAfter:2];
     }
@@ -426,8 +426,8 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
     
     NIMRTSOption *option = [[NIMRTSOption alloc] init];
     
-    option.extendMessage = @"白板请求扩展信息";
-    option.apnsContent = @"邀请你加入白板会话";
+    option.extendMessage = @"白板请求扩展信息".ntes_localized;
+    option.apnsContent = @"邀请你加入白板会话".ntes_localized;
     option.apnsSound = @"video_chat_tip_receiver.aac";
     [self fillUserSetting:option];
     
@@ -439,7 +439,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
     {
         if (error) {
             DDLogInfo(@"RTSDemo: send request failed %zd!!!", error.code);
-            NSString *errToast = (error.code == NIMAVRemoteErrorCodeCalleeOffline) ? @"对方不在线" : [NSString stringWithFormat:@"发起失败:%zd", error.code];
+            NSString *errToast = (error.code == NIMAVRemoteErrorCodeCalleeOffline) ? @"对方不在线".ntes_localized : [NSString stringWithFormat:@"%@:%zd", @"发起失败".ntes_localized, error.code];
             [wself makeToast:errToast];
             [wself dismissAfter:2];
         }
@@ -463,7 +463,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
                                         option:option
                                     completion:^(NSError *error, NSString *sessionID, UInt64 channelID) {
         if (error) {
-            [wself makeToast:[NSString stringWithFormat:@"接听失败:%zd", error.code]];
+            [wself makeToast:[NSString stringWithFormat:@"%@:%zd", @"接听失败".ntes_localized, error.code]];
             DDLogInfo(@"RTSDemo: send response failed %zd!!!", error.code);
             [wself dismissAfter:2];
         }
@@ -526,7 +526,7 @@ static const NSTimeInterval SendCmdIntervalSeconds = 0.06;
                                                            to:(_isCaller ? nil : _peerID) //单播和广播发送示例
                                                         with:NIMRTSServiceReliableTransfer];
     if (!success) {
-        [self.view.window makeToast:@"数据发送失败" duration:1 position:CSToastPositionBottom];
+        [self.view.window makeToast:@"数据发送失败".ntes_localized duration:1 position:CSToastPositionBottom];
     }
 }
 

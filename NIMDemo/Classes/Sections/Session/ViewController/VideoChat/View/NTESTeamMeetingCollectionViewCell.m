@@ -81,7 +81,7 @@
 
 - (void)refreshWithTimeout:(NSString *)user
 {
-    self.tipLabel.text = @"未接通";
+    self.tipLabel.text = @"未接通".ntes_localized;
     self.tipLabel.hidden = NO;
     [self.tipLabel sizeToFit];
     self.connectingImageView.hidden  = YES;
@@ -98,7 +98,7 @@
 
 - (void)refreshWithUserLeft:(NSString *)user
 {
-    self.tipLabel.text = @"已挂断";
+    self.tipLabel.text = @"已挂断".ntes_localized;
     self.tipLabel.hidden = NO;
     [self.tipLabel sizeToFit];
     self.connectingImageView.hidden  = YES;

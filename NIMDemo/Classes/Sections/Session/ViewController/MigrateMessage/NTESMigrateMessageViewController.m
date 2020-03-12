@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"本地消息迁移";
+    self.title = @"本地消息迁移".ntes_localized;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self buildData];
@@ -59,11 +59,11 @@
                           HeaderTitle : @"",
                           RowContent : @[
                                   @{
-                                      Title : @"本地消息导出",
+                                      Title : @"本地消息导出".ntes_localized,
                                       CellAction : @"onTouchExportLocalMessages:",
                                       },
                                   @{
-                                      Title : @"本地消息导入",
+                                      Title : @"本地消息导入".ntes_localized,
                                       CellAction : @"onTouchImportLocalMessages:",
                                       },
                                   ]
@@ -74,16 +74,16 @@
 
 #pragma mark -- cellAction
 - (void)onTouchExportLocalMessages:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定导出本地消息？" message:@"本地消息将存至云端，会耗费较长时间" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定导出本地消息？".ntes_localized message:@"本地消息将存至云端，会耗费较长时间".ntes_localized preferredStyle:UIAlertControllerStyleAlert];
     
     // 返回
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"返回".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
     }];
     [alertController addAction:actionCancel];
     
     // 导出
-    UIAlertAction *actionExport = [UIAlertAction actionWithTitle:@"继续导出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionExport = [UIAlertAction actionWithTitle:@"继续导出".ntes_localized style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         NTESExportMessageViewController *exportController = [[NTESExportMessageViewController alloc] init];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:exportController];
         [self presentViewController:navController animated:YES completion:nil];
@@ -103,11 +103,11 @@
         [SVProgressHUD dismiss];
         
         if (error) {
-            [self onGetRemoteHistoryFailed:@"发生了错误"];
+            [self onGetRemoteHistoryFailed:@"发生了错误".ntes_localized];
             return;
         }
         if (remoteFilePath.length == 0) {
-            [self onGetRemoteHistoryFailed:@"未找到消息备份。请先在旧设备上导出消息记录"];
+            [self onGetRemoteHistoryFailed:@"未找到消息备份。请先在旧设备上导出消息记录".ntes_localized];
             return;
         }
         

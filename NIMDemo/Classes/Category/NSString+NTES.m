@@ -58,6 +58,10 @@
     return [[NIMSDK sharedSDK] isUsingDemoAppKey] ? [self MD5String] : self;
 }
 
+- (NSString *)ntes_localized {
+    return NSLocalizedString(self, nil);
+}
+
 + (NSString *)randomStringWithLength:(NSUInteger)length {
     if (length == 0) {
         return @"";

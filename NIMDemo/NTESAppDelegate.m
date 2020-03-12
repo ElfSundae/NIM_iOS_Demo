@@ -178,7 +178,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
             if (!granted)
             {
                 dispatch_async_main_safe(^{
-                    [[UIApplication sharedApplication].keyWindow makeToast:@"请开启推送功能否则无法收到推送通知" duration:2.0 position:CSToastPositionCenter];
+                    [[UIApplication sharedApplication].keyWindow makeToast:@"请开启推送功能否则无法收到推送通知".ntes_localized duration:2.0 position:CSToastPositionCenter];
                 })
             }
         }];
@@ -264,23 +264,26 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 #pragma NIMLoginManagerDelegate
 -(void)onKick:(NIMKickReason)code clientType:(NIMLoginClientType)clientType
 {
-    NSString *reason = @"你被踢下线";
+    NSString *reason = @"你被踢下线".ntes_localized;
     switch (code) {
         case NIMKickReasonByClient:
         case NIMKickReasonByClientManually:{
             NSString *clientName = [NTESClientUtil clientName:clientType];
-            reason = clientName.length ? [NSString stringWithFormat:@"你的帐号被%@端踢出下线，请注意帐号信息安全",clientName] : @"你的帐号被踢出下线，请注意帐号信息安全";
+            reason = clientName.length ? [NSString stringWithFormat:@"%@%@%@",
+                                          @"你的帐号被".ntes_localized,
+                                          clientName,
+                                          @"端踢出下线，请注意帐号信息安全".ntes_localized] : @"你的帐号被踢出下线，请注意帐号信息安全".ntes_localized;
             break;
         }
         case NIMKickReasonByServer:
-            reason = @"你被服务器踢下线";
+            reason = @"你被服务器踢下线".ntes_localized;
             break;
         default:
             break;
     }
     [[[NIMSDK sharedSDK] loginManager] logout:^(NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NTESNotificationLogout object:nil];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"下线通知" message:reason delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"下线通知".ntes_localized message:reason delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
         [alert show];
     }];
 }
@@ -350,10 +353,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     //场景配置
     NSMutableDictionary *dict = @{@"nim_custom1":@1}.mutableCopy;
-    NSMutableDictionary *dict1 = [NIMSDK sharedSDK].sceneDict;
-    [NIMSDK sharedSDK].sceneDict = dict;
-    NSMutableDictionary *dict2 = [NIMSDK sharedSDK].sceneDict;
-    NSLog(@"%@,%@",dict1,dict2);
+    [[NIMSDK sharedSDK] setSceneDict:dict];
 }
 
 - (void)setupCrashlytics
@@ -366,14 +366,14 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 - (void)showAutoLoginErrorAlert:(NSError *)error
 {
     NSString *message = [NTESSessionUtil formatAutoLoginMessage:error];
-    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"自动登录失败"
+    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"自动登录失败".ntes_localized
                                                                 message:message
                                                          preferredStyle:UIAlertControllerStyleAlert];
     
     if ([error.domain isEqualToString:NIMLocalErrorDomain] &&
         error.code == NIMLocalErrorCodeAutoLoginRetryLimit)
     {
-        UIAlertAction *retryAction = [UIAlertAction actionWithTitle:@"重试"
+        UIAlertAction *retryAction = [UIAlertAction actionWithTitle:@"重试".ntes_localized
                                                               style:UIAlertActionStyleCancel
                                                             handler:^(UIAlertAction * _Nonnull action) {
                                                                 NTESLoginData *data = [[NTESLoginManager sharedManager] currentLoginData];
@@ -393,7 +393,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     
     
-    UIAlertAction *logoutAction = [UIAlertAction actionWithTitle:@"注销"
+    UIAlertAction *logoutAction = [UIAlertAction actionWithTitle:@"注销".ntes_localized
                                                            style:UIAlertActionStyleDestructive
                                                          handler:^(UIAlertAction * _Nonnull action) {
                                                              [[[NIMSDK sharedSDK] loginManager] logout:^(NSError *error) {

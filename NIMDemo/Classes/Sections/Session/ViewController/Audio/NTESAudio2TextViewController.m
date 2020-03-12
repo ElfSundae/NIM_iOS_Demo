@@ -40,7 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SVProgressHUD showWithStatus:@"正在转换"];
+    [SVProgressHUD showWithStatus:@"正在转换".ntes_localized];
     [self.view addSubview:self.textView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
     [self.textView addGestureRecognizer:tap];
@@ -49,7 +49,7 @@
     if (_option.url.length == 0) { //上传一把
         [self doUploadWithCompletion:^(NSError *error) {
             if (error) {
-                [weakSelf switchEndUI:error text:@"转换文件上传失败"];
+                [weakSelf switchEndUI:error text:@"转换文件上传失败".ntes_localized];
                 DDLogError(@"upload audio error, %@",error);
             } else {
                 [self doTransAudioToTextWithCompletion:^(NSError *error, NSString *text) {

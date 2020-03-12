@@ -107,7 +107,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
     
     _contacts = [[NTESGroupedContacts alloc] init];
     
-    self.navigationItem.title = @"通讯录";
+    self.navigationItem.title = @"通讯录".ntes_localized;
     [self setUpNavItem];
 
     NSArray *utils = [self groupAbove];
@@ -138,33 +138,33 @@ static const NSString *contactCellUtilSelectorName = @"selName";
     [@[
        @{
            contactCellUtilIcon:@"icon_notification_normal",
-           contactCellUtilTitle:@"验证消息",
+           contactCellUtilTitle:@"验证消息".ntes_localized,
            contactCellUtilVC:@"NTESSystemNotificationViewController",
            contactCellUtilBadge:@(systemCount)
            },
        @{
            contactCellUtilIcon:@"icon_team_advance_normal",
-           contactCellUtilTitle:@"超大群",
+           contactCellUtilTitle:@"超大群".ntes_localized,
            contactCellUtilVC:@"NTESSuperTeamListViewController"
            },
        @{
            contactCellUtilIcon:@"icon_team_advance_normal",
-           contactCellUtilTitle:@"高级群",
+           contactCellUtilTitle:@"高级群".ntes_localized,
            contactCellUtilVC:@"NTESAdvancedTeamListViewController"
            },
        @{
            contactCellUtilIcon:@"icon_team_normal_normal",
-           contactCellUtilTitle:@"讨论组",
+           contactCellUtilTitle:@"讨论组".ntes_localized,
            contactCellUtilVC:@"NTESNormalTeamListViewController"
            },
        @{
            contactCellUtilIcon:@"icon_blacklist_normal",
-           contactCellUtilTitle:@"黑名单",
+           contactCellUtilTitle:@"黑名单".ntes_localized,
            contactCellUtilVC:@"NTESBlackListViewController"
            },
        @{
            contactCellUtilIcon:@"icon_computer_normal",
-           contactCellUtilTitle:@"我的电脑",
+           contactCellUtilTitle:@"我的电脑".ntes_localized,
            contactCellUtilSelectorName:@"onEnterMyComputer"
            },
        ] mutableCopy];
@@ -180,7 +180,9 @@ static const NSString *contactCellUtilSelectorName = @"selName";
 }
 
 - (void)onOpera:(id)sender{
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"添加好友",@"创建高级群",@"创建讨论组",@"搜索高级群",nil];
+
+
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择操作".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"添加好友".ntes_localized,@"创建高级群".ntes_localized,@"创建讨论组".ntes_localized,@"搜索高级群".ntes_localized,nil];
     __weak typeof(self) wself = self;
     NSString *currentUserId = [[NIMSDK sharedSDK].loginManager currentAccount];
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
@@ -193,10 +195,10 @@ static const NSString *contactCellUtilSelectorName = @"selName";
                 [wself presentMemberSelector:^(NSArray *uids) {
                     NSArray *members = [@[currentUserId] arrayByAddingObjectsFromArray:uids];
                     NIMCreateTeamOption *option = [[NIMCreateTeamOption alloc] init];
-                    option.name       = @"高级群";
+                    option.name       = @"高级群".ntes_localized;
                     option.type       = NIMTeamTypeAdvanced;
                     option.joinMode   = NIMTeamJoinModeNoAuth;
-                    option.postscript = @"邀请你加入群组";
+                    option.postscript = @"邀请你加入群组".ntes_localized;
                     [SVProgressHUD show];
                     [[NIMSDK sharedSDK].teamManager createTeam:option users:members completion:^(NSError *error, NSString *teamId, NSArray<NSString *> * _Nullable failedUserIds) {
                         [SVProgressHUD dismiss];
@@ -205,7 +207,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
                             NTESSessionViewController *vc = [[NTESSessionViewController alloc] initWithSession:session];
                             [wself.navigationController pushViewController:vc animated:YES];
                         }else{
-                            [wself.view makeToast:@"创建失败" duration:2.0 position:CSToastPositionCenter];
+                            [wself.view makeToast:@"创建失败".ntes_localized duration:2.0 position:CSToastPositionCenter];
                         }
                     }];
                 }];
@@ -218,7 +220,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
                     }
                     NSArray *members = [@[currentUserId] arrayByAddingObjectsFromArray:uids];
                     NIMCreateTeamOption *option = [[NIMCreateTeamOption alloc] init];
-                    option.name       = @"讨论组";
+                    option.name       = @"讨论组".ntes_localized;
                     option.type       = NIMTeamTypeNormal;
                     [SVProgressHUD show];
                     [[NIMSDK sharedSDK].teamManager createTeam:option users:members completion:^(NSError *error, NSString *teamId, NSArray<NSString *> * _Nullable failedUserIds) {
@@ -228,7 +230,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
                             NTESSessionViewController *vc = [[NTESSessionViewController alloc] initWithSession:session];
                             [wself.navigationController pushViewController:vc animated:YES];
                         }else{
-                            [wself.view makeToast:@"创建失败" duration:2.0 position:CSToastPositionCenter];
+                            [wself.view makeToast:@"创建失败".ntes_localized duration:2.0 position:CSToastPositionCenter];
                         }
                     }];
                 }];
@@ -329,7 +331,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除好友" message:@"删除好友后，将同时解除双方的好友关系" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除好友".ntes_localized message:@"删除好友后，将同时解除双方的好友关系".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确定".ntes_localized, nil];
         [alert showAlertWithCompletionHandler:^(NSInteger index) {
             if (index == 1) {
                 [SVProgressHUD show];
@@ -343,7 +345,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
                     if (!error) {
                         [_contacts removeGroupMember:contactItem];
                     }else{
-                        [wself.view makeToast:@"删除失败"duration:2.0f position:CSToastPositionCenter];
+                        [wself.view makeToast:@"删除失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
                     }
                 }];
             }
@@ -367,7 +369,7 @@ static const NSString *contactCellUtilSelectorName = @"selName";
 
 #pragma mark - NTESContactUtilCellDelegate
 - (void)onPressUtilImage:(NSString *)content{
-    [self.view makeToast:[NSString stringWithFormat:@"点我干嘛 我是<%@>",content] duration:2.0 position:CSToastPositionCenter];
+    [self.view makeToast:[NSString stringWithFormat:@"%@<%@>",@"点我干嘛 我是".ntes_localized, content] duration:2.0 position:CSToastPositionCenter];
 }
 
 #pragma mark - NIMContactSelectDelegate

@@ -39,7 +39,7 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"直播间";
+    self.title = @"直播间".ntes_localized;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
     [self.collectionView addSubview:self.refreshControl];
@@ -64,7 +64,7 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
             weakSelf.data = chatroom;
             [weakSelf.collectionView reloadData];
         }else{
-            NSString *toast = [NSString stringWithFormat:@"请求失败 code:%zd",error.code];
+            NSString *toast = [NSString stringWithFormat:@"%@ code:%zd",@"请求失败".ntes_localized, error.code];
             [weakSelf.view makeToast:toast duration:2.0 position:CSToastPositionCenter];
         }
         [weakSelf.refreshControl endRefreshing];
@@ -116,7 +116,9 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
                                                  }
                                                  else
                                                  {
-                                                     NSString *toast = [NSString stringWithFormat:@"进入失败 code:%zd",error.code];
+                                                     NSString *toast = [NSString stringWithFormat:@"%@ code:%zd",
+                                                                        @"进入失败".ntes_localized,
+                                                                        error.code];
                                                      [wself.view makeToast:toast duration:2.0 position:CSToastPositionCenter];
                                                      DDLogError(@"enter room %@ failed %@",chatroom.roomId,error);
                                                  }

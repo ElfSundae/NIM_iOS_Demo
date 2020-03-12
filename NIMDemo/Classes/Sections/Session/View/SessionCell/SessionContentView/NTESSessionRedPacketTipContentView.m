@@ -44,7 +44,7 @@
         NSString *formatedMessage = attachment.formatedMessage;
         [self.label appendImage:[UIImage imageNamed:@"icon_redpacket_tip"]];
         [self.label appendText:formatedMessage];
-        NSRange range = [formatedMessage rangeOfString:@"红包"];
+        NSRange range = [formatedMessage rangeOfString:@"红包".ntes_localized];
         if (range.location != NSNotFound)
         {
             //由于还有个 icon , 需要将 range 往后挪一个位置

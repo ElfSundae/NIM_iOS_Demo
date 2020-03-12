@@ -508,6 +508,18 @@
     }
 }
 
+- (BOOL)isDeleteMsgFromServer
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"menu_delete_msg_from_server"];
+    return [ret boolValue];
+}
+
+- (BOOL)isIgnoreRevokeMessageCount
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_revoke_count"];
+    return [ret boolValue];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:
@@ -541,6 +553,7 @@
                 "avchat_scene %zd\n"\
                 "chatroom_retry_count %zd\n"\
                 "sync_when_remote_fetch_messages %zd\n"\
+                "enable_revoke_count %zd\n"\
                 "\n\n\n",
                 [self removeSessionWhenDeleteMessages],
                 [self localSearchOrderByTimeDesc],
@@ -570,7 +583,8 @@
                 [self preferHDAudio],
                 [self scene],
                 [self chatroomRetryCount],
-                [self enableSyncWhenFetchRemoteMessages]
+                [self enableSyncWhenFetchRemoteMessages],
+                [self isIgnoreRevokeMessageCount]
             ];
 }
 

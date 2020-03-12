@@ -54,7 +54,7 @@
     }
     self.tableView.tableHeaderView = self.searchVC.searchBar;
     self.definesPresentationContext = YES;
-    self.title = @"搜索联系人";
+    self.title = @"搜索联系人".ntes_localized;
 }
 
 #pragma mark - Table view data source
@@ -105,7 +105,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             cell.textLabel.textColor = [UIColor blueColor];
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"搜索关键字：\"%@\"", _searchText];
+        cell.textLabel.text = [NSString stringWithFormat:@"搜索关键字:\"%@\"".ntes_localized, _searchText];
         return cell;
     }
 }

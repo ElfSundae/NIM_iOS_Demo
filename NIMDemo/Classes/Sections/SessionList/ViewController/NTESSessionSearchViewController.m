@@ -38,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"搜索最近会话";
+    self.title = @"搜索最近会话".ntes_localized;
     _userResultDictionary = [NSMutableDictionary dictionary];
     _teamResultDictionary = [NSMutableDictionary dictionary];
     UIEdgeInsets separatorInset   = self.tableView.separatorInset;
@@ -88,7 +88,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"entrance"
                                                                 forIndexPath:indexPath];
         cell.textLabel.textColor = [UIColor blueColor];
-        cell.textLabel.text = [NSString stringWithFormat:@"搜索关键字:\"%@\"", _searchText];
+        cell.textLabel.text = [NSString stringWithFormat:@"搜索关键字:\"%@\"".ntes_localized, _searchText];
         return cell;
     }
 }

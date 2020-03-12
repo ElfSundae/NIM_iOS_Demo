@@ -30,11 +30,11 @@ static NSString * const aesVectorString = @"0123456789012345";
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithWhite:0.3 alpha:1];
-    self.title = @"本地消息导入";
+    self.title = @"本地消息导入".ntes_localized;
     
     NTESMigrateProgressView *progressView = [[NTESMigrateProgressView alloc] initWithFrame:self.view.bounds];
     [progressView.stopButton addTarget:self action:@selector(onCancelButton:) forControlEvents:UIControlEventTouchUpInside];
-    progressView.tip = @"导入本地消息需要较长时间，请耐心等待";
+    progressView.tip = @"导入本地消息需要较长时间，请耐心等待".ntes_localized;
     self.contentView = progressView;
     
     [self downloadRemoteFile];
@@ -62,17 +62,17 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 #pragma mark -- action
 - (void)onCancelButton:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定要取消导入？" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定要取消导入？".ntes_localized message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     // 取消导入
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消导入" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消导入".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NIMSDK sharedSDK].conversationManager cancelMigrateMessages];
     }];
     [alertController addAction:actionCancel];
     
     // 继续导入
-    UIAlertAction *actionGoon = [UIAlertAction actionWithTitle:@"继续导入" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionGoon = [UIAlertAction actionWithTitle:@"继续导入".ntes_localized style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
     }];
     [alertController addAction:actionGoon];
@@ -96,17 +96,17 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 #pragma mark -- private
 - (void)onImportFailed:(NSError *)error description:(NSString *)description {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"导入失败！" message:description preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"导入失败！".ntes_localized message:description preferredStyle:UIAlertControllerStyleAlert];
     
     // 返回
-    UIAlertAction *actionReturn = [UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionReturn = [UIAlertAction actionWithTitle:@"返回".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
         // todo 导航
     }];
     [alertController addAction:actionReturn];
     
     // 重新导入
-    UIAlertAction *actionRetry = [UIAlertAction actionWithTitle:@"重新导入" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionRetry = [UIAlertAction actionWithTitle:@"重新导入".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
         [self downloadRemoteFile];
     }];
@@ -119,9 +119,9 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 - (void)onImportSuccess {
     NTESMigrateCompleteView *completeView = [[NTESMigrateCompleteView alloc] initWithFrame:self.view.bounds];
-    completeView.title = @"恭喜你";
-    completeView.message = @"消息导入成功";
-    [completeView.actionButton setTitle:@"返回会话列表" forState:UIControlStateNormal];
+    completeView.title = @"恭喜你".ntes_localized;
+    completeView.message = @"消息导入成功".ntes_localized;
+    [completeView.actionButton setTitle:@"返回会话列表".ntes_localized forState:UIControlStateNormal];
     [completeView.actionButton addTarget:self action:@selector(onReturnButton:) forControlEvents:UIControlEventTouchUpInside];
     self.contentView = completeView;
 }
@@ -136,7 +136,7 @@ static NSString * const aesVectorString = @"0123456789012345";
                                       completion:^(NSError * _Nullable error)
      {
          if (error) {
-             [self onImportFailed:error description:@"下载消息文件失败"];
+             [self onImportFailed:error description:@"下载消息文件失败".ntes_localized];
              return;
          }
 
@@ -202,7 +202,7 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 - (void)importMessageFileAtPath:(NSString *)path {
     if (!path) {
-        [self onImportFailed:nil description:@"解压失败"];
+        [self onImportFailed:nil description:@"解压失败".ntes_localized];
         return;
     }
     
@@ -220,7 +220,7 @@ static NSString * const aesVectorString = @"0123456789012345";
         }
     } completion:^(NSError * _Nullable error) {
         if (error) {
-            [self onImportFailed:error description:@"合并失败"];
+            [self onImportFailed:error description:@"合并失败".ntes_localized];
         }
         else {
             [self onImportSuccess];

@@ -44,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.navigationItem.title = @"视频短片";
+    self.navigationItem.title = @"视频短片".ntes_localized;
     if (self.item.session)
     {
         [self setupRightNavItem];
@@ -58,7 +58,7 @@
             if (!error) {
                 [wself startPlay];
             }else{
-                [wself.view makeToast:@"下载失败，请检查网络"
+                [wself.view makeToast:@"下载失败，请检查网络".ntes_localized
                              duration:2
                              position:CSToastPositionCenter];
             }
@@ -239,7 +239,7 @@
         if (reason == NTESAVMovieFinishReasonPlaybackError)
         {
             NSError *mediaPlayerError = [notificationUserInfo objectForKey:@"error"];
-            NSString *errorTip = [NSString stringWithFormat:@"播放失败: %@", [mediaPlayerError localizedDescription]];
+            NSString *errorTip = [NSString stringWithFormat:@"%@: %@", @"播放失败".ntes_localized, [mediaPlayerError localizedDescription]];
             [self.view makeToast:errorTip
                         duration:2
                         position:CSToastPositionCenter];

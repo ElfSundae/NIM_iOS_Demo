@@ -121,7 +121,7 @@ NSString *const NIMDemoEventNameOpenMergeMessage = @"NIMDemoEventNameOpenMergeMe
 - (UILabel *)subTitleLabel {
     if (!_subTitleLabel) {
         _subTitleLabel = [self setupContentLabel];
-        _subTitleLabel.text = @"聊天记录";
+        _subTitleLabel.text = @"聊天记录".ntes_localized;
         [_subTitleLabel sizeToFit];
     }
     return _subTitleLabel;

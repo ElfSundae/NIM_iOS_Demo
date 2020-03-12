@@ -41,13 +41,13 @@
     self.header = [[NTESListHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
     self.header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.header.delegate = self;
-    [self.header refreshWithType:ListHeaderTypeCommonText value:@"你不会接收到列表中联系人的任何消息"];
+    [self.header refreshWithType:ListHeaderTypeCommonText value:@"你不会接收到列表中联系人的任何消息".ntes_localized];
     [self.view addSubview:self.header];
 }
 
 
 - (void)setUpNavItem{
-    self.navigationItem.title = @"黑名单";
+    self.navigationItem.title = @"黑名单".ntes_localized;
     UIButton *teamBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [teamBtn addTarget:self action:@selector(onOpera:) forControlEvents:UIControlEventTouchUpInside];
     [teamBtn setImage:[UIImage imageNamed:@"icon_tinfo_normal"] forState:UIControlStateNormal];
@@ -105,7 +105,7 @@
                     [wself.data removeObjectAtIndex:indexPath.row];
                     [wself.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 }else{
-                    [wself.view makeToast:@"删除失败"duration:2.0f position:CSToastPositionCenter];
+                    [wself.view makeToast:@"删除失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
                 }
             }];
         }
@@ -132,11 +132,11 @@
         __weak typeof(self) wself = self;
         [[NIMSDK sharedSDK].userManager addToBlackList:selectedContacts.firstObject completion:^(NSError *error) {
             if (!error) {
-                [wself.view makeToast:@"操作成功！" duration:2.0 position:CSToastPositionCenter];
+                [wself.view makeToast:@"操作成功！".ntes_localized duration:2.0 position:CSToastPositionCenter];
                 wself.data = wself.myBlackListUser;
                 [wself.tableView reloadData];
             }else{
-                [wself.view makeToast:@"操作失败！" duration:2.0 position:CSToastPositionCenter];
+                [wself.view makeToast:@"操作失败！".ntes_localized duration:2.0 position:CSToastPositionCenter];
             }
         }];
     }

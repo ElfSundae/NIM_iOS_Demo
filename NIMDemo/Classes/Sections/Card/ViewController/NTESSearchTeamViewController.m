@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"搜索加入群组";
+    self.navigationItem.title = @"搜索加入群组".ntes_localized;
     self.textField.delegate = self;
 }
 
@@ -47,7 +47,7 @@
         vc.joinTeam = team;
         [self.navigationController pushViewController:vc animated:YES];
     } else {
-        [self.view makeToast:error.localizedDescription
+        [self.view makeToast:error.localizedDescription.ntes_localized
                     duration:2
                     position:CSToastPositionCenter];
         DDLogDebug(@"Fetch team info failed: %@", error.localizedDescription);

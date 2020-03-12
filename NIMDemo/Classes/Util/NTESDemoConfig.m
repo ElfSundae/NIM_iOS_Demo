@@ -43,7 +43,7 @@
 
 - (NSString *)apiURL
 {
-    NSAssert([[NIMSDK sharedSDK] isUsingDemoAppKey], @"只有 demo appKey 才能够使用这个API接口");
+    NSAssert([[NIMSDK sharedSDK] isUsingDemoAppKey], @"只有 demo appKey 才能够使用这个API接口".ntes_localized);
     return _apiURL;
 }
 

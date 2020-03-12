@@ -41,7 +41,7 @@ static NSString * const collectionReadCellReuseId   = @"collectionReadCellReuseI
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.navigationItem.title = @"消息已读详情";
+    self.navigationItem.title = @"消息已读详情".ntes_localized;
     UICollectionViewFlowLayout *reasdUsersLayout = [[UICollectionViewFlowLayout alloc] init];
     reasdUsersLayout.minimumInteritemSpacing = 20;
     self.readUsers.collectionViewLayout = reasdUsersLayout;
@@ -120,12 +120,12 @@ static NSString * const collectionReadCellReuseId   = @"collectionReadCellReuseI
             }
             [weakSelf.readUsers reloadData];
             [weakSelf.unreadUsers reloadData];
-            [weakSelf.segmentControl setTitle:[NSString stringWithFormat:@"未读(%zd)",weakSelf.unreadMembers.count] forSegmentAtIndex:0];
-            [weakSelf.segmentControl setTitle:[NSString stringWithFormat:@"已读(%zd)",weakSelf.readMembers.count] forSegmentAtIndex:1];
+            [weakSelf.segmentControl setTitle:[NSString stringWithFormat:@"%@(%zd)",@"未读".ntes_localized, weakSelf.unreadMembers.count] forSegmentAtIndex:0];
+            [weakSelf.segmentControl setTitle:[NSString stringWithFormat:@"%@(%zd)",@"已读".ntes_localized,weakSelf.readMembers.count] forSegmentAtIndex:1];
         }
         else
         {
-            [weakSelf.view makeToast:@"请求失败请重试" duration:2.0 position:CSToastPositionCenter];
+            [weakSelf.view makeToast:@"请求失败请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
         }
         
     }];

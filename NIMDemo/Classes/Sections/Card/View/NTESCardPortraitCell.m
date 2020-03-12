@@ -60,7 +60,7 @@
         NIMUser *user = [[NIMSDK sharedSDK].userManager userInfo:uid];
         NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:uid option:nil];
         self.nameLabel.text   = info.showName ;
-        self.accountLabel.text = [NSString stringWithFormat:@"帐号：%@",uid];
+        self.accountLabel.text = [NSString stringWithFormat:@"%@：%@",@"帐号".ntes_localized, uid];
         [self.accountLabel sizeToFit];
         [self.avatar nim_setImageWithURL:[NSURL URLWithString:info.avatarUrlString] placeholderImage:info.avatarImage options:SDWebImageRetryFailed];
         if (user.userInfo.gender == NIMUserGenderMale) {
@@ -76,7 +76,7 @@
         }
         NSString *nickName  = user.userInfo.nickName ? user.userInfo.nickName : @"";
         _nickNameLabel.hidden = !user.alias.length;
-        _nickNameLabel.text = [NSString stringWithFormat:@"昵称：%@",nickName];
+        _nickNameLabel.text = [NSString stringWithFormat:@"%@：%@",@"昵称".ntes_localized, nickName];
         [_nickNameLabel sizeToFit];
     }
 }

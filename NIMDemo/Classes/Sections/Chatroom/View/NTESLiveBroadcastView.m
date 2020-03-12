@@ -32,9 +32,9 @@
 }
 
 - (void)refresh:(NIMChatroom *)room{
-    self.contentTextView.text = room.announcement.length ? room.announcement : @"暂无公告";
+    self.contentTextView.text = room.announcement.length ? room.announcement : @"暂无公告".ntes_localized;
     [self.contentTextView sizeToFit];
-    self.titleLabel.text = @"直播公告";
+    self.titleLabel.text = @"直播公告".ntes_localized;
     [self.titleLabel sizeToFit];
 }
 

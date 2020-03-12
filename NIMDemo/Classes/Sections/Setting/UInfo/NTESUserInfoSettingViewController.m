@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"个人信息";
+    self.navigationItem.title = @"个人信息".ntes_localized;
     [self buildData];
     __weak typeof(self) wself = self;
     self.delegator = [[NIMCommonTableDelegate alloc] initWithTableData:^NSArray *{
@@ -72,43 +72,43 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title      : @"昵称",
-                                      DetailTitle: me.userInfo.nickName.length ? me.userInfo.nickName : @"未设置",
+                                      Title      : @"昵称".ntes_localized,
+                                      DetailTitle: me.userInfo.nickName.length ? me.userInfo.nickName : @"未设置".ntes_localized,
                                       CellAction : @"onTouchNickSetting:",
                                       RowHeight     : @(50),
                                       ShowAccessory : @(YES),
                                       },
                                   @{
-                                      Title      : @"性别",
+                                      Title      : @"性别".ntes_localized,
                                       DetailTitle: [NTESUserUtil genderString:me.userInfo.gender],
                                       CellAction : @"onTouchGenderSetting:",
                                       RowHeight     : @(50),
                                       ShowAccessory : @(YES)
                                       },
                                   @{
-                                      Title       : @"生日",
-                                      DetailTitle : me.userInfo.birth.length ? me.userInfo.birth : @"未设置",
+                                      Title       : @"生日".ntes_localized,
+                                      DetailTitle : me.userInfo.birth.length ? me.userInfo.birth : @"未设置".ntes_localized,
                                       CellAction  : @"onTouchBirthSetting:",
                                       RowHeight     : @(50),
                                       ShowAccessory : @(YES)
                                       },
                                   @{
-                                      Title      :@"手机",
-                                      DetailTitle:me.userInfo.mobile.length ? me.userInfo.mobile : @"未设置",
+                                      Title      :@"手机".ntes_localized,
+                                      DetailTitle:me.userInfo.mobile.length ? me.userInfo.mobile : @"未设置".ntes_localized,
                                       CellAction :@"onTouchTelSetting:",
                                       RowHeight     : @(50),
                                       ShowAccessory : @(YES)
                                       },
                                   @{
-                                      Title      :@"邮箱",
-                                      DetailTitle:me.userInfo.email.length ? me.userInfo.email : @"未设置",
+                                      Title      :@"邮箱".ntes_localized,
+                                      DetailTitle:me.userInfo.email.length ? me.userInfo.email : @"未设置".ntes_localized,
                                       CellAction :@"onTouchEmailSetting:",
                                       RowHeight     : @(50),
                                       ShowAccessory : @(YES)
                                       },
                                   @{
-                                      Title      :@"签名",
-                                      DetailTitle:me.userInfo.sign.length ? me.userInfo.sign : @"未设置",
+                                      Title      :@"签名".ntes_localized,
+                                      DetailTitle:me.userInfo.sign.length ? me.userInfo.sign : @"未设置".ntes_localized,
                                       CellAction :@"onTouchSignSetting:",
                                       RowHeight     : @(50),
                                       ShowAccessory : @(YES)
@@ -128,7 +128,7 @@
 
 - (void)onTouchPortrait:(id)sender{
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"设置头像" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册", nil];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"设置头像".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"拍照".ntes_localized,@"从相册".ntes_localized, nil];
         [sheet showInView:self.view completionHandler:^(NSInteger index) {
             switch (index) {
                 case 0:
@@ -142,7 +142,7 @@
             }
         }];
     }else{
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"设置头像" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册", nil];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"设置头像".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"从相册".ntes_localized, nil];
         [sheet showInView:self.view completionHandler:^(NSInteger index) {
             switch (index) {
                 case 0:
@@ -240,19 +240,19 @@
                                               completion:nil];
                         [wself refresh];
                     }else{
-                        [wself.view makeToast:@"设置头像失败，请重试"
+                        [wself.view makeToast:@"设置头像失败，请重试".ntes_localized
                                      duration:2
                                      position:CSToastPositionCenter];
                     }
                 }];
             }else{
-                [wself.view makeToast:@"图片上传失败，请重试"
+                [wself.view makeToast:@"图片上传失败，请重试".ntes_localized
                              duration:2
                              position:CSToastPositionCenter];
             }
         }];
     }else{
-        [self.view makeToast:@"图片保存失败，请重试"
+        [self.view makeToast:@"图片保存失败，请重试".ntes_localized
                     duration:2
                     position:CSToastPositionCenter];
     }

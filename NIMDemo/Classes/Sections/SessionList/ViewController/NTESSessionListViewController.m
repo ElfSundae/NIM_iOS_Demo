@@ -18,8 +18,9 @@
 #import "NTESMessageUtil.h"
 #import "NTESSessionServiceListVC.h"
 #import "NTESSessionSearchViewController.h"
+#import "NSString+NTES.h"
 
-#define SessionListTitle @"云信 Demo"
+#define SessionListTitle @"云信 Demo".ntes_localized
 
 @interface NTESSessionListViewController ()<NIMLoginManagerDelegate,NTESListHeaderDelegate,NIMEventSubscribeManagerDelegate,UIViewControllerPreviewingDelegate>
 
@@ -60,9 +61,10 @@
     [self.view addSubview:self.header];
 
     self.emptyTipLabel = [[UILabel alloc] init];
-    self.emptyTipLabel.text = @"还没有会话，在通讯录中找个人聊聊吧";
+    self.emptyTipLabel.text = @"还没有会话，在通讯录中找个人聊聊吧".ntes_localized;
     [self.emptyTipLabel sizeToFit];
     self.emptyTipLabel.hidden = self.recentSessions.count;
+    self.emptyTipLabel.numberOfLines = 0;
     [self.view addSubview:self.emptyTipLabel];
     
     NSString *userID = [[[NIMSDK sharedSDK] loginManager] currentAccount];
@@ -95,13 +97,13 @@
 }
 
 - (NSMutableArray *)setupAlertActions {
-    UIAlertAction *markAllMessagesReadAction = [UIAlertAction actionWithTitle:@"标记所有消息为已读"
+    UIAlertAction *markAllMessagesReadAction = [UIAlertAction actionWithTitle:@"标记所有消息为已读".ntes_localized
                                                                         style:UIAlertActionStyleDefault
                                                                       handler:^(UIAlertAction * _Nonnull action) {
           [[NIMSDK sharedSDK].conversationManager markAllMessagesRead];
     }];
     
-    UIAlertAction *cleanAllMessagesAction = [UIAlertAction actionWithTitle:@"清理所有消息"
+    UIAlertAction *cleanAllMessagesAction = [UIAlertAction actionWithTitle:@"清理所有消息".ntes_localized
                                                                      style:UIAlertActionStyleDefault
                                                                    handler:^(UIAlertAction * _Nonnull action) {
            BOOL removeRecentSessions = [NTESBundleSetting sharedConfig].removeSessionWhenDeleteMessages;
@@ -114,14 +116,15 @@
            [[NIMSDK sharedSDK].conversationManager deleteAllMessages:option];
     }];
     
-    UIAlertAction *allServerSessions = [UIAlertAction actionWithTitle:@"查看云端会话"
+
+    UIAlertAction *allServerSessions = [UIAlertAction actionWithTitle:@"查看云端会话".ntes_localized
                                                                 style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction * _Nonnull action) {
         NTESSessionServiceListVC * vc = [[NTESSessionServiceListVC alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消"
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消".ntes_localized
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
     return @[markAllMessagesReadAction, cleanAllMessagesAction, allServerSessions, cancel].mutableCopy;
@@ -191,7 +194,7 @@
 
 - (NSString *)nameForRecentSession:(NIMRecentSession *)recent{
     if ([recent.session.sessionId isEqualToString:[[NIMSDK sharedSDK].loginManager currentAccount]]) {
-        return @"我的电脑";
+        return @"我的电脑".ntes_localized;
     }
     return [super nameForRecentSession:recent];
 }
@@ -240,17 +243,17 @@
     [super onLogin:step];
     switch (step) {
         case NIMLoginStepLinkFailed:
-            self.titleLabel.text = [SessionListTitle stringByAppendingString:@"(未连接)"];
+            self.titleLabel.text = [SessionListTitle stringByAppendingString:@"(未连接)".ntes_localized];
             break;
         case NIMLoginStepLinking:
-            self.titleLabel.text = [SessionListTitle stringByAppendingString:@"(连接中)"];
+            self.titleLabel.text = [SessionListTitle stringByAppendingString:@"(连接中)".ntes_localized];
             break;
         case NIMLoginStepLinkOK:
         case NIMLoginStepSyncOK:
             self.titleLabel.text = SessionListTitle;
             break;
         case NIMLoginStepSyncing:
-            self.titleLabel.text = [SessionListTitle stringByAppendingString:@"(同步数据)"];
+            self.titleLabel.text = [SessionListTitle stringByAppendingString:@"(同步数据)".ntes_localized];
             break;
         default:
             break;
@@ -269,7 +272,6 @@
 
 - (void)onTeamUsersSyncFinished:(BOOL)success
 {
-    NSLog(@">> 群消息同步完成：%@",@(success));
 }
 
 
@@ -317,7 +319,7 @@
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __weak typeof(self) weakSelf = self;
-    UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NIMRecentSession *recentSession = weakSelf.recentSessions[indexPath.row];
         [weakSelf onDeleteRecentAtIndexPath:recentSession atIndexPath:indexPath];
         [tableView setEditing:NO animated:YES];
@@ -326,7 +328,7 @@
     
     NIMRecentSession *recentSession = weakSelf.recentSessions[indexPath.row];
     BOOL isTop = [NTESSessionUtil recentSessionIsMark:recentSession type:NTESRecentSessionMarkTypeTop];
-    UITableViewRowAction *top = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:isTop?@"取消置顶":@"置顶" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *top = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:isTop?@"取消置顶".ntes_localized:@"置顶".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [weakSelf onTopRecentAtIndexPath:recentSession atIndexPath:indexPath isTop:isTop];
         [tableView setEditing:NO animated:YES];
     }];
@@ -381,6 +383,9 @@
     
     self.emptyTipLabel.centerX = self.view.width * .5f;
     self.emptyTipLabel.centerY = self.tableView.height * .5f;
+    self.emptyTipLabel.width = self.emptyTipLabel.width < self.view.width ? self.emptyTipLabel.width : self.view.width - 5;
+    CGSize size = [self.emptyTipLabel sizeThatFits:CGSizeMake(self.emptyTipLabel.width, CGFLOAT_MAX)];
+    self.emptyTipLabel.height = size.height;
 }
 
 - (UIView*)titleView:(NSString*)userID{
@@ -432,7 +437,7 @@
 - (void)checkNeedAtTip:(NIMRecentSession *)recent content:(NSMutableAttributedString *)content
 {
     if ([NTESSessionUtil recentSessionIsMark:recent type:NTESRecentSessionMarkTypeAt]) {
-        NSAttributedString *atTip = [[NSAttributedString alloc] initWithString:@"[有人@你] " attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
+        NSAttributedString *atTip = [[NSAttributedString alloc] initWithString:@"[有人@你]".ntes_localized attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
         [content insertAttributedString:atTip atIndex:0];
     }
 }

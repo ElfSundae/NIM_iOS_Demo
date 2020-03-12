@@ -27,8 +27,6 @@
 
 - (BOOL)needVerifyForFriend;                        //添加好友是否需要验证
 
-- (NSInteger)ignoreMessageType;
-
 - (BOOL)showFps;                                    //是否显示Fps
 
 - (BOOL)disableProximityMonitor;                    //贴耳的时候是否需要自动切换成听筒模式
@@ -141,5 +139,9 @@
 - (BOOL)asyncLoadRecentSessionEnabled; //是否开启异步读取最近会话
 
 - (NSInteger)ignoreMessageType;
+
+- (BOOL)isDeleteMsgFromServer;
+
+- (BOOL)isIgnoreRevokeMessageCount;
 
 @end

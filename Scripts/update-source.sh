@@ -1,9 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-# Update source code from Netease official project.
-
-URL='https://yx-web-nosdn.netease.im/package/1583137034/NIM_iOS_Demo_v7.3.0.zip?download=NIM_iOS_Demo_v7.3.0.zip'
+# Update source code from Netease official project:
+# https://yunxin.163.com/im-sdk-demo
+URL='https://yx-web-nosdn.netease.im/package/1583908636/NIM_iOS_Demo_v7.4.0.zip?download=NIM_iOS_Demo_v7.4.0.zip'
 
 WORKING=working
 
@@ -39,6 +39,7 @@ rsync -a --delete "$srcRoot/NIMDemo/Settings.bundle" "NIMDemo/Supporting Files"
 
 rm -rf "NIMDemo/Supporting Files/NIMKitEmoticon.bundle"
 rm -rf "NIMDemo/Supporting Files/NIMKitResource.bundle"
+rm -rf "NIMDemo/Supporting Files/NIMLanguage.bundle"
 rm -rf "NIMDemo/Vendors/NIMAVChat"
 rm -rf "NIMDemo/Vendors/NIMSDK"
 

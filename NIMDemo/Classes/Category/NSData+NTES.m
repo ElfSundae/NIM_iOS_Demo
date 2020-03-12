@@ -99,7 +99,7 @@
 }
 
 
-void RC4(const char *key, int keylen, char* output, const char* input, int len)
+void _NTES_RC4(const char *key, int keylen, char* output, const char* input, int len)
 {
     // 设置密钥
     char key_[256];
@@ -132,7 +132,7 @@ void RC4(const char *key, int keylen, char* output, const char* input, int len)
 - (NSData *)rc4EncryptWithKey:(NSString *)key {
     const char *pwd = [key UTF8String];
     char *outdata = (char *)calloc(self.length, 1);
-    RC4(pwd, (int)key.length, outdata, self.bytes, (int)self.length);
+    _NTES_RC4(pwd, (int)key.length, outdata, self.bytes, (int)self.length);
     NSData *ret = [NSMutableData dataWithBytes:outdata length:self.length];
     free(outdata);
     return ret;
@@ -141,7 +141,7 @@ void RC4(const char *key, int keylen, char* output, const char* input, int len)
 - (NSData *)rc4DecryptWithKey:(NSString *)key {
      const char *pwd = [key UTF8String];
      char *outdata = (char *)calloc(self.length + 1, 1);
-     RC4(pwd, (int)key.length, outdata, self.bytes, (int)self.length);
+     _NTES_RC4(pwd, (int)key.length, outdata, self.bytes, (int)self.length);
      outdata[self.length] = 0;
      NSData *ret = [NSMutableData dataWithBytes:outdata length:self.length];
      free(outdata);

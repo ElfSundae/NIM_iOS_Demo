@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpNav];
-    self.navigationItem.title = @"备注名";
+    self.navigationItem.title = @"备注名".ntes_localized;
     __weak typeof(self) wself = self;
     self.alias = self.user.alias;
     [self buildData];
@@ -76,15 +76,15 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"签名";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
+    self.navigationItem.title = @"签名".ntes_localized;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 }
 
 - (void)onDone:(id)sender{
     [self.view endEditing:YES];
     if (self.alias.length > self.inputLimit) {
-        [self.view makeToast:@"备注名过长" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"备注名过长".ntes_localized duration:2.0 position:CSToastPositionCenter];
         return;
     }
     [SVProgressHUD show];
@@ -93,12 +93,12 @@
     [[NIMSDK sharedSDK].userManager updateUser:self.user completion:^(NSError *error) {
         [SVProgressHUD dismiss];
         if (!error) {
-            [wself.navigationController.view makeToast:@"备注名设置成功"
+            [wself.navigationController.view makeToast:@"备注名设置成功".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
             [wself.navigationController popViewControllerAnimated:YES];
         }else{
-            [wself.view makeToast:@"备注名设置失败，请重试"
+            [wself.view makeToast:@"备注名设置失败，请重试".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }

@@ -32,11 +32,11 @@ static NSString * const aesVectorString = @"0123456789012345";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"本地消息导出";
+    self.title = @"本地消息导出".ntes_localized;
 
     NTESMigrateProgressView *progressView = [[NTESMigrateProgressView alloc] initWithFrame:self.view.bounds];
     [progressView.stopButton addTarget:self action:@selector(onCancelButton:) forControlEvents:UIControlEventTouchUpInside];
-    progressView.tip = @"导出本地消息需要较长时间，请耐心等待";
+    progressView.tip = @"导出本地消息需要较长时间，请耐心等待".ntes_localized;
     self.contentView = progressView;
     
     [self exportMessageInfos];
@@ -90,17 +90,17 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 #pragma mark -- action
 - (void)onCancelButton:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定要取消导出?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定要取消导出?".ntes_localized message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     // 取消导出
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消导出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消导出".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NIMSDK sharedSDK].conversationManager cancelMigrateMessages];
     }];
     [alertController addAction:actionCancel];
     
     // 继续导出
-    UIAlertAction *actionGoon = [UIAlertAction actionWithTitle:@"继续导出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionGoon = [UIAlertAction actionWithTitle:@"继续导出".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
 
     }];
@@ -117,16 +117,16 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 #pragma mark -- private
 - (void)onExportFailed:(NSError *)error {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"导出失败!" message:@"本地消息格式化导出失败" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"导出失败!".ntes_localized message:@"本地消息格式化导出失败".ntes_localized preferredStyle:UIAlertControllerStyleAlert];
     
     // 返回
-    UIAlertAction *actionBack = [UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionBack = [UIAlertAction actionWithTitle:@"返回".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     [alertController addAction:actionBack];
     
     // 重新导出
-    UIAlertAction *actionRetry = [UIAlertAction actionWithTitle:@"重新导出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *actionRetry = [UIAlertAction actionWithTitle:@"重新导出".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
         [self exportMessageInfos];
     }];
@@ -158,7 +158,7 @@ static NSString * const aesVectorString = @"0123456789012345";
 
 - (void)onExportEmpty:(NSError *)error {
     NSLog(@"error %@", error);
-    NSString *errorDscription = @"可导出的消息记录总数为空";
+    NSString *errorDscription = @"可导出的消息记录总数为空".ntes_localized;
     [self.view makeToast:errorDscription duration:3.0 position:CSToastPositionCenter];
 }
 
@@ -172,9 +172,9 @@ static NSString * const aesVectorString = @"0123456789012345";
     [SVProgressHUD dismiss];
     
     NTESMigrateCompleteView *completeView = [[NTESMigrateCompleteView alloc] initWithFrame:self.view.bounds];
-    completeView.title = @"恭喜你";
-    completeView.message = @"本地消息导出成功，请在新设备上点击导入吧";
-    [completeView.actionButton setTitle:@"返回" forState:UIControlStateNormal];
+    completeView.title = @"恭喜你".ntes_localized;
+    completeView.message = @"本地消息导出成功，请在新设备上点击导入吧".ntes_localized;
+    [completeView.actionButton setTitle:@"返回".ntes_localized forState:UIControlStateNormal];
     [completeView.actionButton addTarget:self action:@selector(onReturnButton:) forControlEvents:UIControlEventTouchUpInside];
     self.contentView = completeView;
 }

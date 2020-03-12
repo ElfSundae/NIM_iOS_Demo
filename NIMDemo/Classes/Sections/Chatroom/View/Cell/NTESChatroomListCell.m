@@ -101,12 +101,12 @@
 }
 
 - (void)refresh:(NIMChatroom *)chatroom{
-    self.statusLabel.text = @"正在直播";
+    self.statusLabel.text = @"正在直播".ntes_localized;
     [self.statusLabel sizeToFit];
     float onlineUserCount = (float)chatroom.onlineUserCount;
     NSString *countText;
     if (onlineUserCount > 10000) {
-        countText = [NSString stringWithFormat:@"%.1f万",onlineUserCount / 10000];
+        countText = [NSString stringWithFormat:@"%.1f%@",onlineUserCount / 10000, @"万".ntes_localized];
     }else{
         countText = @(chatroom.onlineUserCount).stringValue;
     }

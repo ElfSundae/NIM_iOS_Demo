@@ -12,7 +12,7 @@
 @implementation NTESMessageUtil
 
 + (NSString *)messageContent:(NIMMessage *)message {
-    NSString *text = @"[未知消息]";
+    NSString *text = @"[未知消息]".ntes_localized;
     if (message.messageType == NIMMessageTypeCustom) {
         text = [self customMessageContent:message];
     } else {
@@ -22,27 +22,27 @@
 }
 
 + (NSString *)customMessageContent:(NIMMessage *)message {
-    NSString *text = @"[未知消息]";
+    NSString *text = @"[未知消息]".ntes_localized;
     NIMCustomObject *object = message.messageObject;
     if ([object.attachment isKindOfClass:[NTESSnapchatAttachment class]])
     {
-        text = @"[阅后即焚]";
+        text = @"[阅后即焚]".ntes_localized;
     }
     else if ([object.attachment isKindOfClass:[NTESJanKenPonAttachment class]])
     {
-        text = @"[猜拳]";
+        text = @"[猜拳]".ntes_localized;
     }
     else if ([object.attachment isKindOfClass:[NTESChartletAttachment class]])
     {
-        text = @"[贴图]";
+        text = @"[贴图]".ntes_localized;
     }
     else if ([object.attachment isKindOfClass:[NTESWhiteboardAttachment class]])
     {
-        text = @"[白板]";
+        text = @"[白板]".ntes_localized;
     }
     else if ([object.attachment isKindOfClass:[NTESRedPacketAttachment class]])
     {
-        text = @"[红包消息]";
+        text = @"[红包消息]".ntes_localized;
     }
     else if ([object.attachment isKindOfClass:[NTESRedPacketTipAttachment class]])
     {
@@ -51,11 +51,11 @@
     }
     else if ([object.attachment isKindOfClass:[NTESMultiRetweetAttachment class]])
     {
-        text = @"[聊天记录]";
+        text = @"[聊天记录]".ntes_localized;
     }
     else
     {
-        text = @"[未知消息]";
+        text = @"[未知消息]".ntes_localized;
     }
     return text;
 }

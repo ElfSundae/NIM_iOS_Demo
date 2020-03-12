@@ -57,7 +57,7 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"选择出生日期";
+    self.navigationItem.title = @"选择出生日期".ntes_localized;
 }
 
 - (void)buildData{
@@ -66,7 +66,7 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title         : @"生日",
+                                      Title         : @"生日".ntes_localized,
                                       DetailTitle   : self.birth,
                                       CellAction    : @"onTouchBirthSetting:",
                                       },
@@ -96,12 +96,12 @@
     [[NIMSDK sharedSDK].userManager updateMyUserInfo:@{@(NIMUserInfoUpdateTagBirth) : birth} completion:^(NSError *error) {
         [SVProgressHUD dismiss];
         if (!error) {
-            [wself.navigationController.view makeToast:@"生日设置成功"
+            [wself.navigationController.view makeToast:@"生日设置成功".ntes_localized
                                               duration:2
                                               position:CSToastPositionCenter];
             [wself.navigationController popViewControllerAnimated:YES];
         }else{
-            [wself.view makeToast:@"生日设置失败，请重试"
+            [wself.view makeToast:@"生日设置失败，请重试".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }

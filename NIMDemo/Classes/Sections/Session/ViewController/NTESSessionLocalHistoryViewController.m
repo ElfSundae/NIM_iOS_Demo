@@ -61,7 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"聊天记录";
+    self.navigationItem.title = @"聊天记录".ntes_localized;
     [self prepareMember];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
@@ -87,7 +87,7 @@
     [self.tableView registerClass:[NTESSearchMessageContentCell class] forCellReuseIdentifier:ContentCellIdentity];
     
     self.noResultTip = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.noResultTip.text = @"无结果";
+    self.noResultTip.text = @"无结果".ntes_localized;
     self.noResultTip.hidden = YES;
     [self.noResultTip sizeToFit];
     [self.tableView addSubview:self.noResultTip];
@@ -231,7 +231,7 @@
         return self.data;
     }else{
         NTESSearchLocalHistoryObject *obj = [[NTESSearchLocalHistoryObject alloc] init];
-        obj.content  = self.keyWord.length? [NSString stringWithFormat:@"搜索：“%@”",self.keyWord] : @"";
+        obj.content  = self.keyWord.length? [NSString stringWithFormat:@"%@：“%@”",@"搜索".ntes_localized, self.keyWord] : @"";
         obj.type     = SearchLocalHistoryTypeEntrance;
         obj.uiHeight = EntranceCellHeight;
         return [@[obj] mutableCopy];
@@ -267,7 +267,7 @@
     [btn addTarget:self action:@selector(loadMore:) forControlEvents:UIControlEventTouchUpInside];
     UILabel *lable = [[UILabel alloc] initWithFrame:CGRectZero];
     lable.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    lable.text = @"点击加载更多";
+    lable.text = @"点击加载更多".ntes_localized;
     [lable sizeToFit];
     [btn addSubview:lable];
     lable.centerX = btn.width  * .5f;

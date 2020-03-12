@@ -15,6 +15,7 @@
 #import "NTESGalleryViewController.h"
 #import "NTESVideoViewController.h"
 #import "NTESSessionViewController.h"
+#import <YYImage/YYImage.h>
 
 @interface NTESMediaPreviewViewHeader : UICollectionReusableView
 
@@ -78,7 +79,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"图片和视频";
+    self.navigationItem.title = @"图片和视频".ntes_localized;
     
     [self sort];
     
@@ -183,6 +184,7 @@
         NTESGalleryItem *item = [[NTESGalleryItem alloc] init];
         item.thumbPath      = [object thumbPath];
         item.imageURL       = [object url];
+        item.imagePath      = [object path];
         item.name           = [object displayName];
         item.itemId         = [object objectId];
         item.size           = [object imageSize];
@@ -257,11 +259,11 @@
     NSString *key;
     if (dateComponents.year == nowComponents.year && dateComponents.month == nowComponents.month && dateComponents.weekOfMonth == nowComponents.weekOfMonth)
     {
-        key = @"本周";
+        key = @"本周".ntes_localized;
     }
     else
     {
-        key = [NSString stringWithFormat:@"%zd年%zd月",dateComponents.year,dateComponents.month];
+        key = [NSString stringWithFormat:@"%zd%@%zd%@",dateComponents.year,@"年".ntes_localized, dateComponents.month, @"月".ntes_localized];
     }
     return key;
 }
@@ -333,12 +335,25 @@ FOUNDATION_STATIC_INLINE NSUInteger NTESCacheCostForImage(UIImage *image) {
     if (!image && [[NSFileManager defaultManager] fileExistsAtPath:object.thumbPath])
     {
         //存磁盘读出
-        image = [UIImage imageWithContentsOfFile:object.thumbPath];
-        //预解码
-        image = [SDImageCoderHelper decodedImageWithImage:image];
+        NSData * data = [NSData dataWithContentsOfFile:object.thumbPath];
+        YYImageDecoder *decoder = [YYImageDecoder decoderWithData:data scale:[UIScreen mainScreen].scale];
+        if (decoder.type == YYImageTypeWebP)
+        {
+            image = [decoder frameAtIndex:0 decodeForDisplay:YES].image;
+        }
+        else
+        {
+            image = [UIImage imageWithContentsOfFile:object.thumbPath];
+            //预解码
+            image = [SDImageCoderHelper decodedImageWithImage:image];
+        }
+        
         //缓存
         NSUInteger cost = NTESCacheCostForImage(image);
-        [previewImageCache setObject:image forKey:object.thumbPath cost:cost];
+        if (image)
+        {
+            [previewImageCache setObject:image forKey:object.thumbPath cost:cost];
+        }
     }
     if (!image && object.thumbUrl)
     {

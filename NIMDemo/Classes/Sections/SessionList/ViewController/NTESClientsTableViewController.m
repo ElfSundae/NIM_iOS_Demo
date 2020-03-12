@@ -34,7 +34,7 @@ NSString *Identifier = @"client_cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"多端登录管理";
+    self.navigationItem.title = @"多端登录管理".ntes_localized;
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.backgroundColor = UIColorFromRGB(0xecf1f5);
@@ -111,7 +111,7 @@ NSString *Identifier = @"client_cell";
         if (error)
         {
             DDLogError(@"on kick error : %@", error);
-            [wself.view makeToast:@"踢出失败"
+            [wself.view makeToast:@"踢出失败".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }
@@ -168,7 +168,7 @@ NSString *Identifier = @"client_cell";
     if (self.clients.count) {
         [self reload];
     }else{
-        [self.navigationController.view makeToast:@"已没有其他设备连接"
+        [self.navigationController.view makeToast:@"已没有其他设备连接".ntes_localized
                                          duration:2
                                          position:CSToastPositionCenter];
         [self.navigationController popViewControllerAnimated:YES];

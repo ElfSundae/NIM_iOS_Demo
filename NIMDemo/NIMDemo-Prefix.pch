@@ -16,6 +16,8 @@
 #import <NIMAVChat/NIMAVChat.h>
 #import "NTESGlobalMacro.h"
 #import "NIMKit.h"
+#import "NSString+NTES.h"
+
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 

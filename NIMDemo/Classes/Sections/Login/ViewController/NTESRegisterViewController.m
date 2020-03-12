@@ -22,9 +22,9 @@
 NTES_USE_CLEAR_BAR
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self resetTextField:self.accountTextfield placeholder:@"帐号：限20位字母或者数字"];
-    [self resetTextField:self.nicknameTextfield placeholder:@"昵称：限10位汉字、字母或者数字"];
-    [self resetTextField:self.passwordTextfield placeholder:@"密码：6~20位字母或者数字"];
+    [self resetTextField:self.accountTextfield placeholder:@"帐号：限20位字母或者数字".ntes_localized];
+    [self resetTextField:self.nicknameTextfield placeholder:@"昵称：限10位汉字、字母或者数字".ntes_localized];
+    [self resetTextField:self.passwordTextfield placeholder:@"密码：6~20位字母或者数字".ntes_localized];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
@@ -40,7 +40,7 @@ NTES_USE_CLEAR_BAR
 - (void)setupNav
 {
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [registerBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [registerBtn setTitle:@"完成".ntes_localized forState:UIControlStateNormal];
     registerBtn.titleLabel.font = [UIFont systemFontOfSize:15.f];
     [registerBtn setTitleColor:UIColorFromRGB(0x2294ff) forState:UIControlStateNormal];
     
@@ -87,7 +87,7 @@ NTES_USE_CLEAR_BAR
                                        completion:^(NSError *error, NSString *errorMsg) {
                                            [SVProgressHUD dismiss];
                                            if (error == nil) {
-                                               [weakSelf.navigationController.view makeToast:@"注册成功"
+                                               [weakSelf.navigationController.view makeToast:@"注册成功".ntes_localized
                                                                                     duration:2
                                                                                     position:CSToastPositionCenter];
                                                if ([weakSelf.delegate respondsToSelector:@selector(registDidComplete:password:)]) {
@@ -101,7 +101,7 @@ NTES_USE_CLEAR_BAR
                                                    [weakSelf.delegate registDidComplete:nil password:nil];
                                                }
                                                
-                                               NSString *toast = [NSString stringWithFormat:@"注册失败"];
+                                               NSString *toast = [NSString stringWithFormat:@"注册失败".ntes_localized];
                                                if ([errorMsg isKindOfClass:[NSString class]] &&errorMsg.length) {
                                                    toast = [toast stringByAppendingFormat:@": %@",errorMsg];
                                                }
@@ -145,7 +145,7 @@ NTES_USE_CLEAR_BAR
     if (self.logo.bottom > self.navigationController.navigationBar.bottom) {
         self.logo.bottom = self.navigationController.navigationBar.bottom;
         self.logo.alpha  = 0;
-        self.navigationItem.title = @"注册";
+        self.navigationItem.title = @"注册".ntes_localized;
     }
     [UIView commitAnimations];
     
@@ -181,21 +181,21 @@ NTES_USE_CLEAR_BAR
 
 - (BOOL)check{
     if (!self.checkAccount) {
-        [self.view makeToast:@"账号长度有误"
+        [self.view makeToast:@"账号长度有误".ntes_localized
                     duration:2
                     position:CSToastPositionCenter];
         
         return NO;
     }
     if (!self.checkPassword) {
-        [self.view makeToast:@"密码长度有误"
+        [self.view makeToast:@"密码长度有误".ntes_localized
                     duration:2
                     position:CSToastPositionCenter];
         
         return NO;
     }
     if (!self.checkNickname) {
-        [self.view makeToast:@"昵称长度有误"
+        [self.view makeToast:@"昵称长度有误".ntes_localized
                     duration:2
                     position:CSToastPositionCenter];
         

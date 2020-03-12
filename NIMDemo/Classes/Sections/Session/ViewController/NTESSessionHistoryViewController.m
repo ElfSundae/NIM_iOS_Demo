@@ -42,7 +42,7 @@
 - (NSArray *)mediaItems {
     NSMutableArray *items = [super mediaItems].mutableCopy;
     for (NIMMediaItem *item in items) {
-        if ([item.title isEqualToString:@"已读回执"]) {
+        if ([item.title isEqualToString:@"已读回执".ntes_localized]) {
             [items removeObject:item];
             break;
         }

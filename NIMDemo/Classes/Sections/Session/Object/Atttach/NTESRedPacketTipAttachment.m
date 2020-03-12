@@ -70,18 +70,21 @@
     {
         if ([self.isGetDone boolValue])
         {
-            showContent = @"你领取了自己的红包，你的红包已被领完";
+            showContent = @"你领取了自己的红包，你的红包已被领完".ntes_localized;
         }
         else
         {
-            showContent = @"你领取了自己的红包";
+            showContent = @"你领取了自己的红包".ntes_localized;
         }
     }
     else if ([currentUserId isEqualToString:self.openPacketId])
     {
         NIMKitInfo * sendUserInfo = [[NIMKit sharedKit] infoByUser:self.sendPacketId option:option];
         NSString * name = sendUserInfo.showName;
-        showContent = [NSString stringWithFormat:@"你领取了%@的红包", name];
+        showContent = [NSString stringWithFormat:@"%@%@%@",
+                       @"你领取了".ntes_localized,
+                       name,
+                       @"红包".ntes_localized];
     }
     
     // 他人领取你的红包
@@ -92,11 +95,15 @@
         
         if ([self.isGetDone boolValue])
         {
-            showContent = [NSString stringWithFormat:@"%@领取了你的红包，你的红包已被领完", name];
+            showContent = [NSString stringWithFormat:@"%@%@",
+                           name,
+                           @"领取了你的红包，你的红包已被领完".ntes_localized];
         }
         else
         {
-            showContent = [NSString stringWithFormat:@"%@领取了你的红包", name];
+            showContent = [NSString stringWithFormat:@"%@%@",
+                           name,
+                           @"领取了你的红包".ntes_localized];
         }
     }
     

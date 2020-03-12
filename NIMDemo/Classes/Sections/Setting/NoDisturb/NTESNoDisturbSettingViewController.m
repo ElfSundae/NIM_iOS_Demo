@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"免打扰设置";
+    self.navigationItem.title = @"免打扰设置".ntes_localized;
     [self buildData];
     __weak typeof(self) wself = self;
     self.delegator = [[NIMCommonTableDelegate alloc] initWithTableData:^NSArray *{
@@ -55,28 +55,28 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title        : @"免打扰",
+                                      Title        : @"免打扰".ntes_localized,
                                       CellClass    : @"NTESSettingSwitcherCell",
                                       CellAction   : @"onActionNoDisturbingSettingValueChange:",
                                       ExtraInfo    : @(enableNoDisturbing),
                                       ForbidSelect : @(YES)
                                       },
                                   @{
-                                      Title       : @"从",
+                                      Title       : @"从".ntes_localized,
                                       DetailTitle : noDisturbingStart,
                                       CellClass   : @"NTESNoDisturbTimeCell",
                                       CellAction  : @"onActionSetNoDisturbingStart:",
                                       Disable     : @(!enableNoDisturbing),
                                       },
                                   @{
-                                      Title      :@"至",
+                                      Title      :@"至".ntes_localized,
                                       DetailTitle:noDisturbingEnd,
                                       CellClass  :@"NTESNoDisturbTimeCell",
                                       CellAction :@"onActionSetNoDisturbingEnd:",
                                       Disable    :@(!enableNoDisturbing),
                                       },
                                   ],
-                          FooterTitle:@"在设定的时间段内云信消息将不再提醒。"
+                          FooterTitle:@"在设定的时间段内云信消息将不再提醒。".ntes_localized
                           },
                       ];
     self.data = [NIMCommonTableSection sectionsWithData:data];
@@ -105,7 +105,7 @@
     [pickerView showInView:self.view.window onCompletion:^(NSInteger hour, NSInteger minute) {
         NIMPushNotificationSetting *setting = [[NIMSDK sharedSDK].apnsManager currentSetting];
         if (hour == setting.noDisturbingEndH && minute == setting.noDisturbingEndM) {
-            [wself.view makeToast:@"结束时间不能与开始时间一致" duration:2.0 position:CSToastPositionCenter];
+            [wself.view makeToast:@"结束时间不能与开始时间一致".ntes_localized duration:2.0 position:CSToastPositionCenter];
             [wself refreshData];
         }else{
             setting.noDisturbingStartH = hour;
@@ -123,7 +123,7 @@
     [pickerView showInView:self.view.window onCompletion:^(NSInteger hour, NSInteger minute) {
         NIMPushNotificationSetting *setting = [[NIMSDK sharedSDK].apnsManager currentSetting];
         if (hour == setting.noDisturbingStartH && minute == setting.noDisturbingStartM) {
-            [wself.view makeToast:@"结束时间不能与开始时间一致" duration:2.0 position:CSToastPositionCenter];
+            [wself.view makeToast:@"结束时间不能与开始时间一致".ntes_localized duration:2.0 position:CSToastPositionCenter];
             [wself refreshData];
         }else{
             setting.noDisturbingEndH = hour;
@@ -143,7 +143,7 @@
     [[NIMSDK sharedSDK].apnsManager updateApnsSetting:setting completion:^(NSError *error) {
         wself.isUpdate = YES;
         if (error) {
-            [wself.view makeToast:@"免打扰设置更新失败" duration:2.0 position:CSToastPositionCenter];
+            [wself.view makeToast:@"免打扰设置更新失败".ntes_localized duration:2.0 position:CSToastPositionCenter];
         }
         [wself refreshData];
     }];

@@ -224,6 +224,20 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
     
 }
 
+- (void)onRecvMessageDeleted:(NIMMessage *)message ext:(NSString *)ext
+{
+
+    NTESMainTabController *tabVC = [NTESMainTabController instance];
+    UINavigationController *nav = tabVC.selectedViewController;
+
+    for (NTESSessionViewController *vc in nav.viewControllers) {
+        if ([vc isKindOfClass:[NTESSessionViewController class]]
+            && [vc.session.sessionId isEqualToString:message.session.sessionId]) {
+            [vc uiDeleteMessage:message];
+        }
+    }
+}
+
 
 #pragma mark - NIMSystemNotificationManagerDelegate
 - (void)onReceiveCustomSystemNotification:(NIMCustomSystemNotification *)notification{
@@ -404,12 +418,19 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
 #pragma mark - format
 - (NSString *)textByCaller:(NSString *)caller type:(NIMNetCallMediaType)type
 {
-    NSString *action = type == NIMNetCallMediaTypeAudio ? @"音频":@"视频";
-    NSString *text = [NSString stringWithFormat:@"你收到了一个%@聊天请求",action];
+    NSString *action = type == NIMNetCallMediaTypeAudio ? @"音频".ntes_localized : @"视频".ntes_localized;
+    NSString *text = [NSString stringWithFormat:@"%@%@%@",
+                              @"你收到了一个".ntes_localized,
+                              action,
+                              @"聊天请求".ntes_localized];
     NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:caller option:nil];
     if ([info.showName length])
     {
-        text = [NSString stringWithFormat:@"%@向你发起了一个%@聊天请求",info.showName,action];
+        text = [NSString stringWithFormat:@"%@%@%@%@",
+                info.showName,
+                @"向你发起了一个".ntes_localized,
+                action,
+                @"聊天请求".ntes_localized];
     }
     return text;
 }
@@ -417,11 +438,13 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
 
 - (NSString *)textByCaller:(NSString *)caller
 {
-    NSString *text = @"你收到了一个白板请求";
+    NSString *text = @"你收到了一个白板请求".ntes_localized;
     NIMKitInfo *info = [[NIMKit sharedKit] infoByUser:caller option:nil];
     if ([info.showName length])
     {
-        text = [NSString stringWithFormat:@"%@向你发起了一个白板请求",info.showName];
+        text = [NSString stringWithFormat:@"%@%@",
+                info.showName,
+                @"向你发起了一个白板请求".ntes_localized];
     }
     return text;
 }

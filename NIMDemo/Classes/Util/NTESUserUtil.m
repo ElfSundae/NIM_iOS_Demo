@@ -15,13 +15,13 @@
     NSString *genderStr = @"";
     switch (gender) {
         case NIMUserGenderMale:
-            genderStr = @"男";
+            genderStr = @"男".ntes_localized;
             break;
         case NIMUserGenderFemale:
-            genderStr = @"女";
+            genderStr = @"女".ntes_localized;
             break;
         case NIMUserGenderUnknown:
-            genderStr = @"未知";
+            genderStr = @"未知".ntes_localized;
         default:
             break;
     }

@@ -27,7 +27,7 @@
     if (!_sureBtn) {
         _sureBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         _sureBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        [_sureBtn setTitle:@"发送" forState:UIControlStateNormal];
+        [_sureBtn setTitle:@"发送".ntes_localized forState:UIControlStateNormal];
     }
     return _sureBtn;
 }

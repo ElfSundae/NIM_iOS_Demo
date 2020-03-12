@@ -133,13 +133,13 @@
         NSString *showNameKey = @"showName";
         NSArray *vcs = @[
                          @{
-                             showNameKey : @"直播互动"
+                             showNameKey : @"直播互动".ntes_localized
                              },
                          @{
-                             showNameKey : @"主播"
+                             showNameKey : @"主播".ntes_localized
                              },
                          @{
-                             showNameKey : @"在线成员"
+                             showNameKey : @"在线成员".ntes_localized
                              },
                          ];
         for (NSDictionary *dict in vcs) {

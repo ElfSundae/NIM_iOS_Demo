@@ -64,7 +64,9 @@
         //目前的踢人逻辑是web和pc不能共存，移动端不能共存，所以这里取第一个显示就可以了
         NIMLoginClient *client = clients.firstObject;
         NSString *name = [NTESClientUtil clientName:client.type];
-        text = name.length? [NSString stringWithFormat:@"正在使用云信%@版",name] : @"正在使用云信未知版本";
+        text = name.length? [NSString stringWithFormat:@"%@ %@",
+                             @"正在使用云信".ntes_localized,
+                             name] : @"正在使用云信未知版本".ntes_localized;
     }
     [self addRow:ListHeaderTypeLoginClients content:text viewClassName:@"NTESMutiClientsHeaderView"];
 }
@@ -75,20 +77,20 @@
     switch (step) {
         case NIMLoginStepLinkFailed:
         case NIMLoginStepLoseConnection:
-            text = @"当前网络不可用，请检查网络设置";
+            text = @"当前网络不可用，请检查网络设置".ntes_localized;
             break;
         case NIMLoginStepLoginFailed:
-            text = @"登录失败";
+            text = @"登录失败".ntes_localized;
             break;
         case NIMLoginStepNetChanged:
         {
             if ([[Reachability reachabilityForInternetConnection] isReachable])
             {
-                text = @"网络正在切换,识别中....";
+                text = @"网络正在切换,识别中....".ntes_localized;
             }
             else
             {
-                text = @"当前网络不可用";
+                text = @"当前网络不可用".ntes_localized;
             }
         }
             break;

@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"文件列表";
+    self.navigationItem.title = @"文件列表".ntes_localized;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.data = [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"Files"];
 }
@@ -38,11 +38,11 @@
     NSString *filePath = self.data[indexPath.row];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD showWithStatus:@"加载中"];
+    [SVProgressHUD showWithStatus:@"加载中".ntes_localized];
     
     if (self.completionBlock) {
         unsigned long long fileSize = [self fileSizeWithPath:filePath];
-        if(fileSize > 200 * 1024 * 1024) {
+        if(fileSize > 200 * 1024 * 1024 || indexPath.row % 2 == 1) {
             self.completionBlock(filePath,filePath.pathExtension);
             self.completionBlock = nil;
         }else{
@@ -67,7 +67,7 @@
     if (indexPath.row % 2 == 0) {
         cell.textLabel.text = path.lastPathComponent;
     }else{
-        cell.textLabel.text = [path.lastPathComponent stringByAppendingString:@"(DATA 传输)"];
+        cell.textLabel.text = [path.lastPathComponent stringByAppendingString:@"(DATA 传输)".ntes_localized];
     }
 
     return cell;

@@ -49,13 +49,13 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
-    imageObject.displayName = [NSString stringWithFormat:@"图片发送于%@",dateString];
+    imageObject.displayName = [NSString stringWithFormat:@"%@%@",@"图片发送于".ntes_localized, dateString];
     NIMImageOption *option  = [[NIMImageOption alloc] init];
     option.compressQuality  = 0.8;
     imageObject.option = option;
     NIMMessage *message     = [[NIMMessage alloc] init];
     message.messageObject   = imageObject;
-    message.apnsContent = @"发来了一张图片";
+    message.apnsContent = @"发来了一张图片".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
@@ -71,7 +71,7 @@
     NIMAudioObject *audioObject = [[NIMAudioObject alloc] initWithSourcePath:filePath];
     NIMMessage *message = [[NIMMessage alloc] init];
     message.messageObject = audioObject;
-    message.apnsContent = @"发来了一段语音";
+    message.apnsContent = @"发来了一段语音".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
@@ -84,10 +84,10 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     NIMVideoObject *videoObject = [[NIMVideoObject alloc] initWithSourcePath:filePath];
-    videoObject.displayName = [NSString stringWithFormat:@"视频发送于%@",dateString];
+    videoObject.displayName = [NSString stringWithFormat:@"%@%@",@"视频发送于".ntes_localized,dateString];
     NIMMessage *message = [[NIMMessage alloc] init];
     message.messageObject = videoObject;
-    message.apnsContent = @"发来了一段视频";
+    message.apnsContent = @"发来了一段视频".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
@@ -101,7 +101,7 @@
     NIMCustomObject *customObject     = [[NIMCustomObject alloc] init];
     customObject.attachment           = attachment;
     message.messageObject             = customObject;
-    message.apnsContent = @"发来了猜拳信息";
+    message.apnsContent = @"发来了猜拳信息".ntes_localized;
     message.setting = [[NIMMessageSetting alloc] init];
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
@@ -115,7 +115,7 @@
     NIMCustomObject *customObject     = [[NIMCustomObject alloc] init];
     customObject.attachment           = attachment;
     message.messageObject             = customObject;
-    message.apnsContent = @"发来了阅后即焚";
+    message.apnsContent = @"发来了阅后即焚".ntes_localized;
     
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.historyEnabled = NO;
@@ -133,7 +133,7 @@
     fileObject.displayName    = displayName;
     NIMMessage *message       = [[NIMMessage alloc] init];
     message.messageObject     = fileObject;
-    message.apnsContent = @"发来了一个文件";
+    message.apnsContent = @"发来了一个文件".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
@@ -154,7 +154,7 @@
     fileObject.displayName    = displayName;
     NIMMessage *message       = [[NIMMessage alloc] init];
     message.messageObject     = fileObject;
-    message.apnsContent = @"发来了一个文件";
+    message.apnsContent = @"发来了一个文件".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
@@ -167,7 +167,7 @@
     NIMCustomObject *customObject     = [[NIMCustomObject alloc] init];
     customObject.attachment           = attachment;
     message.messageObject             = customObject;
-    message.apnsContent = @"[贴图]";
+    message.apnsContent = @"[贴图]".ntes_localized;
     message.setting = [[NIMMessageSetting alloc] init];
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
@@ -212,7 +212,7 @@
     customObject.attachment           = attachment;
     message.messageObject             = customObject;
     
-    message.apnsContent = @"发来了一个红包";
+    message.apnsContent = @"发来了一个红包".ntes_localized;
     
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.historyEnabled     = NO;
@@ -243,7 +243,7 @@
     NIMCustomObject *customObject     = [[NIMCustomObject alloc] init];
     customObject.attachment           = attachment;
     message.messageObject             = customObject;
-    message.apnsContent = @"发来一段聊天记录";
+    message.apnsContent = @"发来一段聊天记录".ntes_localized;
     message.setting = [[NIMMessageSetting alloc] init];
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];

@@ -75,7 +75,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    self.navigationItem.title = @"超大群组";
+    self.navigationItem.title = @"超大群组".ntes_localized;
     [[NIMSDK sharedSDK].superTeamManager addDelegate:self];
 }
 
@@ -122,7 +122,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    self.navigationItem.title = @"高级群组";
+    self.navigationItem.title = @"高级群组".ntes_localized;
     [[NIMSDK sharedSDK].teamManager addDelegate:self];
 }
 
@@ -170,7 +170,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    self.navigationItem.title = @"讨论组";
+    self.navigationItem.title = @"讨论组".ntes_localized;
 }
 
 //MARK:Reload

@@ -31,10 +31,10 @@
     NSString *msg = @"";
     switch (self.flag) {
         case CustomWhiteboardFlagInvite:
-            msg = @"我发起了白板演示";
+            msg = @"我发起了白板演示".ntes_localized;
             break;
         case CustomWhiteboardFlagClose:
-            msg = @"白板演示已结束";
+            msg = @"白板演示已结束".ntes_localized;
         default:
             break;
     }

@@ -47,7 +47,9 @@
     NSURL *avatarUrl     = [NSURL URLWithString:member.roomAvatar];
     [self.avatarImageView nim_setImageWithURL:avatarUrl placeholderImage:nil];
     NSString *masterName = member.roomNickname;
-    self.nameLabel.text  = [NSString stringWithFormat:@"主播 :  %@",masterName];
+    self.nameLabel.text  = [NSString stringWithFormat:@"%@ :  %@",
+                            @"主播".ntes_localized,
+                            masterName];
     [self.nameLabel sizeToFit];
     self.countLabel.text = @(chatroom.onlineUserCount).stringValue;
     [self.countLabel sizeToFit];

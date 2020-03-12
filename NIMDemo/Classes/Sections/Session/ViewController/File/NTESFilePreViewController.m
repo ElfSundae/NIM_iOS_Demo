@@ -42,9 +42,9 @@
     self.progressView.hidden = YES;
     [self.actionBtn addTarget:self action:@selector(touchUpBtn) forControlEvents:UIControlEventTouchUpInside];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        [self.actionBtn setTitle:@"用其他应用程序打开" forState:UIControlStateNormal];
+        [self.actionBtn setTitle:@"用其他应用程序打开".ntes_localized forState:UIControlStateNormal];
     }else{
-        [self.actionBtn setTitle:@"下载文件" forState:UIControlStateNormal];
+        [self.actionBtn setTitle:@"下载文件".ntes_localized forState:UIControlStateNormal];
     }
 }
 
@@ -57,7 +57,7 @@
             [[NIMSDK sharedSDK].chatManager cancelFetchingMessageAttachment:self.fileObject.message];
             self.progressView.hidden   = YES;
             self.progressView.progress = 0.0;
-            [self.actionBtn setTitle:@"下载文件" forState:UIControlStateNormal];
+            [self.actionBtn setTitle:@"下载文件".ntes_localized forState:UIControlStateNormal];
             self.isDownLoading         = NO;
         }else{
             [self downLoadFile];
@@ -80,7 +80,7 @@
         self.isDownLoading = YES;
         self.progressView.hidden = NO;
         self.progressView.progress = progress;
-        [self.actionBtn setTitle:@"取消下载" forState:UIControlStateNormal];
+        [self.actionBtn setTitle:@"取消下载".ntes_localized forState:UIControlStateNormal];
     }
 }
 
@@ -94,12 +94,12 @@
         self.progressView.hidden = YES;
         if (!error)
         {
-            [self.actionBtn setTitle:@"用其他应用程序打开" forState:UIControlStateNormal];
+            [self.actionBtn setTitle:@"用其他应用程序打开".ntes_localized forState:UIControlStateNormal];
         }
         else
         {
             self.progressView.progress = 0.0f;
-            [self.actionBtn setTitle:@"下载失败，点击重新下载" forState:UIControlStateNormal];
+            [self.actionBtn setTitle:@"下载失败，点击重新下载".ntes_localized forState:UIControlStateNormal];
         }
     }
 }
@@ -113,7 +113,7 @@
     interactionControllerWithURL:[NSURL fileURLWithPath:self.fileObject.path]];
     if (![self.interactionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:YES])
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"未找到打开该应用的程序" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"未找到打开该应用的程序".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles: nil];
         [alert show];
     }
 }

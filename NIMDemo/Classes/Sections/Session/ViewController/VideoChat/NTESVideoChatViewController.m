@@ -160,7 +160,7 @@
     self.refuseBtn.hidden   = YES;
     self.hungUpBtn.hidden   = NO;
     self.connectingLabel.hidden = NO;
-    self.connectingLabel.text = @"正在呼叫，请稍候...";
+    self.connectingLabel.text = @"正在呼叫，请稍候...".ntes_localized;
     self.switchModelBtn.hidden = YES;
     self.switchCameraBtn.hidden = NO;
     self.muteBtn.hidden = NO;
@@ -183,7 +183,7 @@
     self.refuseBtn.hidden   = NO;
     self.hungUpBtn.hidden   = YES;
     NSString *nick = [NTESSessionUtil showNick:self.callInfo.caller inSession:nil];
-    self.connectingLabel.text = [nick stringByAppendingString:@"的来电"];
+    self.connectingLabel.text = [nick stringByAppendingString:@"的来电".ntes_localized];
     self.muteBtn.hidden = YES;
     self.switchCameraBtn.hidden = YES;
     self.disableCameraBtn.hidden = YES;
@@ -199,7 +199,7 @@
     self.refuseBtn.hidden   = YES;
     self.hungUpBtn.hidden   = NO;
     self.connectingLabel.hidden = NO;
-    self.connectingLabel.text = @"正在连接对方...请稍后...";
+    self.connectingLabel.text = @"正在连接对方...请稍后...".ntes_localized;
     self.switchModelBtn.hidden = YES;
     self.switchCameraBtn.hidden = YES;
     self.muteBtn.hidden = YES;
@@ -237,7 +237,7 @@
     self.localRecordingView.hidden = [self allRecordsStopped];
 ;
     self.lowMemoryView.hidden = YES;
-    [self.switchModelBtn setTitle:@"语音模式" forState:UIControlStateNormal];
+    [self.switchModelBtn setTitle:@"语音模式".ntes_localized forState:UIControlStateNormal];
     [self.hungUpBtn removeTarget:self action:NULL forControlEvents:UIControlEventTouchUpInside];
     [self.hungUpBtn addTarget:self action:@selector(hangup) forControlEvents:UIControlEventTouchUpInside];
 //    self.localVideoLayer.hidden = NO;
@@ -417,14 +417,14 @@
             [self resetRemoteImage];
             self.oppositeCloseVideo = YES;
             _remoteView.hidden = YES;
-            [self.view makeToast:@"对方关闭了摄像头"
+            [self.view makeToast:@"对方关闭了摄像头".ntes_localized
                         duration:2
                         position:CSToastPositionCenter];
             break;
         case NIMNetCallControlTypeOpenVideo:
             self.oppositeCloseVideo = NO;
             _remoteView.hidden = NO;
-            [self.view makeToast:@"对方开启了摄像头"
+            [self.view makeToast:@"对方开启了摄像头".ntes_localized
                         duration:2
                         position:CSToastPositionCenter];
             break;

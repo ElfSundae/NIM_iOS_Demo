@@ -17,7 +17,7 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _label = [[UILabel alloc] initWithFrame:CGRectZero];
         _label.textColor = UIColorFromRGB(0x888888);
-        _label.font = [UIFont systemFontOfSize:14.f];
+        _label.font = [UIFont systemFontOfSize:11.f];
         [self addSubview:_label];
     }
     return self;

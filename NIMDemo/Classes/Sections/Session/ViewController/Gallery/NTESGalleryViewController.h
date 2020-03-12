@@ -12,6 +12,7 @@
 @property (nonatomic,copy)  NSString    *itemId;
 @property (nonatomic,copy)  NSString    *thumbPath;
 @property (nonatomic,copy)  NSString    *imageURL;
+@property (nonatomic,copy)  NSString    *imagePath;
 @property (nonatomic,copy)  NSString    *name;
 @property (nonatomic,assign) CGSize     size;
 @end

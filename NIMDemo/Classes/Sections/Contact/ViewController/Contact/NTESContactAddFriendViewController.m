@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"添加好友";
+    self.navigationItem.title = @"添加好友".ntes_localized;
     __weak typeof(self) wself = self;
     [self buildData];
     self.delegator = [[NIMCommonTableDelegate alloc] initWithTableData:^NSArray *{
@@ -59,7 +59,7 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title         : @"请输入帐号",
+                                      Title         : @"请输入帐号".ntes_localized,
                                       CellClass     : @"NTESTextSettingCell",
                                       RowHeight     : @(50),
                                       },
@@ -98,7 +98,7 @@
             [wself.navigationController pushViewController:vc animated:YES];
         }else{
             if (wself) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"该用户不存在" message:@"请检查你输入的帐号是否正确" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"该用户不存在".ntes_localized message:@"请检查你输入的帐号是否正确".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
                 [alert show];
             }
         }

@@ -42,13 +42,13 @@
         self.handleInfoLabel.hidden = NO;
         switch (self.notification.handleStatus) {
             case NotificationHandleTypeOk:
-                 self.handleInfoLabel.text = @"已同意";
+                 self.handleInfoLabel.text = @"已同意".ntes_localized;
                 break;
             case NotificationHandleTypeNo:
-                self.handleInfoLabel.text = @"已拒绝";
+                self.handleInfoLabel.text = @"已拒绝".ntes_localized;
                 break;
             case NotificationHandleTypeOutOfDate:
-                self.handleInfoLabel.text = @"已过期";
+                self.handleInfoLabel.text = @"已过期".ntes_localized;
                 break;
             default:
                 self.handleInfoLabel.text = nil;
@@ -78,70 +78,80 @@
         case NIMSystemNotificationTypeTeamApply:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"申请加入群 %@", team.teamName];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@",@"申请加入群".ntes_localized, team.teamName];
         }
             break;
         case NIMSystemNotificationTypeTeamApplyReject:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"群 %@ 拒绝你加入", team.teamName];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@ %@",
+                                         @"群".ntes_localized,
+                                         team.teamName,
+                                         @"拒绝你加入".ntes_localized];
         }
             break;
         case NIMSystemNotificationTypeTeamInvite:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:self.notification.targetID];
             
-            self.detailTextLabel.text = [NSString stringWithFormat:@"群 %@ 邀请你加入 attach:%@", team.teamName, self.notification.notifyExt ? : @""];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@ %@ attach:%@",
+                                         @"群".ntes_localized,
+                                         team.teamName,
+                                         @"邀请你加入".ntes_localized,
+                                         self.notification.notifyExt ? : @""];
         }
             break;
         case NIMSystemNotificationTypeTeamIviteReject:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"拒绝了群 %@ 邀请", team.teamName];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@ %@",
+                                         @"拒绝了群".ntes_localized,
+                                         team.teamName,
+                                         @"邀请".ntes_localized];
         }
             break;
         case NIMSystemNotificationTypeSuperTeamApply:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"申请加入超大群 %@", team.teamName];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"申请加入超大群 %@".ntes_localized, team.teamName];
             break;
         }
         case NIMSystemNotificationTypeSuperTeamApplyReject:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"超大群 %@ 拒绝你加入", team.teamName];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"超大群 %@ 拒绝你加入".ntes_localized, team.teamName];
             break;
         }
         case NIMSystemNotificationTypeSuperTeamInvite:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"超大群 %@ 邀请你加入 attach:%@", team.teamName, self.notification.notifyExt ? : @""];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"超大群 %@ 邀请你加入 attach:%@".ntes_localized, team.teamName, self.notification.notifyExt ? : @""];
             break;
         }
         case NIMSystemNotificationTypeSuperTeamIviteReject:
         {
             NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.notification.targetID];
-            self.detailTextLabel.text = [NSString stringWithFormat:@"拒绝了超大群 %@ 邀请", team.teamName];
+            self.detailTextLabel.text = [NSString stringWithFormat:@"拒绝了超大群 %@ 邀请".ntes_localized, team.teamName];
             break;
         }
         case NIMSystemNotificationTypeFriendAdd:
         {
-            NSString *text = @"未知请求";
+            NSString *text = @"未知请求".ntes_localized;
             id object = self.notification.attachment;
             if ([object isKindOfClass:[NIMUserAddAttachment class]]) {
                 NIMUserOperation operation = [(NIMUserAddAttachment *)object operationType];
                 switch (operation) {
                     case NIMUserOperationAdd:
-                        text = @"已添加你为好友";
+                        text = @"已添加你为好友".ntes_localized;
                         break;
                     case NIMUserOperationRequest:
-                        text = @"请求添加你为好友";
+                        text = @"请求添加你为好友".ntes_localized;
                         break;
                     case NIMUserOperationVerify:
-                        text = @"通过了你的好友请求";
+                        text = @"通过了你的好友请求".ntes_localized;
                         break;
                     case NIMUserOperationReject:
-                        text = @"拒绝了你的好友请求";
+                        text = @"拒绝了你的好友请求".ntes_localized;
                         break;
                     default:
                         break;

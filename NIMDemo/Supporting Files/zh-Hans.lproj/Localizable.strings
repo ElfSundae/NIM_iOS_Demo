@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  NIM
+
+  Created by zhanggenning on 2019/10/23.
+  Copyright © 2019 Netease. All rights reserved.
+*/
+
+"Choose From Library" = "相册";
+"Take Photo" = "相机";
+"Cancel" = "取消";
+
+"云信" = "云信(简体)";

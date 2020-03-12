@@ -40,7 +40,7 @@ NSString *const NIMDemoEventNameCloseSnapPicture = @"NIMDemoEventNameCloseSnapPi
         _label = [[UILabel alloc] initWithFrame:CGRectZero];
         _label.font = [UIFont systemFontOfSize:13.f];
         _label.textColor = [UIColor grayColor];
-        _label.text = @"按住查看";
+        _label.text = @"按住查看".ntes_localized;
         [_label sizeToFit];
         [self addSubview:_label];
     }

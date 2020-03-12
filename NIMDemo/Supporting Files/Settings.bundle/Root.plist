@@ -267,6 +267,16 @@
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>enable_revoke_count</string>
+			<key>Title</key>
+			<string>撤回消息不计入角标</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>网络通话和白板参数设置</string>
 			<key>Type</key>

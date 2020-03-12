@@ -55,7 +55,7 @@
         self.layer.masksToBounds = YES;
         //title
         _title = [[UILabel alloc]init];
-        [_title setText:@"选择录制内容"];
+        [_title setText:@"选择录制内容".ntes_localized];
         [_title setFont:[UIFont systemFontOfSize:16]];
         _title.textColor = UIColorFromRGB(NTESRecordSelectLabelTextColor);
         _title.textAlignment = NSTextAlignmentCenter;
@@ -63,28 +63,28 @@
         
         //subTitle
         _subTitle = [[UILabel alloc]init];
-        [_subTitle setText:@"录制的内容会被单独保存"];
+        [_subTitle setText:@"录制的内容会被单独保存".ntes_localized];
         _subTitle.textAlignment = NSTextAlignmentCenter;
         [_subTitle setFont:[UIFont systemFontOfSize:10]];
         _subTitle.textColor = UIColorFromRGB(NTESRecordSelectLabelTextGrayColor);
         [self addSubview:_subTitle];
 
         _audioConversationLable = [[UILabel alloc]init];
-        [_audioConversationLable setText:@"语音对话"];
+        [_audioConversationLable setText:@"语音对话".ntes_localized];
         _audioConversationLable.textAlignment = NSTextAlignmentLeft;
         _audioConversationLable.textColor = UIColorFromRGB(NTESRecordSelectLabelTextColor);
 
         [self addSubview:_audioConversationLable];
 
         _myMediaLable = [[UILabel alloc]init];
-        [_myMediaLable setText: isVideo ? @"我的音视频" : @"我的音频"];
+        [_myMediaLable setText: isVideo ? @"我的音视频".ntes_localized : @"我的音频".ntes_localized];
         _myMediaLable.textAlignment = NSTextAlignmentLeft;
         _myMediaLable.textColor = UIColorFromRGB(NTESRecordSelectLabelTextColor);
 
         [self addSubview:_myMediaLable];
 
         _otherSideMediaLable = [[UILabel alloc]init];
-        [_otherSideMediaLable setText: isVideo ? @"对方音视频": @"对方音频"];
+        [_otherSideMediaLable setText: isVideo ? @"对方音视频".ntes_localized: @"对方音频".ntes_localized];
         _otherSideMediaLable.textAlignment = NSTextAlignmentLeft;
         _otherSideMediaLable.textColor = UIColorFromRGB(NTESRecordSelectLabelTextColor);
 
@@ -122,13 +122,13 @@
         [self addSubview:_verticalSplitLine];
         
         _cancelButton = [[UIButton alloc]init];
-        [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [_cancelButton setTitle:@"取消".ntes_localized forState:UIControlStateNormal];
         [_cancelButton setTitleColor:UIColorFromRGB(NTESRecordSelectLabelTextColor) forState:UIControlStateNormal];
         [_cancelButton addTarget:self action:@selector(cancelButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_cancelButton];
         
         _startButton = [[UIButton alloc]init];
-        [_startButton setTitle:@"开始录制" forState:UIControlStateNormal];
+        [_startButton setTitle:@"开始录制".ntes_localized forState:UIControlStateNormal];
         [_startButton setTitleColor:UIColorFromRGB(NTESRecordSelectLabelTextColor) forState:UIControlStateNormal];
         [_startButton setTitleColor:UIColorFromRGB(NTESRecordSelectStartButtonGrayColor) forState:UIControlStateDisabled];
         [_startButton addTarget:self action:@selector(startButtonPressed) forControlEvents:UIControlEventTouchUpInside];

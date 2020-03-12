@@ -88,7 +88,9 @@
 }
 
 - (NSString *)formatTitleMessage {
-    return [NSString stringWithFormat:@"%@的聊天记录", _sessionName];
+    return [NSString stringWithFormat:@"%@%@",
+            _sessionName,
+            @"聊天记录".ntes_localized];
 }
 
 - (NSString *)formatAbstractMessage:(NTESMessageAbstract *)abstract {
@@ -147,10 +149,10 @@
                                                  context:nil].size;
     
     attribute = @{NSFontAttributeName:[UIFont systemFontOfSize:Message_Detail_Font_Size]};
-    CGSize subTitleSize = [@"聊天记录" boundingRectWithSize:bounding
-                                                    options:options
-                                                 attributes:attribute
-                                                    context:nil].size;
+    CGSize subTitleSize = [@"聊天记录".ntes_localized boundingRectWithSize:bounding
+                                                               options:options
+                                                            attributes:attribute
+                                                               context:nil].size;
     
     
     CGFloat abstractHeight = 0;

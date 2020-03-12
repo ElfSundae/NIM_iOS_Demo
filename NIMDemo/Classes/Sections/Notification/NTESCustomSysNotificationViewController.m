@@ -47,8 +47,8 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
 }
 
 - (void)setupNav{
-    self.navigationItem.title = @"自定义系统通知";
-    UIBarButtonItem *clearBarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"清空"
+    self.navigationItem.title = @"自定义系统通知".ntes_localized;
+    UIBarButtonItem *clearBarBtnItem = [[UIBarButtonItem alloc] initWithTitle:@"清空".ntes_localized
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
                                                                        action:@selector(clearAll:)];
@@ -112,7 +112,7 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
 #pragma mark - Action
 - (void)addCustomNotification:(id)sender{
     
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"单聊",@"群组",@"超大群组", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择操作".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"单聊".ntes_localized,@"群组".ntes_localized,@"超大群组".ntes_localized, nil];
     __block NIMContactSelectViewController *vc;
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
         switch (index) {
@@ -161,17 +161,17 @@ static NSString *reuseIdentifier = @"reuseIdentifier";
         return;
     }
     
-    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"" message:@"自定义发送内容" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"" message:@"自定义发送内容".ntes_localized preferredStyle:UIAlertControllerStyleAlert];
     [vc addTextFieldWithConfigurationHandler:nil];
     __weak UIAlertController *wvc = vc;
-    [[vc addAction:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [[vc addAction:@"确认".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString *content = [wvc.textFields.firstObject.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         content = [content length] ? content : @"";
         NIMSession *session = [NIMSession session:selectId type:self.sendSessionType];
         [_sender sendCustomContent:content
                          toSession:session];
     }]
-    addAction:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    addAction:@"取消".ntes_localized style:UIAlertActionStyleCancel handler:nil];
     
     [vc show];
 }

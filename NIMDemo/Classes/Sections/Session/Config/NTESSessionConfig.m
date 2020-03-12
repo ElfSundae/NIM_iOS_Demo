@@ -29,42 +29,43 @@
     NIMMediaItem *janKenPon = [NIMMediaItem item:@"onTapMediaItemJanKenPon:"
                                      normalImage:[UIImage imageNamed:@"icon_jankenpon_normal"]
                                    selectedImage:[UIImage imageNamed:@"icon_jankenpon_pressed"]
-                                           title:@"石头剪刀布"];
+                                           title:@"石头剪刀布".ntes_localized];
     
     NIMMediaItem *fileTrans = [NIMMediaItem item:@"onTapMediaItemFileTrans:"
                                                 normalImage:[UIImage imageNamed:@"icon_file_trans_normal"]
                                               selectedImage:[UIImage imageNamed:@"icon_file_trans_pressed"]
-                                           title:@"文件传输"];
+                                           title:@"文件传输".ntes_localized];
     
     NIMMediaItem *tip       = [NIMMediaItem item:@"onTapMediaItemTip:"
                                      normalImage:[UIImage imageNamed:@"bk_media_tip_normal"]
                                    selectedImage:[UIImage imageNamed:@"bk_media_tip_pressed"]
-                                           title:@"提示消息"];
+                                           title:@"提示消息".ntes_localized];
     
     NIMMediaItem *audioChat =  [NIMMediaItem item:@"onTapMediaItemAudioChat:"
                                       normalImage:[UIImage imageNamed:@"btn_media_telphone_message_normal"]
                                     selectedImage:[UIImage imageNamed:@"btn_media_telphone_message_pressed"]
-                                           title:@"实时语音"];
+                                           title:@"实时语音".ntes_localized];
     
     NIMMediaItem *videoChat =  [NIMMediaItem item:@"onTapMediaItemVideoChat:"
                                       normalImage:[UIImage imageNamed:@"btn_bk_media_video_chat_normal"]
                                     selectedImage:[UIImage imageNamed:@"btn_bk_media_video_chat_pressed"]
-                                            title:@"视频聊天"];
+                                            title:@"视频聊天".ntes_localized];
     
     NIMMediaItem *teamMeeting =  [NIMMediaItem item:@"onTapMediaItemTeamMeeting:"
                                       normalImage:[UIImage imageNamed:@"btn_media_telphone_message_normal"]
                                     selectedImage:[UIImage imageNamed:@"btn_media_telphone_message_pressed"]
-                                            title:@"视频通话"];
+                                            title:@"视频通话".ntes_localized];
     
     NIMMediaItem *snapChat =   [NIMMediaItem item:@"onTapMediaItemSnapChat:"
                                       normalImage:[UIImage imageNamed:@"bk_media_snap_normal"]
                                     selectedImage:[UIImage imageNamed:@"bk_media_snap_pressed"]
-                                            title:@"阅后即焚"];
+                                            title:@"阅后即焚".ntes_localized];
 
     NIMMediaItem *whiteBoard = [NIMMediaItem item:@"onTapMediaItemWhiteBoard:"
                                       normalImage:[UIImage imageNamed:@"btn_whiteboard_invite_normal"]
                                     selectedImage:[UIImage imageNamed:@"btn_whiteboard_invite_pressed"]
-                                            title:@"白板"];
+
+                                            title:@"白板".ntes_localized];
     //红包功能因合作终止，暂时关闭
 //    NIMMediaItem *redPacket  = [NIMMediaItem item:@"onTapMediaItemRedPacket:"
 //                                      normalImage:[UIImage imageNamed:@"icon_redpacket_normal"]
@@ -74,7 +75,7 @@
     NIMMediaItem *teamReceipt  = [NIMMediaItem item:@"onTapMediaItemTeamReceipt:"
                                       normalImage:[UIImage imageNamed:@"icon_team_receipt_normal"]
                                     selectedImage:[UIImage imageNamed:@"icon_team_receipt_pressed"]
-                                            title:@"已读回执"];
+                                            title:@"已读回执".ntes_localized];
     
     
     

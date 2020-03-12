@@ -242,27 +242,27 @@ typedef NS_ENUM(NSInteger,NTESMainTabType) {
         _configs = @{
                      @(NTESMainTabTypeMessageList) : @{
                              TabbarVC           : @"NTESSessionListViewController",
-                             TabbarTitle        : @"云信",
+                             TabbarTitle        : @"云信".ntes_localized,
                              TabbarImage        : @"icon_message_normal",
                              TabbarSelectedImage: @"icon_message_pressed",
                              TabbarItemBadgeValue: @(self.sessionUnreadCount)
                              },
                      @(NTESMainTabTypeContact)     : @{
                              TabbarVC           : @"NTESContactViewController",
-                             TabbarTitle        : @"通讯录",
+                             TabbarTitle        : @"通讯录".ntes_localized,
                              TabbarImage        : @"icon_contact_normal",
                              TabbarSelectedImage: @"icon_contact_pressed",
                              TabbarItemBadgeValue: @(self.systemUnreadCount)
                              },
                      @(NTESMainTabTypeChatroomList): @{
                              TabbarVC           : @"NTESChatroomListViewController",
-                             TabbarTitle        : @"直播间",
+                             TabbarTitle        : @"直播间".ntes_localized,
                              TabbarImage        : @"icon_chatroom_normal",
                              TabbarSelectedImage: @"icon_chatroom_pressed",
                              },
                      @(NTESMainTabTypeSetting)     : @{
                              TabbarVC           : @"NTESSettingViewController",
-                             TabbarTitle        : @"设置",
+                             TabbarTitle        : @"设置".ntes_localized,
                              TabbarImage        : @"icon_setting_normal",
                              TabbarSelectedImage: @"icon_setting_pressed",
                              TabbarItemBadgeValue: @(self.customSystemUnreadCount)

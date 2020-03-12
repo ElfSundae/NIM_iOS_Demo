@@ -91,7 +91,7 @@
         }
         else
         {
-            [self.currentTopViewController.view makeToast:@"不在群中，无法发送红包" duration:2.0 position:CSToastPositionCenter];
+            [self.currentTopViewController.view makeToast:@"不在群中，无法发送红包".ntes_localized duration:2.0 position:CSToastPositionCenter];
         }
     }
     _currentSession = session;
@@ -183,7 +183,7 @@
             {
                 NIMRedPacketTokenRequest *request = [[NIMRedPacketTokenRequest alloc] init];
                 request.type = NIMRedPacketServiceTypeJRMF;
-                NSString *envelopeName = @"云信红包";
+                NSString *envelopeName = @"云信红包".ntes_localized;
                 BOOL isOnLine = [NTESDemoConfig sharedConfig].redPacketConfig.useOnlineEnv;
                 NSString *aliPaySchemeUrl = [NTESDemoConfig sharedConfig].redPacketConfig.aliPaySchemeUrl;
                 NSString *weChatSchemeUrl = [NTESDemoConfig sharedConfig].redPacketConfig.weChatSchemeUrl;

@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpNav];
-    self.navigationItem.title = @"设置签名";
+    self.navigationItem.title = @"设置签名".ntes_localized;
     __weak typeof(self) wself = self;
     NSString *userId = [[NIMSDK sharedSDK].loginManager currentAccount];
     self.sign = [[NIMSDK sharedSDK].userManager userInfo:userId].userInfo.sign;
@@ -72,15 +72,15 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"签名";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
+    self.navigationItem.title = @"签名".ntes_localized;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 }
 
 - (void)onDone:(id)sender{
     [self.view endEditing:YES];
     if (self.sign.length > self.inputLimit) {
-        [self.view makeToast:@"签名过长" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"签名过长".ntes_localized duration:2.0 position:CSToastPositionCenter];
         return;
     }
     [SVProgressHUD show];
@@ -91,11 +91,11 @@
             UINavigationController *nav = wself.navigationController;
             [nav popViewControllerAnimated:YES];
             UIViewController *vc = nav.topViewController;
-            [vc.view makeToast:@"签名设置成功"
+            [vc.view makeToast:@"签名设置成功".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }else{
-            [wself.view makeToast:@"签名设置失败，请重试"
+            [wself.view makeToast:@"签名设置失败，请重试".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }

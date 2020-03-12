@@ -49,7 +49,7 @@
     } else {
         teamName = teamName? teamName : [[NIMSDK sharedSDK].teamManager teamById:self.info.teamId].teamName;
     }
-    self.nameLabel.text = [NSString stringWithFormat:@"%@的视频通话",teamName];
+    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", teamName, @"视频通话".ntes_localized];
     [self.timer startTimer:NTESTeamMeegingNoBodyResponseTimeOut delegate:self repeats:NO];
     [self checkServiceEnable:^(BOOL enable) {
         if (!enable)
@@ -80,7 +80,7 @@
 #pragma mark - NTESTimerHolderDelegate
 - (void)onNTESTimerFired:(NTESTimerHolder *)holder
 {
-    [self.presentingViewController.view makeToast:@"接听超时"
+    [self.presentingViewController.view makeToast:@"接听超时".ntes_localized
                                      duration:2
                                      position:CSToastPositionCenter];
     [self dismiss];
@@ -115,9 +115,9 @@
     if (videoStatus == AVAuthorizationStatusRestricted
         || videoStatus == AVAuthorizationStatusDenied) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"相机权限受限,无法视频聊天"
+                                                        message:@"相机权限受限,无法视频聊天".ntes_localized
                                                        delegate:nil
-                                              cancelButtonTitle:@"确定"
+                                              cancelButtonTitle:@"确定".ntes_localized
                                               otherButtonTitles:nil];
         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
             if (result) {
@@ -130,9 +130,9 @@
     if (audioStatus == AVAuthorizationStatusRestricted
         || audioStatus == AVAuthorizationStatusDenied ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"麦克风权限受限,无法聊天"
+                                                        message:@"麦克风权限受限,无法聊天".ntes_localized
                                                        delegate:nil
-                                              cancelButtonTitle:@"确定"
+                                              cancelButtonTitle:@"确定".ntes_localized
                                               otherButtonTitles:nil];
         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
             if (result) {
@@ -158,9 +158,9 @@
                     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
                     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"相机权限受限,无法视频聊天"
+                                                                        message:@"相机权限受限,无法视频聊天".ntes_localized
                                                                        delegate:nil
-                                                              cancelButtonTitle:@"确定"
+                                                              cancelButtonTitle:@"确定".ntes_localized
                                                               otherButtonTitles:nil];
                         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
                             if (result) {
@@ -175,9 +175,9 @@
                 }
                 else {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:@"麦克风权限受限,无法聊天"
+                                                                    message:@"麦克风权限受限,无法聊天".ntes_localized
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"确定"
+                                                          cancelButtonTitle:@"确定".ntes_localized
                                                           otherButtonTitles:nil];
                     [alert showAlertWithCompletionHandler:^(NSInteger idx) {
                         if (result) {

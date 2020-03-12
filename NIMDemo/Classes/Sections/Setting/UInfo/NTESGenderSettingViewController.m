@@ -44,7 +44,7 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"性别";
+    self.navigationItem.title = @"性别".ntes_localized;
 }
 
 
@@ -54,7 +54,7 @@
                           HeaderTitle:@"",
                           RowContent :@[
                                   @{
-                                      Title         : @"男",
+                                      Title         : @"男".ntes_localized,
                                       CellClass     : @"NTESSettingCheckCell",
                                       RowHeight     : @(50),
                                       CellAction    : @"onTouchMaleCell:",
@@ -62,7 +62,7 @@
                                       ForbidSelect  : @(YES),
                                       },
                                   @{
-                                      Title         : @"女",
+                                      Title         : @"女".ntes_localized,
                                       CellClass     : @"NTESSettingCheckCell",
                                       RowHeight     : @(50),
                                       CellAction    : @"onTouchFemaleCell:",
@@ -70,7 +70,7 @@
                                       ForbidSelect  : @(YES),
                                       },
                                   @{
-                                      Title         : @"其他",
+                                      Title         : @"其他".ntes_localized,
                                       CellClass     : @"NTESSettingCheckCell",
                                       CellAction    : @"onTouchUnkownGenderCell:",
                                       RowHeight     : @(50),
@@ -113,7 +113,7 @@
         [SVProgressHUD dismiss];
         if (!error) {
             UINavigationController *nav = wself.navigationController;
-            [nav.view makeToast:@"性别设置成功"
+            [nav.view makeToast:@"性别设置成功".ntes_localized
                        duration:2
                        position:CSToastPositionCenter];
             [nav popViewControllerAnimated:YES];
@@ -121,7 +121,7 @@
         }else{
             NSString *userId = [[NIMSDK sharedSDK].loginManager currentAccount];
             wself.selectedGender = [[NIMSDK sharedSDK].userManager userInfo:userId].userInfo.gender;
-            [wself.view makeToast:@"性别设置失败，请重试"
+            [wself.view makeToast:@"性别设置失败，请重试".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
             [wself refresh];

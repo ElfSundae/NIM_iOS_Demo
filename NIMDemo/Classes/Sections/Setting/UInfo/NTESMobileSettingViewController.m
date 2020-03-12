@@ -71,15 +71,15 @@
 
 
 - (void)setUpNav{
-    self.navigationItem.title = @"手机号码";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
+    self.navigationItem.title = @"手机号码".ntes_localized;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 }
 
 - (void)onDone:(id)sender{
     [self.view endEditing:YES];
     if (self.mobile.length > self.inputLimit) {
-        [self.view makeToast:@"手机号码过长" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"手机号码过长".ntes_localized duration:2.0 position:CSToastPositionCenter];
         return;
     }
     [SVProgressHUD show];
@@ -89,9 +89,9 @@
         if (!error) {
             UINavigationController *nav = wself.navigationController;
             [nav popViewControllerAnimated:YES];
-            [nav.view makeToast:@"手机设置成功" duration:2.0 position:CSToastPositionCenter];
+            [nav.view makeToast:@"手机设置成功".ntes_localized duration:2.0 position:CSToastPositionCenter];
         }else{
-            [wself.view makeToast:@"手机设置失败，请重试" duration:2.0 position:CSToastPositionCenter];
+            [wself.view makeToast:@"手机设置失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
         }
     }];
 }

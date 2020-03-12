@@ -78,7 +78,7 @@ NSString *const NIMDemoEventNameOpenRedPacket = @"NIMDemoEventNameOpenRedPacket"
         rect.size.width = self.bounds.size.width - rect.origin.x - 20;
         self.titleLabel.frame = rect;
     }
-    self.subTitleLabel.text = self.model.message.isOutgoingMsg? @"查看红包" : @"领取红包";
+    self.subTitleLabel.text = self.model.message.isOutgoingMsg? @"查看红包".ntes_localized : @"领取红包".ntes_localized;
 }
 
 - (void)layoutSubviews

@@ -44,9 +44,9 @@
 
 - (void)setUpNav
 {
-    self.navigationItem.title = @"屏蔽音频";
-    self.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(done:)];
+    self.navigationItem.title = @"屏蔽音频".ntes_localized;
+    self.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:@"取消".ntes_localized style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成".ntes_localized style:UIBarButtonItemStylePlain target:self action:@selector(done:)];
 }
 
 - (void)cancel:(id)sender

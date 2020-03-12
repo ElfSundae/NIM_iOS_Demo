@@ -362,7 +362,7 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
                meeting:(NIMNetCallMeeting *)meeting
 {
     DDLogError(@"on meeting error! error %@",error);
-    [self.presentingViewController.view makeToast:@"连接断开，请检查网络设置"
+    [self.presentingViewController.view makeToast:@"连接断开，请检查网络设置".ntes_localized
                                         duration:2
                                         position:CSToastPositionCenter];
 
@@ -523,8 +523,8 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
 - (void)fillUserSetting:(NIMNetCallOption *)option
 {
     option.autoRotateRemoteVideo = [[NTESBundleSetting sharedConfig] videochatAutoRotateRemoteVideo];
-    option.remoteViewoShowType = NIMNetCallRemoteVideoShowTypeYuvData;
-    
+    option.remoteViewoShowType =  [NTESBundleSetting sharedConfig].enableSdkRemoteRender ? NIMNetCallRemoteVideoShowTypeLocalView : NIMNetCallRemoteVideoShowTypeYuvData;
+
     NIMNetCallServerRecord *serverRecord = [[NIMNetCallServerRecord alloc] init];
     serverRecord.enableServerAudioRecording     = [[NTESBundleSetting sharedConfig] serverRecordAudio];
     serverRecord.enableServerVideoRecording     = [[NTESBundleSetting sharedConfig] serverRecordVideo];
@@ -593,7 +593,7 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
     }
     if (self.role == NTESTeamMeetingRoleCaller && connectedCount < 2) {
         //自己是拨打放，并只有自己连了上来
-        [self.presentingViewController.view makeToast:@"无人接听，请重试"
+        [self.presentingViewController.view makeToast:@"无人接听，请重试".ntes_localized
                                             duration:2
                                             position:CSToastPositionCenter];
         [[NIMAVChatSDK sharedSDK].netCallManager leaveMeeting:self.meeting];
@@ -604,20 +604,20 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
 
 - (void)sendReserveErrorTip
 {
-    NIMMessage *message = [NTESSessionMsgConverter msgWithTip:@"呼叫失败"];
+    NIMMessage *message = [NTESSessionMsgConverter msgWithTip:@"呼叫失败".ntes_localized];
     [[NIMSDK sharedSDK].conversationManager saveMessage:message forSession:_session completion:nil];
 }
 
 - (void)sendJoinErrorTip
 {
-    NIMMessage *message = [NTESSessionMsgConverter msgWithTip:@"加入视频聊天失败"];
+    NIMMessage *message = [NTESSessionMsgConverter msgWithTip:@"加入视频聊天失败".ntes_localized];
     [[NIMSDK sharedSDK].conversationManager saveMessage:message forSession:_session completion:nil];
 }
 
 - (void)sendReserveSuccessTip
 {
     NSString *nick = [NTESSessionUtil showNick:[NIMSDK sharedSDK].loginManager.currentAccount inSession:_session];
-    NSString *tip = [NSString stringWithFormat:@"%@发起了视频聊天",nick];
+    NSString *tip = [NSString stringWithFormat:@"%@发起了视频聊天".ntes_localized,nick];
     NIMMessage *message = [NTESSessionMsgConverter msgWithTip:tip];
     message.setting.roamingEnabled = NO;
     message.setting.historyEnabled = NO;
@@ -701,9 +701,9 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
     if (videoStatus == AVAuthorizationStatusRestricted
         || videoStatus == AVAuthorizationStatusDenied) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"相机权限受限,无法视频聊天"
+                                                        message:@"相机权限受限,无法视频聊天".ntes_localized
                                                        delegate:nil
-                                              cancelButtonTitle:@"确定"
+                                              cancelButtonTitle:@"确定".ntes_localized
                                               otherButtonTitles:nil];
         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
             if (result) {
@@ -716,9 +716,9 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
     if (audioStatus == AVAuthorizationStatusRestricted
         || audioStatus == AVAuthorizationStatusDenied ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"麦克风权限受限,无法聊天"
+                                                        message:@"麦克风权限受限,无法聊天".ntes_localized
                                                        delegate:nil
-                                              cancelButtonTitle:@"确定"
+                                              cancelButtonTitle:@"确定".ntes_localized
                                               otherButtonTitles:nil];
         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
             if (result) {
@@ -736,9 +736,9 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
                     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
                     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"相机权限受限,无法视频聊天"
+                                                                        message:@"相机权限受限,无法视频聊天".ntes_localized
                                                                        delegate:nil
-                                                              cancelButtonTitle:@"确定"
+                                                              cancelButtonTitle:@"确定".ntes_localized
                                                               otherButtonTitles:nil];
                         [alert showAlertWithCompletionHandler:^(NSInteger idx) {
                             if (result) {
@@ -753,9 +753,9 @@ typedef NS_ENUM(NSInteger,NTESTeamMeetingRoleType) {
                 }
                 else {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:@"麦克风权限受限,无法聊天"
+                                                                    message:@"麦克风权限受限,无法聊天".ntes_localized
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"确定"
+                                                          cancelButtonTitle:@"确定".ntes_localized
                                                           otherButtonTitles:nil];
                     [alert showAlertWithCompletionHandler:^(NSInteger idx) {
                         if (result) {

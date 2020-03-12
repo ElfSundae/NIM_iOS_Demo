@@ -42,7 +42,7 @@
     // Do any additional setup after loading the view from its nib.
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.view addSubview:self.logTextView];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStyleDone target:self action:@selector(onDismiss:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDismiss:)];
     
     NSString *content = nil;
     if (_path)

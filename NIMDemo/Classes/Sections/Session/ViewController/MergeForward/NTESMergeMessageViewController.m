@@ -90,7 +90,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
     btn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     btn.frame = CGRectMake(0, 0, 40, 60);
-    [btn setTitle:@"转发" forState:UIControlStateNormal];
+    [btn setTitle:@"转发".ntes_localized forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(forwardAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -197,7 +197,7 @@
 }
 
 - (void)selectForwardSessionCompletion:(void (^)(NIMSession *targetSession))completion {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择会话类型" delegate:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"个人", @"群组", @"超大群组", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择会话类型".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized destructiveButtonTitle:nil otherButtonTitles:@"个人".ntes_localized, @"群组".ntes_localized, @"超大群组".ntes_localized, nil];
     [sheet showInView:self.view completionHandler:^(NSInteger index) {
         switch (index) {
             case 0:{
@@ -265,8 +265,8 @@
     else {
         DDLogWarn(@"unknown session type %zd", session.sessionType);
     }
-    NSString *tip = [NSString stringWithFormat:@"确认转发给 %@ ?",name];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认转发" message:tip delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    NSString *tip = [NSString stringWithFormat:@"%@ %@ ?",@"确认转发给".ntes_localized,name];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认转发".ntes_localized message:tip delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确认".ntes_localized, nil];
     
     __weak typeof(self) weakSelf = self;
     [alert showAlertWithCompletionHandler:^(NSInteger index) {
@@ -280,10 +280,10 @@
             }
             
             if (error) {
-                NSString *msg = [NSString stringWithFormat:@"转发失败.code:%zd", error.code];
+                NSString *msg = [NSString stringWithFormat:@"%@.code:%zd",@"转发失败".ntes_localized, error.code];
                 [weakSelf.view makeToast:msg duration:2.0 position:CSToastPositionCenter];
             } else {
-                [weakSelf.view makeToast:@"已发送" duration:2.0 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:@"已发送".ntes_localized duration:2.0 position:CSToastPositionCenter];
             }
         }
     }];

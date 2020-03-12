@@ -82,9 +82,9 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"个人名片";
+    self.navigationItem.title = @"个人名片".ntes_localized;
     if ([self.userId isEqualToString:[[NIMSDK sharedSDK].loginManager currentAccount]]) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(onActionEditMyInfo:)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onActionEditMyInfo:)];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     }
 }
@@ -117,29 +117,29 @@
                             HeaderTitle:@"",
                             RowContent :@[
                                            @{
-                                                Title        : @"备注名",
+                                                Title        : @"备注名".ntes_localized,
                                                 DetailTitle  : self.user.alias.length ? self.user.alias : @"",
                                                 CellAction   : @"onActionEditAlias:",
                                                 ShowAccessory: @(YES),
                                                 Disable      : @(!isMyFriend),
                                             },
                                             @{
-                                                Title        : @"生日",
+                                                Title        : @"生日".ntes_localized,
                                                 DetailTitle  : self.user.userInfo.birth.length ? self.user.userInfo.birth : @"",
                                                 Disable      : @(!self.user.userInfo.birth.length),
                                              },
                                             @{
-                                                Title        : @"手机",
+                                                Title        : @"手机".ntes_localized,
                                                 DetailTitle  : self.user.userInfo.mobile.length ? self.user.userInfo.mobile : @"",
                                                 Disable      : @(!self.user.userInfo.mobile.length),
                                              },
                                             @{
-                                                Title        : @"邮箱",
+                                                Title        : @"邮箱".ntes_localized,
                                                 DetailTitle  : self.user.userInfo.email.length ? self.user.userInfo.email : @"",
                                                 Disable      : @(!self.user.userInfo.email.length),
                                              },
                                             @{
-                                                Title        : @"签名",
+                                                Title        : @"签名".ntes_localized,
                                                 DetailTitle  : self.user.userInfo.sign.length ? self.user.userInfo.sign : @"",
                                                 Disable      : @(!self.user.userInfo.sign.length),
                                              },
@@ -150,7 +150,7 @@
                             HeaderTitle:@"",
                             RowContent :@[
                                     @{
-                                        Title        : @"消息提醒",
+                                        Title        : @"消息提醒".ntes_localized,
                                         CellClass    : @"NTESSettingSwitcherCell",
                                         CellAction   : @"onActionNeedNotifyValueChange:",
                                         ExtraInfo    : @(needNotify),
@@ -164,7 +164,7 @@
                             HeaderTitle:@"",
                             RowContent :@[
                                            @{
-                                                Title        : @"黑名单",
+                                                Title        : @"黑名单".ntes_localized,
                                                 CellClass    : @"NTESSettingSwitcherCell",
                                                 CellAction   : @"onActionBlackListValueChange:",
                                                 ExtraInfo    : @(isInBlackList),
@@ -178,7 +178,7 @@
                             HeaderTitle:@"",
                             RowContent :@[
                                     @{
-                                        Title        : @"聊天",
+                                        Title        : @"聊天".ntes_localized,
                                         CellClass    : @"NTESColorButtonCell",
                                         CellAction   : @"chat",
                                         ExtraInfo    : @(ColorButtonCellStyleBlue),
@@ -188,7 +188,7 @@
                                         SepLeftEdge  : @(self.view.width),
                                         },
                                     @{
-                                        Title        : @"删除好友",
+                                        Title        : @"删除好友".ntes_localized,
                                         CellClass    : @"NTESColorButtonCell",
                                         CellAction   : @"deleteFriend",
                                         ExtraInfo    : @(ColorButtonCellStyleRed),
@@ -198,7 +198,7 @@
                                         SepLeftEdge  : @(self.view.width),
                                         },
                                     @{
-                                        Title        : @"添加好友",
+                                        Title        : @"添加好友".ntes_localized,
                                         CellClass    : @"NTESColorButtonCell",
                                         CellAction   : @"addFriend",
                                         ExtraInfo    : @(ColorButtonCellStyleBlue),
@@ -233,9 +233,9 @@
         [[NIMSDK sharedSDK].userManager addToBlackList:self.userId completion:^(NSError *error) {
             [SVProgressHUD dismiss];
             if (!error) {
-                [wself.view makeToast:@"拉黑成功"duration:2.0f position:CSToastPositionCenter];
+                [wself.view makeToast:@"拉黑成功".ntes_localized duration:2.0f position:CSToastPositionCenter];
             }else{
-                [wself.view makeToast:@"拉黑失败"duration:2.0f position:CSToastPositionCenter];
+                [wself.view makeToast:@"拉黑失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
                 [wself refresh];
             }
         }];
@@ -243,9 +243,9 @@
         [[NIMSDK sharedSDK].userManager removeFromBlackBlackList:self.userId completion:^(NSError *error) {
             [SVProgressHUD dismiss];
             if (!error) {
-                [wself.view makeToast:@"移除黑名单成功"duration:2.0f position:CSToastPositionCenter];
+                [wself.view makeToast:@"移除黑名单成功".ntes_localized duration:2.0f position:CSToastPositionCenter];
             }else{
-                [wself.view makeToast:@"移除黑名单失败"duration:2.0f position:CSToastPositionCenter];
+                [wself.view makeToast:@"移除黑名单失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
                 [wself refresh];
             }
         }];
@@ -258,7 +258,7 @@
     __weak typeof(self) wself = self;
     [[NIMSDK sharedSDK].userManager updateNotifyState:switcher.on forUser:self.userId completion:^(NSError *error) {            [SVProgressHUD dismiss];
         if (error) {
-            [wself.view makeToast:@"操作失败"duration:2.0f position:CSToastPositionCenter];
+            [wself.view makeToast:@"操作失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
             [wself refresh];
         }
     }];
@@ -280,10 +280,10 @@
     request.operation = NIMUserOperationAdd;
     if ([[NTESBundleSetting sharedConfig] needVerifyForFriend]) {
         request.operation = NIMUserOperationRequest;
-        request.message = @"跪求通过";
+        request.message = @"跪求通过".ntes_localized;
     }
-    NSString *successText = request.operation == NIMUserOperationAdd ? @"添加成功" : @"请求成功";
-    NSString *failedText =  request.operation == NIMUserOperationAdd ? @"添加失败" : @"请求失败";
+    NSString *successText = request.operation == NIMUserOperationAdd ? @"添加成功".ntes_localized : @"请求成功".ntes_localized;
+    NSString *failedText =  request.operation == NIMUserOperationAdd ? @"添加失败".ntes_localized : @"请求失败".ntes_localized;
     
     __weak typeof(self) wself = self;
     [SVProgressHUD show];
@@ -304,17 +304,17 @@
 
 - (void)deleteFriend{
     __weak typeof(self) wself = self;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除好友" message:@"删除好友后，将同时解除双方的好友关系" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除好友".ntes_localized message:@"删除好友后，将同时解除双方的好友关系".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确定".ntes_localized, nil];
     [alert showAlertWithCompletionHandler:^(NSInteger index) {
         if (index == 1) {
             [SVProgressHUD show];
             [[NIMSDK sharedSDK].userManager deleteFriend:wself.userId completion:^(NSError *error) {
                 [SVProgressHUD dismiss];
                 if (!error) {
-                    [wself.view makeToast:@"删除成功"duration:2.0f position:CSToastPositionCenter];
+                    [wself.view makeToast:@"删除成功".ntes_localized duration:2.0f position:CSToastPositionCenter];
                     [wself refresh];
                 }else{
-                    [wself.view makeToast:@"删除失败"duration:2.0f position:CSToastPositionCenter];
+                    [wself.view makeToast:@"删除失败".ntes_localized duration:2.0f position:CSToastPositionCenter];
                 }
             }];
         }
@@ -351,7 +351,7 @@
 - (void)onLongPressNavbar:(UIGestureRecognizer *)gesture{
     if (gesture.state == UIGestureRecognizerStateBegan) {
         NSString *title = self.user.description;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"个人信息" message:title delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"个人信息".ntes_localized message:title delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
         [alert show];
     }
 }

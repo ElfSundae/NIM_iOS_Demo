@@ -188,7 +188,7 @@ NTES_USE_CLEAR_BAR
 - (void)chatroomBeKicked:(NIMChatroomBeKickedResult *)result
 {
     if ([result.roomId isEqualToString:self.chatroom.roomId]) {
-        NSString *toast = [NSString stringWithFormat:@"你被踢出聊天室"];
+        NSString *toast = @"你被踢出聊天室".ntes_localized;
         DDLogInfo(@"chatroom be kicked, roomId:%@  rease:%zd ext:%@",result.roomId,result.reason,result.ext);
         [[NIMSDK sharedSDK].chatroomManager exitChatroom:result.roomId completion:nil];
         

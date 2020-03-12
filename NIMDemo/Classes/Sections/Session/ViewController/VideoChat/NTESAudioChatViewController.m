@@ -89,7 +89,7 @@
     self.durationLabel.hidden   = YES;
     self.switchVideoBtn.hidden  = YES;
     self.connectingLabel.hidden = NO;
-    self.connectingLabel.text   = @"正在呼叫，请稍候...";
+    self.connectingLabel.text   = @"正在呼叫，请稍候...".ntes_localized;
     self.refuseBtn.hidden = YES;
     self.acceptBtn.hidden = YES;
 }
@@ -106,7 +106,7 @@
     self.switchVideoBtn.hidden  = YES;
     self.connectingLabel.hidden = NO;
     NSString *nick = [NTESSessionUtil showNick:self.callInfo.caller inSession:nil];
-    self.connectingLabel.text = [nick stringByAppendingString:@"的来电"];
+    self.connectingLabel.text = [nick stringByAppendingString:@"的来电".ntes_localized];
     self.refuseBtn.hidden = NO;
     self.acceptBtn.hidden = NO;
 }
@@ -122,7 +122,7 @@
     self.durationLabel.hidden   = YES;
     self.switchVideoBtn.hidden  = YES;
     self.connectingLabel.hidden = NO;
-    self.connectingLabel.text   = @"正在连接对方...请稍后...";
+    self.connectingLabel.text   = @"正在连接对方...请稍后...".ntes_localized;
     self.refuseBtn.hidden = YES;
     self.acceptBtn.hidden = YES;
 }
@@ -193,7 +193,7 @@
 }
 
 - (IBAction)switchToVideoMode:(id)sender {
-    [self.view makeToast:@"已发送转换请求，请等待对方应答..."
+    [self.view makeToast:@"已发送转换请求，请等待对方应答...".ntes_localized
                 duration:2
                 position:CSToastPositionCenter];
     [[NIMAVChatSDK sharedSDK].netCallManager control:self.callInfo.callID type:NIMNetCallControlTypeToVideo];
@@ -249,7 +249,7 @@
             [self videoCallingInterface];
             break;
         case NIMNetCallControlTypeRejectToVideo:
-            [self.view makeToast:@"对方拒绝切换到视频模式"
+            [self.view makeToast:@"对方拒绝切换到视频模式".ntes_localized
                         duration:2
                         position:CSToastPositionCenter];
             break;
@@ -331,12 +331,12 @@
 
 
 - (void)onResponseVideoMode{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"对方请求切换为视频模式" delegate:nil cancelButtonTitle:@"拒绝" otherButtonTitles:@"接受", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"对方请求切换为视频模式".ntes_localized delegate:nil cancelButtonTitle:@"拒绝".ntes_localized otherButtonTitles:@"接受".ntes_localized, nil];
     [alert showAlertWithCompletionHandler:^(NSInteger idx) {
         switch (idx) {
             case 0:
                 [[NIMAVChatSDK sharedSDK].netCallManager control:self.callInfo.callID type:NIMNetCallControlTypeRejectToVideo];
-                [self.view makeToast:@"已拒绝"
+                [self.view makeToast:@"已拒绝".ntes_localized
                             duration:2
                             position:CSToastPositionCenter];
                 break;

@@ -21,13 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"音视频网络探测";
+    self.title = @"音视频网络探测".ntes_localized;
     
     [self.view addSubview:self.netDetectResultTextView];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStyleDone target:self action:@selector(onDismiss:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDismiss:)];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"探测" style:UIBarButtonItemStyleDone target:self action:@selector(onDetect:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"探测".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDetect:)];
 
 
 }
@@ -66,7 +66,7 @@
 
 - (void)updateDetectButton
 {
-    self.navigationItem.leftBarButtonItem.title = (self.taskId == 0) ? @"探测" : @"停止";
+    self.navigationItem.leftBarButtonItem.title = (self.taskId == 0) ? @"探测".ntes_localized : @"停止".ntes_localized;
 }
 
 - (UITextView *)netDetectResultTextView {

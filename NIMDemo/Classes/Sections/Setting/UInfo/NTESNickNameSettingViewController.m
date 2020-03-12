@@ -73,19 +73,19 @@
 }
 
 - (void)setUpNav{
-    self.navigationItem.title = @"昵称";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
+    self.navigationItem.title = @"昵称".ntes_localized;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成".ntes_localized style:UIBarButtonItemStyleDone target:self action:@selector(onDone:)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 }
 
 - (void)onDone:(id)sender{
     [self.view endEditing:YES];
     if (!self.nick.length) {
-        [self.view makeToast:@"昵称不能为空" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"昵称不能为空".ntes_localized duration:2.0 position:CSToastPositionCenter];
         return;
     }
     if (self.nick.length > self.inputLimit) {
-        [self.view makeToast:@"昵称过长" duration:2.0 position:CSToastPositionCenter];
+        [self.view makeToast:@"昵称过长".ntes_localized duration:2.0 position:CSToastPositionCenter];
         return;
     }
     [SVProgressHUD show];
@@ -94,12 +94,12 @@
         [SVProgressHUD dismiss];
         if (!error) {
             [[NTESRedPacketManager sharedManager] updateUserInfo];
-            [wself.navigationController.view makeToast:@"昵称设置成功"
+            [wself.navigationController.view makeToast:@"昵称设置成功".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
             [wself.navigationController popViewControllerAnimated:YES];
         }else{
-            [wself.view makeToast:@"昵称设置失败，请重试"
+            [wself.view makeToast:@"昵称设置失败，请重试".ntes_localized
                          duration:2
                          position:CSToastPositionCenter];
         }
@@ -117,7 +117,7 @@
                                       RowHeight     : @(50),
                                       },
                                   ],
-                          FooterTitle:@"好的昵称可以让你的朋友更容易记住你"
+                          FooterTitle:@"好的昵称可以让你的朋友更容易记住你".ntes_localized
                           },
                       ];
     self.data = [NIMCommonTableSection sectionsWithData:data];

@@ -49,11 +49,11 @@
 
 - (NSArray<id<UIPreviewActionItem>> *)previewActionItems
 {
-    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@"标记已读" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@"标记已读".ntes_localized style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
         [[NIMSDK sharedSDK].conversationManager markAllMessagesReadInSession:self.recent.session];
     }];
     
-    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"删除会话" style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@"删除会话".ntes_localized style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
         [[NIMSDK sharedSDK].conversationManager deleteRecentSession:self.recent];        
     }];
 

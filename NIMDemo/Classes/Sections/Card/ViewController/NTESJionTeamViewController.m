@@ -25,11 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"加入群组";
+    self.navigationItem.title = @"加入群组".ntes_localized;
     self.teamNameLabel.text = self.joinTeam.teamName;
-    self.teamIdLabel.text = [NSString stringWithFormat:@"群号：%@", self.joinTeam.teamId];
+    self.teamIdLabel.text = [NSString stringWithFormat:@"%@：%@",@"群号".ntes_localized, self.joinTeam.teamId];
     if(self.joinTeam.joinMode == NIMTeamJoinModeRejectAll) {
-        [self.jionTeamBtn setTitle:@"该群无法申请加入" forState:UIControlStateNormal];
+        [self.jionTeamBtn setTitle:@"该群无法申请加入".ntes_localized forState:UIControlStateNormal];
         self.jionTeamBtn.userInteractionEnabled = NO;
     }
 }
@@ -39,7 +39,7 @@
     if(self.joinTeam.joinMode == NIMTeamJoinModeNoAuth) {
         [self didApplyToTeamWithMessage:@""];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"输入验证信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"输入验证信息".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert showAlertWithCompletionHandler:^(NSInteger index) {
             NSString *message = [alert textFieldAtIndex:0].text ? : @"";
@@ -59,6 +59,7 @@
                 } else {
                     session = [NIMSession session:self.joinTeam.teamId type:NIMSessionTypeTeam];
                 }
+
                 NTESSessionViewController * vc = [[NTESSessionViewController alloc] initWithSession:session];
                 [self.navigationController pushViewController:vc animated:YES];
                 break;

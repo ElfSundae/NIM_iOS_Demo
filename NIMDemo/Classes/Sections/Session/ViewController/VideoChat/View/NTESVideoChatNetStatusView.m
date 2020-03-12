@@ -56,13 +56,13 @@
     NSString *netState;
     switch (status) {
         case NIMNetCallNetStatusGood:
-            netState = @"网络正常:";
+            netState = @"网络正常:".ntes_localized;
             break;
         case NIMNetCallNetStatusPoor:
-            netState = @"网络一般:";
+            netState = @"网络一般:".ntes_localized;
             break;
         case NIMNetCallNetStatusBad:
-            netState = @"网络差:";
+            netState = @"网络差:".ntes_localized;
             break;
         default:
             break;
@@ -74,7 +74,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     self.statusLabel.centerY   = self.height * .5f;
-    self.statusImageView.right = self.width;
+    self.statusImageView.left = self.statusLabel.right + 2;
     self.statusImageView.centerY = self.height * .5f;
 }
 

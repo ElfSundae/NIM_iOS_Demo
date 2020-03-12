@@ -79,7 +79,7 @@
         }
         else
         {
-            [wself.view makeToast:@"直播间成员获取失败"];
+            [wself.view makeToast:@"直播间成员获取失败".ntes_localized];
         }
     }];
 }
@@ -119,25 +119,25 @@
     BOOL isManager = member.type == NIMChatroomMemberTypeManager;
     
     __weak typeof(self) weakSelf = self;
-    UITableViewRowAction *blackUser = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:isBlack? @"解除拉黑":@"拉黑" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *blackUser = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:isBlack? @"解除拉黑".ntes_localized : @"拉黑".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [weakSelf updateBlackListAtIndexPath:indexPath isBlack:!isBlack];
         [tableView setEditing:NO animated:YES];
     }];
     blackUser.backgroundColor = [UIColor orangeColor];
     
-    UITableViewRowAction *muteUser = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:isMute?@"解除禁言":@"禁言" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *muteUser = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:isMute?@"解除禁言".ntes_localized:@"禁言".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [weakSelf updateMuteListAtIndexPath:indexPath isMute:!isMute];
         [tableView setEditing:NO animated:YES];
     }];
     muteUser.backgroundColor = [UIColor redColor];
     
-    UITableViewRowAction *appointManager = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:isManager?@"解除管理员":@"任命管理员" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *appointManager = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:isManager?@"解除管理员".ntes_localized:@"任命管理员".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [weakSelf appointManagerAtIndexPath:indexPath isManager:!isManager];
         [tableView setEditing:NO animated:YES];
     }];
     appointManager.backgroundColor = UIColorFromRGB(0x0BB3FC);
     
-    UITableViewRowAction *kickMember = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"踢出" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *kickMember = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"踢出".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [weakSelf kickMemberAtIndexPath:indexPath];
         [tableView setEditing:NO animated:NO];
     }];
@@ -182,7 +182,7 @@
         }
         else
         {
-            NSString *toast = [NSString stringWithFormat:@"操作失败 code:%zd",error.code];
+            NSString *toast = [NSString stringWithFormat:@"%@ code:%zd",@"操作失败".ntes_localized, error.code];
             [weakSelf.tableView makeToast:toast duration:2.0 position:CSToastPositionCenter];
         }
     }];
@@ -210,7 +210,7 @@
         }
         else
         {
-            NSString *toast = [NSString stringWithFormat:@"操作失败 code:%zd",error.code];
+            NSString *toast = [NSString stringWithFormat:@"%@ code:%zd",@"操作失败".ntes_localized, error.code];
             [weakSelf.tableView makeToast:toast duration:2.0 position:CSToastPositionCenter];
         }
     }];
@@ -232,7 +232,7 @@
         }
         else
         {
-            NSString *toast = [NSString stringWithFormat:@"操作失败 code:%zd",error.code];
+            NSString *toast = [NSString stringWithFormat:@"%@ code:%zd",@"操作失败".ntes_localized, error.code];
             [weakSelf.tableView makeToast:toast duration:2.0 position:CSToastPositionCenter];
         }
     }];
@@ -253,7 +253,7 @@
         }
         else
         {
-            NSString *toast = [NSString stringWithFormat:@"操作失败 code:%zd",error.code];
+            NSString *toast = [NSString stringWithFormat:@"%@ code:%zd",@"操作失败".ntes_localized, error.code];
             [weakSelf.tableView makeToast:toast duration:2.0 position:CSToastPositionCenter];
         }
     }];

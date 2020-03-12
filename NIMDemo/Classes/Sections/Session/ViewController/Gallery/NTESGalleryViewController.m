@@ -17,6 +17,7 @@
 #import "NIMKitAuthorizationTool.h"
 #import <SDWebImageFLPlugin/SDWebImageFLPlugin.h>
 #import <SDWebImage/SDWebImage.h>
+#import <YYImage/YYImage.h>
 
 @implementation NTESGalleryItem
 
@@ -28,7 +29,7 @@
     BOOL _onceToken;
 }
 
-@property (weak, nonatomic) IBOutlet FLAnimatedImageView *galleryImageView;
+@property (weak, nonatomic) IBOutlet YYAnimatedImageView *galleryImageView;
 @property (nonatomic,strong)    NTESGalleryItem *currentItem;
 @property (nonatomic,strong)    NIMSession *session;
 @property (nonatomic,strong)  IBOutlet  UIScrollView *scrollView;
@@ -54,14 +55,19 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
 }
 
-
-- (void)viewDidLayoutSubviews
+- (void)viewWillAppear:(BOOL)animated
 {
-    if (!_onceToken)
-    {
-        [self loadImage];
-        _onceToken = YES;
+    [super viewDidAppear:animated];
+    [self loadImage];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.galleryImageView.isAnimating) {
+        [self.galleryImageView stopAnimating];
     }
+
 }
 
 
@@ -82,37 +88,49 @@
     
     [self layoutGallery:_currentItem.size];
     
-    [[NIMSDK sharedSDK].resourceManager fetchNOSURLWithURL:_currentItem.imageURL completion:^(NSError * _Nullable error, NSString * _Nullable urlString) {
-        NSURL *url = [NSURL URLWithString:urlString ? : @""];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_currentItem.imagePath])
+    {
+        [self setupImageWithPath:_currentItem.imagePath];
+    }
+    else
+    {
         typeof(self) weakSelf = self;
-        UIImage *placeholder = [UIImage imageWithContentsOfFile:_currentItem.thumbPath];
-        
-        [self.galleryImageView sd_setImageWithURL:url
-                                 placeholderImage:placeholder
-                                          options:SDWebImageRetryFailed
-                                        completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                                              dispatch_async(dispatch_get_main_queue(), ^
-                                                             {
-                                                                 if (!error)
-                                                                 {
-                                                                     [weakSelf layoutGallery:image.size];
-                                                                 }
-                                                             });
-                                          }];
-        if (self.session)
-        {
-            [self setupRightNavItem];
-        }
-        
-        if ([_currentItem.name length])
-        {
-            self.navigationItem.title = _currentItem.name;
-        }
-        
-        UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPressImageView:)];
-        [self.scrollView addGestureRecognizer:recognizer];
-    }];
+        [[NIMSDK sharedSDK].resourceManager download:_currentItem.imageURL filepath:_currentItem.imagePath progress:nil completion:^(NSError * _Nullable error) {
+            if (error || ![[NSFileManager defaultManager] fileExistsAtPath:_currentItem.imagePath])
+            {
+                return;
+            }
+            
+            [weakSelf setupImageWithPath:weakSelf.currentItem.imagePath];
+        }];
+    }
     
+    if (self.session)
+    {
+        [self setupRightNavItem];
+    }
+              
+    if ([_currentItem.name length])
+    {
+        self.navigationItem.title = _currentItem.name;
+    }
+                          
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPressImageView:)];
+    [self.scrollView addGestureRecognizer:recognizer];
+}
+
+- (void)setupImageWithPath:(NSString *)path
+{
+    if (path.length == 0)
+    {
+        return;
+    }
+    
+    NSData *imageData = [[NSData alloc] initWithContentsOfFile:path];
+    YYImage *yyImage = [YYImage imageWithData:imageData
+                                        scale:UIScreen.mainScreen.scale];
+    self.galleryImageView.image = yyImage;
+    [self layoutGallery:yyImage.size];
 }
 
 
@@ -204,17 +222,16 @@
         __weak typeof(self) weakSelf = self;
         [[NIMSDK sharedSDK].resourceManager fetchNOSURLWithURL:self.currentItem.imageURL completion:^(NSError * _Nullable error, NSString * _Nullable urlString)
         {
-            NSURL *url = [NSURL URLWithString:weakSelf.currentItem.imageURL];
             SDWebImageManager *sdManager = [SDWebImageManager sharedManager];
             [sdManager.imageCache queryImageForKey:urlString options:0 context:nil completion:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
-                [[[controller addAction:@"保存至相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[[controller addAction:@"保存至相册".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     [NIMKitAuthorizationTool requestPhotoLibraryAuthorization:^(NIMKitAuthorizationStatus status) {
                         switch (status) {
                             case NIMKitAuthorizationStatusAuthorized:
                                 UIImageWriteToSavedPhotosAlbum(image, weakSelf, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                                 break;
                             default:
-                                [weakSelf.view makeToast:@"没有开启权限，请开启权限" duration:2.0 position:CSToastPositionCenter];
+                                [weakSelf.view makeToast:@"没有开启权限，请开启权限".ntes_localized duration:2.0 position:CSToastPositionCenter];
                                 break;
                         }
                     }];
@@ -227,7 +244,7 @@
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    NSString *toast = (!image || error)? [NSString stringWithFormat:@"保存图片失败 , 错误：%@",error] : @"保存图片成功";
+    NSString *toast = (!image || error)? [NSString stringWithFormat:@"%@：%@",@"保存图片失败 , 错误".ntes_localized,error] : @"保存图片成功".ntes_localized;
     [self.view makeToast:toast duration:2.0 position:CSToastPositionCenter];
 }
 
@@ -331,7 +348,7 @@
              });
          } completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
              if (error) {
-                 [wImageView makeToast:@"下载图片失败"
+                 [wImageView makeToast:@"下载图片失败".ntes_localized
                               duration:2
                               position:CSToastPositionCenter];
              }else{
