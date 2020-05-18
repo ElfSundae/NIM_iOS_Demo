@@ -16,18 +16,23 @@
 #pragma mark - Remote View Controller
 @interface NTESSessionRemoteHistoryViewController ()<NTESRemoteSessionDelegate>
 
-@property (nonatomic,strong) NTESRemoteSessionConfig *config;
-
 
 @end
 
 @implementation NTESSessionRemoteHistoryViewController
 
 - (instancetype) initWithSession:(NIMSession *)session{
+    NTESRemoteSessionConfig *config = [[NTESRemoteSessionConfig alloc] initWithSession:session];
+
+    return [self initWithSession:session config:config];
+}
+
+- (instancetype)initWithSession:(NIMSession *)session config:(NTESRemoteSessionConfig *)config
+{
     self = [super initWithSession:session];
     if (self) {
-        _config = [[NTESRemoteSessionConfig alloc] initWithSession:session];
-        _config.delegate = self;
+        self.config = [[NTESRemoteSessionConfig alloc] initWithSession:session];
+        self.config.delegate = self;
         self.disableCommandTyping = YES;
         self.disableOnlineState = YES;
     }
@@ -41,10 +46,11 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = UIColorFromRGB(0xe4e7ec);
-    self.navigationItem.leftBarButtonItems  = @[];
     self.navigationItem.rightBarButtonItems = @[];
+    self.navigationItem.leftBarButtonItems = @[];
     [SVProgressHUD show];
 }
+
 
 - (NSString *)sessionTitle{
     return @"云消息记录".ntes_localized;
@@ -69,6 +75,22 @@
 - (NSArray *)menusItems:(NIMMessage *)message{
     return nil;
 }
+
+#pragma mark - NIMMessageCellDelegate
+
+- (BOOL)onLongPressCell:(NIMMessage *)message
+                 inView:(UIView *)view
+{
+    return YES;
+}
+
+- (void)onClickEmoticon:(NIMMessage *)message
+                comment:(NIMQuickComment *)comment
+               selected:(BOOL)isSelected
+{
+    
+}
+
 
 - (void)uiAddMessages:(NSArray *)messages{}
 
@@ -143,6 +165,22 @@
 - (BOOL)disableReceiveNewMessages
 {
     return YES;
+}
+
+- (NSArray<NIMMediaItem *> *)mediaItems
+{
+    return nil;
+}
+
+- (NSArray<NIMMediaItem *> *)menuItemsWithMessage:(NIMMessage *)message
+{
+    return nil;
+}
+
+
+- (NSArray*)emotionItems
+{
+    return nil;
 }
 
 @end

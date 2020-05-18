@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger,NTESCustomMessageType){
 #define CMFlag             @"flag"
 #define CMURL              @"url"
 #define CMMD5              @"md5"
+#define CMFileName         @"fileName"
 #define CMFIRE             @"fired"        //阅后即焚消息是否被焚毁
 #define CMCatalog          @"catalog"      //贴图类别
 #define CMChartlet         @"chartlet"     //贴图表情ID
@@ -74,5 +75,7 @@ typedef NS_ENUM(NSInteger,NTESCustomMessageType){
 - (BOOL)canBeRevoked;
 
 - (BOOL)canBeForwarded;
+
+- (BOOL)canDisplayBubbleBackground:(NIMMessage *)message;
 
 @end

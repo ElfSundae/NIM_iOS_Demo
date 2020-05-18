@@ -11,6 +11,8 @@
 #import "NTESSessionConfig.h"
 #import "NTESSessionViewController.h"
 
+@class NTESRemoteSessionConfig;
+
 @protocol NTESRemoteSessionDelegate <NSObject>
 
 - (void)fetchRemoteDataError:(NSError *)error;
@@ -19,6 +21,9 @@
 
 
 @interface NTESSessionRemoteHistoryViewController : NTESSessionViewController
+@property (nonatomic,strong) NTESRemoteSessionConfig *config;
+
+- (instancetype)initWithSession:(NIMSession *)session config:(NTESRemoteSessionConfig *)config;
 
 @end
 

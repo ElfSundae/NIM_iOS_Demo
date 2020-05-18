@@ -39,5 +39,17 @@
     return [info contentViewInsets:message];
 }
 
+- (BOOL)enableBackgroundBubbleView:(NIMMessage *)message
+{
+    NIMCustomObject *object = message.messageObject;
+    NSAssert([object isKindOfClass:[NIMCustomObject class]], @"message must be custom");
+    id<NTESCustomAttachmentInfo> info = (id<NTESCustomAttachmentInfo>)object.attachment;
+    if (![info respondsToSelector:@selector(canDisplayBubbleBackground:)])
+    {
+        return YES;
+    }
+    return [info canDisplayBubbleBackground:message];
+}
+
 
 @end

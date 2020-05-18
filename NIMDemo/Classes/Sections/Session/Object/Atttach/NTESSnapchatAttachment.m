@@ -64,6 +64,7 @@
 
 
 - (NSString *)cellContent:(NIMMessage *)message{
+    self.isFromMe = message.isOutgoingMsg;
     return @"NTESSessionSnapchatContentView";
 }
 
@@ -80,8 +81,8 @@
     CGFloat bubbleArrowWidthForImage = -4.f;
     if (message.isOutgoingMsg) {
         return  UIEdgeInsetsMake(bubblePaddingForImage,bubblePaddingForImage,bubblePaddingForImage,bubblePaddingForImage + bubbleArrowWidthForImage);
-    }else{
-        return  UIEdgeInsetsMake(bubblePaddingForImage,bubblePaddingForImage + bubbleArrowWidthForImage, bubblePaddingForImage,bubblePaddingForImage);
+    } else {
+        return  UIEdgeInsetsMake(bubblePaddingForImage,bubblePaddingForImage + bubbleArrowWidthForImage + 4, bubblePaddingForImage,bubblePaddingForImage);
     }
 }
 

@@ -129,13 +129,10 @@
         [tableView setEditing:NO animated:YES];
     }];
     
-    
     NIMRecentSession *recentSession = weakSelf.recentSessions[indexPath.row];
-    BOOL isTop = [NTESSessionUtil recentSessionIsMark:recentSession type:NTESRecentSessionMarkTypeTop];
-    UITableViewRowAction *top = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"更新" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *update = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"更新" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NSDictionary * localExt = recentSession.localExt;
         NSMutableDictionary * newExt = [NSMutableDictionary dictionaryWithDictionary:localExt];
-        newExt[@"NTESRecentSessionTopMark"] = @(!isTop);
         newExt[@"number"] = @(arc4random());
 
         NSData * data = [NSJSONSerialization dataWithJSONObject:newExt options:NSJSONWritingPrettyPrinted error:nil];
@@ -149,38 +146,13 @@
                 [self.view makeToast:recentSession.serverExt duration:3 position:CSToastPositionCenter];
             }
             recentSession.serverExt = newServerExt;
-            NSMutableArray * array = [self customSortRecents:self.recentSessions];
-            self.recentSessions = array;
             [self.tableView reloadData];
         }];
         
         [tableView setEditing:NO animated:YES];
     }];
     
-    return @[delete,top];
-}
-
-- (NSMutableArray *)customSortRecents:(NSMutableArray *)recentSessions
-{
-    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:recentSessions];
-    [array sortUsingComparator:^NSComparisonResult(NIMRecentSession *obj1, NIMRecentSession *obj2) {
-        NSInteger score1 = [NTESSessionUtil recentSessionIsMark:obj1 type:NTESRecentSessionMarkTypeTop]? 10 : 0;
-        NSInteger score2 = [NTESSessionUtil recentSessionIsMark:obj2 type:NTESRecentSessionMarkTypeTop]? 10 : 0;
-        if (obj1.updateTime > obj2.updateTime)
-        {
-            score1 += 1;
-        }
-        else if (obj1.updateTime < obj2.updateTime)
-        {
-            score2 += 1;
-        }
-        if (score1 == score2)
-        {
-            return NSOrderedSame;
-        }
-        return score1 > score2;// ? NSOrderedDescending : NSOrderedAscending;
-    }];
-    return array;
+    return @[delete,update];
 }
 
 - (void)onTouchAvatar:(id)sender{

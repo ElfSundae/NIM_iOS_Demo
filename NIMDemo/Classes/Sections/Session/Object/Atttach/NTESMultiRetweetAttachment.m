@@ -29,6 +29,7 @@
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
     dataDic[CMURL] = _url;
     dataDic[CMMD5] = _md5;
+    dataDic[CMFileName] = _fileName;
     dataDic[CMCompressed] = @(_compressed);
     dataDic[CMEncrypted] = @(_encrypted);
     dataDic[CMPassword] = _password;
@@ -48,14 +49,6 @@
     
     
     return content;
-}
-
-- (void)setUrl:(NSString *)url {
-    _url = url;
-    if (url && !_filePath) {
-        NSString *fileName = [url lastPathComponent];
-        _filePath = [NTESFileLocationHelper filepathForMergeForwardFile:fileName];
-    }
 }
 
 - (void)setAbstracts:(NSMutableArray<NTESMessageAbstract *> *)abstracts {
@@ -103,7 +96,7 @@
 }
 
 - (NSString *)attachmentPathForUploading {
-    return _filePath;
+    return self.filePath;
 }
 
 - (void)updateAttachmentURL:(NSString *)urlString {
@@ -114,10 +107,7 @@
 - (BOOL)attachmentNeedsDownload {
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir = NO;
-    if (_filePath.length == 0) {
-        _filePath = [NTESFileLocationHelper filepathForMergeForwardFile:_url.lastPathComponent];
-    }
-    BOOL fileExist = ([fm fileExistsAtPath:_filePath isDirectory:&isDir]
+    BOOL fileExist = ([fm fileExistsAtPath:self.filePath isDirectory:&isDir]
                       && !isDir);
     return !fileExist;
 }
@@ -127,7 +117,7 @@
 }
 
 - (NSString *)attachmentPathForDownloading {
-    return _filePath;
+    return self.filePath;
 }
 
 #pragma mark - cell相关
@@ -181,6 +171,19 @@
     return YES;
 }
 
+- (NSString *)filePath
+{
+    NSString *filePath = self.fileName ? [NTESFileLocationHelper filepathForMergeForwardFile:self.fileName] : nil;
+    return filePath;
+}
+
+- (NSString *)fileName
+{
+    if (!_fileName) {
+        _fileName = self.url.lastPathComponent;
+    }
+    return _fileName;
+}
 
 - (M80AttributedLabel *)label {
     if (!_label) {

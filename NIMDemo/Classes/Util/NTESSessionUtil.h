@@ -13,7 +13,7 @@
 typedef NS_ENUM(NSInteger, NTESRecentSessionMarkType){
     // @ 标记
     NTESRecentSessionMarkTypeAt,
-    // 置顶标记
+    // 置顶标记（已废弃）
     NTESRecentSessionMarkTypeTop,
 };
 

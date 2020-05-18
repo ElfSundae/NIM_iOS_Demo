@@ -101,7 +101,7 @@ typedef void(^NTESMergeForwardTaskResult)(uint64_t identifier, NSError * _Nonnul
             }
         } else {
             NTESMultiRetweetAttachment *attach = [[NTESMultiRetweetAttachment alloc] init];
-            attach.filePath = info.filePath;
+            attach.fileName = info.filePath.lastPathComponent;
             attach.md5 = info.md5;
             attach.compressed = info.compressed;
             attach.encrypted = info.encrypted;

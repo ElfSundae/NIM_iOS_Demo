@@ -84,6 +84,7 @@
     }
     
     self.bubbleView.bubbleImageView.hidden = YES;
+    self.bubblesBackgroundView.hidden = YES;
     self.backgroundColor = UIColorFromRGB(0xfefefe);
     
     id bubbleView = self.bubbleView;

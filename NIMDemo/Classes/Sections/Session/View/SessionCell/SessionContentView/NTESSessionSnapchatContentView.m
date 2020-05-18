@@ -67,9 +67,8 @@ NSString *const NIMDemoEventNameCloseSnapPicture = @"NIMDemoEventNameCloseSnapPi
 
     CGFloat customSnapMessageImageRightToText = 5.f;
     CGFloat customSnapMessageTextBottom       = 20.f;
-    self.label.left = self.model.message.isOutgoingMsg ? self.imageView.left - customSnapMessageImageRightToText - self.label.width : self.imageView.right + customSnapMessageImageRightToText;
+    self.label.left = self.model.message.isOutgoingMsg ? self.imageView.left - customSnapMessageImageRightToText - self.label.width : self.imageView.right + customSnapMessageImageRightToText + 5;
     self.label.bottom = self.imageView.bottom - customSnapMessageTextBottom ;
-    
 }
 
 

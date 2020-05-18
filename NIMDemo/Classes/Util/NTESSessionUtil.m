@@ -246,17 +246,15 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
             tip = @"你".ntes_localized;
             break;
         }
-        //
         NIMSession *session = notification.session;
         if (session.sessionType == NIMSessionTypeTeam || session.sessionType == NIMSessionTypeSuperTeam) {
             tip = [self tipTitleFromMessageRevokeNotificationTeam:notification];
             break;
         }
-        //
         tip = [self tipTitleFromMessageRevokeNotificationP2P:notification];
     } while (false);
     
-    return [NSString stringWithFormat:@"%@%@", tip, @"撤回了一条消息".ntes_localized];
+    return [NSString stringWithFormat:@"%@撤回了一条消息".ntes_localized, tip];
 }
 
 + (NSString *)tipTitleFromMessageRevokeNotificationP2P:(NIMRevokeMessageNotification *)notification {

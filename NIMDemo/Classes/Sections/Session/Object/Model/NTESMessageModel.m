@@ -10,4 +10,16 @@
 
 @implementation NTESMessageModel
 
+- (instancetype)initWithMessage:(NIMMessage*)message
+{
+    self = [super initWithMessage:message];
+    if (self) {
+        self.shouldShowPinContent = NO;
+        self.enableSubMessages = NO;
+        self.enableRepliedContent = NO;
+        self.enableQuickComments = NO;
+    }
+    return self;
+}
+
 @end

@@ -89,5 +89,14 @@
     return YES;
 }
 
+- (BOOL)canDisplayBubbleBackground:(NIMMessage *)message
+{
+    NIMSession *session = message.session;
+    if (session.sessionType == NIMSessionTypeChatroom)
+    {
+        return NO;
+    }
+    return YES;
+}
 
 @end

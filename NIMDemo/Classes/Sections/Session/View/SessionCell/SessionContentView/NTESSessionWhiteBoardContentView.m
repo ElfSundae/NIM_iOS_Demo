@@ -50,6 +50,8 @@
     }else{
         _textLabel.textColor = [UIColor whiteColor];
     }
+    
+    self.bubbleImageView.hidden = NO;
 }
 
 - (void)layoutSubviews{

@@ -51,8 +51,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.frame = self.view.bounds;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,23 +72,20 @@
 
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.scrollView.frame = self.view.bounds;
+    [self layoutGallery:_currentItem.size];
+}
+
 
 - (void)loadImage
 {
     UIEdgeInsets insets = UIEdgeInsetsZero;
-    
-    if (@available(iOS 11.0, *))
-    {
-        insets = self.scrollView.adjustedContentInset;
-    }
-    else
-    {
-        insets = self.scrollView.contentInset;
-    }
     self.scrollView.contentSize = CGSizeMake(self.scrollView.width - insets.left - insets.right,
                                              self.scrollView.height - insets.top - insets.bottom);
     
-    [self layoutGallery:_currentItem.size];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:_currentItem.imagePath])
     {
@@ -121,16 +120,22 @@
 
 - (void)setupImageWithPath:(NSString *)path
 {
-    if (path.length == 0)
+    UIImage *yyImage = [self imageWithPath:path];
+    self.galleryImageView.image = yyImage;
+    [self layoutGallery:yyImage.size];
+}
+
+- (UIImage *)imageWithPath:(NSString *)path
+{
+    if (path.length == 0 || ![[NSFileManager defaultManager] fileExistsAtPath:path])
     {
-        return;
+        return nil;
     }
     
     NSData *imageData = [[NSData alloc] initWithContentsOfFile:path];
     YYImage *yyImage = [YYImage imageWithData:imageData
                                         scale:UIScreen.mainScreen.scale];
-    self.galleryImageView.image = yyImage;
-    [self layoutGallery:yyImage.size];
+    return yyImage;
 }
 
 
@@ -154,7 +159,7 @@
         self.galleryImageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     
-    self.galleryImageView.centerY = self.galleryImageView.height * .5f ;
+    self.galleryImageView.centerY = self.galleryImageView.height * .5f;
 }
 
 
@@ -219,26 +224,19 @@
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
     {
         UIAlertController *controller = [[UIAlertController alloc] init];
-        __weak typeof(self) weakSelf = self;
-        [[NIMSDK sharedSDK].resourceManager fetchNOSURLWithURL:self.currentItem.imageURL completion:^(NSError * _Nullable error, NSString * _Nullable urlString)
-        {
-            SDWebImageManager *sdManager = [SDWebImageManager sharedManager];
-            [sdManager.imageCache queryImageForKey:urlString options:0 context:nil completion:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
-                [[[controller addAction:@"保存至相册".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    [NIMKitAuthorizationTool requestPhotoLibraryAuthorization:^(NIMKitAuthorizationStatus status) {
-                        switch (status) {
-                            case NIMKitAuthorizationStatusAuthorized:
-                                UIImageWriteToSavedPhotosAlbum(image, weakSelf, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-                                break;
-                            default:
-                                [weakSelf.view makeToast:@"没有开启权限，请开启权限".ntes_localized duration:2.0 position:CSToastPositionCenter];
-                                break;
-                        }
-                    }];
-                }]addAction:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}] show];
+        UIImage *image = [self imageWithPath:self.currentItem.imagePath];
+        [[[controller addAction:@"保存至相册".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [NIMKitAuthorizationTool requestPhotoLibraryAuthorization:^(NIMKitAuthorizationStatus status) {
+                switch (status) {
+                    case NIMKitAuthorizationStatusAuthorized:
+                        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+                        break;
+                    default:
+                        [self.view makeToast:@"没有开启权限，请开启权限".ntes_localized duration:2.0 position:CSToastPositionCenter];
+                        break;
+                }
             }];
-        }];
-        
+        }]addAction:@"取消".ntes_localized style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}] show];
     }
 }
 

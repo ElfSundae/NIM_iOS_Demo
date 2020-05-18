@@ -84,6 +84,16 @@
     [self sendMessage:[NTESSessionMsgConverter msgWithJenKenPon:attachment]];
 }
 
+- (BOOL)onLongPressCell:(NIMMessage *)message
+                 inView:(UIView *)view
+{
+    if (message.session.sessionType == NIMSessionTypeChatroom)
+    {
+        return YES;
+    }
+    return [super onLongPressCell:message inView:view];
+}
+
 - (void)sendMessage:(NIMMessage *)message
 {
     NIMChatroomMember *member = [[NTESChatroomManager sharedInstance] myInfo:self.chatroom.roomId];
@@ -139,6 +149,10 @@
     }
 }
 
+- (void)uiCheckPinItems
+{
+    
+}
 
 #pragma mark - Get
 - (NTESChatroomConfig *)config{

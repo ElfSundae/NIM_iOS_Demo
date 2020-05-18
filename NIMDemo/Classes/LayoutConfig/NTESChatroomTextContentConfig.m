@@ -56,4 +56,9 @@
     return _label;
 }
 
+- (BOOL)enableBackgroundBubbleView:(NIMMessage *)message
+{
+    return NO;
+}
+
 @end

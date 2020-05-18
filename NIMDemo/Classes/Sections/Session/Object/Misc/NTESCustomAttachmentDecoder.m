@@ -82,6 +82,7 @@
                     attachment = [[NTESMultiRetweetAttachment alloc] init];
                     ((NTESMultiRetweetAttachment *)attachment).url = [data jsonString:CMURL];
                     ((NTESMultiRetweetAttachment *)attachment).md5 = [data jsonString:CMMD5];
+                    ((NTESMultiRetweetAttachment *)attachment).fileName = [data jsonString:CMFileName];
                     ((NTESMultiRetweetAttachment *)attachment).compressed = [data jsonBool:CMCompressed];
                     ((NTESMultiRetweetAttachment *)attachment).encrypted = [data jsonBool:CMEncrypted];
                     ((NTESMultiRetweetAttachment *)attachment).password = [data jsonString:CMPassword];
@@ -129,7 +130,7 @@
     else if ([attachment isKindOfClass:[NTESMultiRetweetAttachment class]])
     {
         NTESMultiRetweetAttachment *target = (NTESMultiRetweetAttachment *)attachment;
-        if (target.url.length == 0 || target.messageAbstract.count == 0) {
+        if (target.messageAbstract.count == 0) {
             check = NO;
         } else if (target.encrypted && target.password.length == 0) {
             check = NO;

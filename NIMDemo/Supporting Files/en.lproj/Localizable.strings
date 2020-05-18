@@ -39,9 +39,9 @@
 "晚上" = "Night";
 
 "你" = "You";
-"撤回了一条消息" = "Recalled a message";
+"%@撤回了一条消息" = "%@ revoked a message";
 "对方" = "The Other side";
-"群主" = "Owener";
+"群主" = "Owner";
 "管理员" = "Administrator";
 "在线" = "Online";
 "离线" = "Offline";
@@ -50,10 +50,10 @@
 "未知" = "Unknown";
 "[未知消息]" = "[unknow message]";
 "[阅后即焚]" = "[snapchat]";
-"[猜拳]" = "[Guess]";
-"[贴图]" = "[Sticker]";
+"[猜拳]" = "[guess]";
+"[贴图]" = "[sticker]";
 "[白板]" = "[RTS]";
-"[红包消息]" = "[Red packet]";
+"[红包消息]" = "[red packet]";
 "[聊天记录]" = "[chat history]";
 
 // 系统通知
@@ -117,7 +117,6 @@
 "解除管理员" = "Cancel Administrator";
 "任命管理员" = "Set as administrator";
 "踢出" = "Kick out";
-"操作失败" = "Operated failed";
 "帐号" = "Account";
 "昵称" = "Nickname";
 "加入群组" = "Join group";
@@ -150,7 +149,6 @@
 "拉黑失败" = "Block failed";
 "移除黑名单成功" = "Blacklist removed successfully";
 "移除黑名单失败" = "Remove blacklist failed";
-"操作失败" = "Operated failed";
 "跪求通过" = "Begging to pass";
 "添加成功"  = "Successfully added ";
 "请求成功"  = "Request Successfully";
@@ -358,17 +356,18 @@
 "云消息记录" = "Cloud message record";
 "搜索本地消息记录" = "Search local message records";
 "清空本地聊天记录" = "Clear local chat history";
+"查看标记消息" = "View pinned messages";
 "确定清空聊天记录？" = "Confirm to clear chat history?";
 "选择操作" = "Select operate";
 "转发" = "Forward";
-"多选" = "Multiple choice";
-"撤回" = "recall";
+"多选" = "Choose";
+"撤回" = "Revoke";
 "转文字" = "speech to text";
 "取消上传" = "Cancel upload";
 "消息合并转发失败" = "Message mergeed to forward failed";
 "选择会话类型" = "Select session type";
 "发送时间超过2分钟的消息，不能被撤回" = "Send messages longer than 2 minutes and cannot be withdrawn";
-"消息撤回失败，请重试" = "Message recall failed, please try again";
+"消息撤回失败，请重试" = "Message revoke failed, please try again";
 "确认转发给" = "Confirm forward to";
 "确认转发" = "Confirm forward";
 "转发失败" = "Forward failed";
@@ -471,7 +470,7 @@
 "开始录制" = "Start recording";
 "未接通" = "Not connected";
 "已挂断" = "Hung up";
-"已读回执" = "Read receipt";
+"已读回执" = "Receipt";
 "消息已读详情" = "Message read details";
 "未读" = "Unread";
 "已读" = "read";
@@ -499,7 +498,10 @@
 "群消息同步完成" = "Group message sync completed";
 "取消置顶" = "Cancel set-top";
 "置顶" = "set-top";
-"删除" = "del";
+"删除" = "Del";
+"收藏" = "Collect";
+"标记" = "Pin";
+"取消标记" = "Un-pin";
 "有人" = "Someone";
 "你" = "You";
 "音视频网络探测" = "AVchat network detection";
@@ -559,6 +561,7 @@
 "版本号" = "Version number";
 "服务端时间查询失败" = "Server time query failed";
 "自定义系统通知" = "Custom system notifications";
+"我的收藏" = "My collection";
 "我的钱包" = "My wallet";
 "消息提醒" = "Message notification";
 "在iPhone的“设置- 通知中心”功能，找到应用程序“云信”，可以更改云信新消息提醒设置" = "In the Settings →Notification Center of iPhone, find the ”Yunxin“ application , you can change the new message remind settings of Yunxin";
@@ -627,3 +630,8 @@
 "个人" = "P2P";
 "的来电" = "'s calling";
 "群组不存在" = "Not exists";
+"回复" = "Reply";
+"复制" = "Copy";
+
+"回复详情" = "Reply Details";
+"父消息不存在" = "Parent Message missed";

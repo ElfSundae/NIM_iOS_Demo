@@ -32,6 +32,8 @@
     }
     self.label.textColor = [UIColor whiteColor];;
     self.label.font = [UIFont systemFontOfSize:10.f];
+    
+    self.bubbleImageView.hidden = NO;
 }
 
 - (UIImage *)chatBubbleImageForState:(UIControlState)state outgoing:(BOOL)outgoing

@@ -19,16 +19,20 @@
 #import "NTESSessionServiceListVC.h"
 #import "NTESSessionSearchViewController.h"
 #import "NSString+NTES.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 #define SessionListTitle @"云信 Demo".ntes_localized
 
-@interface NTESSessionListViewController ()<NIMLoginManagerDelegate,NTESListHeaderDelegate,NIMEventSubscribeManagerDelegate,UIViewControllerPreviewingDelegate>
+@interface NTESSessionListViewController ()<NIMLoginManagerDelegate,NTESListHeaderDelegate,NIMEventSubscribeManagerDelegate,UIViewControllerPreviewingDelegate,NIMChatExtendManagerDelegate>
 
 @property (nonatomic,strong) NTESListHeader *header;
 
 @property (nonatomic,assign) BOOL supportsForceTouch;
 
 @property (nonatomic,strong) NSMutableDictionary *previews;
+
+@property (nonatomic,strong) NSMutableDictionary<NIMSession *,NIMStickTopSessionInfo *> *stickTopInfos;
+
 
 @end
 
@@ -38,6 +42,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _previews = [[NSMutableDictionary alloc] init];
+        self.stickTopInfos = NSMutableDictionary.dictionary;
         self.autoRemoveRemoteSession = [[NTESBundleSetting sharedConfig] autoRemoveRemoteSession];
     }
     return self;
@@ -45,6 +50,7 @@
 
 - (void)dealloc{
     [[NIMSDK sharedSDK].loginManager removeDelegate:self];
+    [[NIMSDK sharedSDK].chatExtendManager removeDelegate:self];
 }
 
 
@@ -54,7 +60,8 @@
     
     [[NIMSDK sharedSDK].loginManager addDelegate:self];
     [[NIMSDK sharedSDK].subscribeManager addDelegate:self];
-    
+    [[NIMSDK sharedSDK].chatExtendManager addDelegate:self];
+
     self.header = [[NTESListHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
     self.header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.header.delegate = self;
@@ -71,6 +78,12 @@
     self.navigationItem.titleView  = [self titleView:userID];
     self.definesPresentationContext = YES;
     [self setUpNavItem];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadStickTopSessions];
 }
 
 - (void)setUpNavItem{
@@ -175,14 +188,31 @@
 {
     if (isTop)
     {
-        [NTESSessionUtil removeRecentSessionMark:recent.session type:NTESRecentSessionMarkTypeTop];
+        __weak typeof(self) wself = self;
+        [NIMSDK.sharedSDK.chatExtendManager removeStickTopSession:self.stickTopInfos[recent.session] completion:^(NSError * _Nullable error, NIMStickTopSessionInfo * _Nullable removedInfo) {
+            __weak typeof(self) sself = wself;
+            if (!sself) return;
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                return;
+            }
+            self.stickTopInfos[recent.session] = nil;
+            [self refresh];
+        }];
+    } else {
+        __weak typeof(self) wself = self;
+        NIMAddStickTopSessionParams *params = [[NIMAddStickTopSessionParams alloc] initWithSession:recent.session];
+        [NIMSDK.sharedSDK.chatExtendManager addStickTopSession:params completion:^(NSError * _Nullable error, NIMStickTopSessionInfo * _Nullable newInfo) {
+            __weak typeof(self) sself = wself;
+            if (!sself) return;
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                return;
+            }
+            self.stickTopInfos[newInfo.session] = newInfo;
+            [self refresh];
+        }];
     }
-    else
-    {
-        [NTESSessionUtil addRecentSessionMark:recent.session type:NTESRecentSessionMarkTypeTop];
-    }
-    self.recentSessions = [self customSortRecents:self.recentSessions];
-    [self.tableView reloadData];
 }
 
 
@@ -201,25 +231,8 @@
 
 - (NSMutableArray *)customSortRecents:(NSMutableArray *)recentSessions
 {
-    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:recentSessions];
-    [array sortUsingComparator:^NSComparisonResult(NIMRecentSession *obj1, NIMRecentSession *obj2) {
-        NSInteger score1 = [NTESSessionUtil recentSessionIsMark:obj1 type:NTESRecentSessionMarkTypeTop]? 10 : 0;
-        NSInteger score2 = [NTESSessionUtil recentSessionIsMark:obj2 type:NTESRecentSessionMarkTypeTop]? 10 : 0;
-        if (obj1.lastMessage.timestamp > obj2.lastMessage.timestamp)
-        {
-            score1 += 1;
-        }
-        else if (obj1.lastMessage.timestamp < obj2.lastMessage.timestamp)
-        {
-            score2 += 1;
-        }
-        if (score1 == score2)
-        {
-            return NSOrderedSame;
-        }
-        return score1 > score2? NSOrderedAscending : NSOrderedDescending;
-    }];
-    return array;
+    [NIMSDK.sharedSDK.chatExtendManager sortRecentSessions:recentSessions withStickTopInfos:self.stickTopInfos];
+    return recentSessions;
 }
 
 #pragma mark - SessionListHeaderDelegate
@@ -316,6 +329,12 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 偶现侧滑数组越界，但并没有发现并发问题，暂且防护
+    return indexPath.row < self.recentSessions.count;
+}
+
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __weak typeof(self) weakSelf = self;
@@ -323,11 +342,23 @@
         NIMRecentSession *recentSession = weakSelf.recentSessions[indexPath.row];
         [weakSelf onDeleteRecentAtIndexPath:recentSession atIndexPath:indexPath];
         [tableView setEditing:NO animated:YES];
+        
+        // 删除置顶
+        NIMStickTopSessionInfo *stickTopInfo = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:recentSession.session];
+        if (stickTopInfo) {
+            [NIMSDK.sharedSDK.chatExtendManager removeStickTopSession:stickTopInfo completion:^(NSError * _Nullable error, NIMStickTopSessionInfo * _Nullable removedInfo) {
+                __strong typeof(self) sself = weakSelf;
+                if (!sself) return;
+                if (!error) {
+                    self.stickTopInfos[recentSession.session] = nil;
+                }
+            }];
+        }
     }];
     
     
     NIMRecentSession *recentSession = weakSelf.recentSessions[indexPath.row];
-    BOOL isTop = [NTESSessionUtil recentSessionIsMark:recentSession type:NTESRecentSessionMarkTypeTop];
+    BOOL isTop = self.stickTopInfos[recentSession.session] != nil;
     UITableViewRowAction *top = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:isTop?@"取消置顶".ntes_localized:@"置顶".ntes_localized handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [weakSelf onTopRecentAtIndexPath:recentSession atIndexPath:indexPath isTop:isTop];
         [tableView setEditing:NO animated:YES];
@@ -359,7 +390,28 @@
     [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 }
 
+- (void)onNotifyAddStickTopSession:(NIMStickTopSessionInfo *)newInfo
+{
+    self.stickTopInfos[newInfo.session] = newInfo;
+    [self refresh];
+}
 
+- (void)onNotifyRemoveStickTopSession:(NIMStickTopSessionInfo *)removedInfo
+{
+    self.stickTopInfos[removedInfo.session] = nil;
+    [self refresh];
+}
+
+- (void)onNotifySyncStickTopSessions:(NIMSyncStickTopSessionResponse *)response
+{
+    if (response.hasChange) {
+        [self.stickTopInfos removeAllObjects];
+        [response.allInfos enumerateObjectsUsingBlock:^(NIMStickTopSessionInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            self.stickTopInfos[obj.session] = obj;
+        }];
+        [self refresh];
+    }
+}
 
 #pragma mark - Private
 
@@ -452,6 +504,17 @@
             [content insertAttributedString:atTip atIndex:0];
         }
     }
+}
+
+- (void)loadStickTopSessions
+{
+    __weak typeof(self) wself = self;
+    [NIMSDK.sharedSDK.chatExtendManager loadStickTopSessionInfos:^(NSError * _Nullable error, NSDictionary<NIMSession *,NIMStickTopSessionInfo *> * _Nullable infos) {
+        __strong typeof(self) sself = wself;
+        if (!sself) return;
+        sself.stickTopInfos = [NSMutableDictionary dictionaryWithDictionary:infos];
+        [sself refresh];
+    }];
 }
 
 @end

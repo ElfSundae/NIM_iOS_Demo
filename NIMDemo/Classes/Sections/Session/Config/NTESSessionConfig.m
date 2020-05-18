@@ -15,9 +15,11 @@
 #import "NSString+NTES.h"
 #import "NIMSessionConfig.h"
 #import "NTESSessionUtil.h"
+#import "NIMInputEmoticonManager.h"
+#import "NIMKitUtil.h"
 
 @interface NTESSessionConfig()
-
+@property (nonatomic,strong) NIMMessage *threadMessage;
 @end
 
 @implementation NTESSessionConfig
@@ -99,6 +101,107 @@
 
     return [defaultMediaItems arrayByAddingObjectsFromArray:items];
     
+}
+
+
+- (NSArray<NIMMediaItem *> *)menuItemsWithMessage:(NIMMessage *)message {
+    NSMutableArray *items = [NSMutableArray array];
+
+    NIMMediaItem *reply = [NIMMediaItem item:@"onTapMenuItemReply:"
+                                 normalImage:[UIImage imageNamed:@"menu_reply"]
+                               selectedImage:nil
+                                       title:@"回复".ntes_localized];
+    
+    NIMMediaItem *copy = [NIMMediaItem item:@"onTapMenuItemCopy:"
+                                normalImage:[UIImage imageNamed:@"menu_copy"]
+                              selectedImage:nil
+                                      title:@"复制".ntes_localized];
+    
+    NIMMediaItem *forword = [NIMMediaItem item:@"onTapMenuItemForword:"
+                                   normalImage:[UIImage imageNamed:@"menu_forword"]
+                                 selectedImage:nil
+                                         title:@"转发".ntes_localized];
+    
+    NIMMediaItem *mark = [NIMMediaItem item:@"onTapMenuItemMark:"
+                                normalImage:[UIImage imageNamed:@"menu_collect"]
+                              selectedImage:nil
+                                      title:@"收藏".ntes_localized];
+    
+    BOOL isMessagePined = [NIMSDK.sharedSDK.chatExtendManager pinItemForMessage:message] != nil;
+    NSString *pinTitle = isMessagePined ? @"Un-pin": @"Pin";
+    NSString *pinAction = isMessagePined ? @"onTapMenuItemUnpin:" : @"onTapMenuItemPin:";
+    NIMMediaItem *pin = [NIMMediaItem item:pinAction
+                               normalImage:[UIImage imageNamed:@"menu_pin"]
+                             selectedImage:nil
+                                     title:pinTitle];
+    
+    NIMMediaItem *revoke = [NIMMediaItem item:@"onTapMenuItemRevoke:"
+                                  normalImage:[UIImage imageNamed:@"menu_revoke"]
+                                selectedImage:nil
+                                        title:@"撤回".ntes_localized];
+    
+    NIMMediaItem *delete = [NIMMediaItem item:@"onTapMenuItemDelete:"
+                                  normalImage:[UIImage imageNamed:@"menu_del"]
+                                selectedImage:nil
+                                        title:@"删除".ntes_localized];
+    
+    NIMMediaItem *mutiSelect = [NIMMediaItem item:@"onTapMenuItemMutiSelect:"
+                                      normalImage:[UIImage imageNamed:@"menu_choose"]
+                                    selectedImage:nil
+                                            title:@"多选".ntes_localized];
+    if ([NTESSessionUtil canMessageBeForwarded:message])
+    {
+        [items addObject:reply];
+    }
+    
+    if (message.messageType == NIMMessageTypeText)
+    {
+        [items addObject:copy];
+    }
+    
+    if ([NTESSessionUtil canMessageBeForwarded:message]) {
+        [items addObject:forword];
+    }
+    if ([NTESSessionUtil canMessageBeForwarded:message]) {
+        [items addObject:mark];
+        [items addObject:pin];
+    }
+    if ([NTESSessionUtil canMessageBeRevoked:message]) {
+        [items addObject:revoke];
+    }
+    [items addObject:delete];
+    if ([NTESSessionUtil canMessageBeForwarded:message])
+    {
+        [items addObject:mutiSelect];
+    }
+    
+    if (message.messageType == NIMMessageTypeAudio)
+    {
+        NIMMediaItem *audio2text = [NIMMediaItem item:@"onTapMenuItemAudio2Text:"
+          normalImage:[UIImage imageNamed:@"menu_audio2text"]
+        selectedImage:nil
+                title:@"转文字".ntes_localized];
+        
+        [items addObject:audio2text];
+    }
+    return items;
+}
+
+- (NSArray *)emotionItems
+{
+    NSArray *indexs = @[@(1),@(145),@(12),@(15),@(10),@(18),@(19)];
+    NSMutableArray *items = [NSMutableArray array];
+    for (NSNumber *index in indexs)
+    {
+        NSString * ID = [NSString stringWithFormat:NIMKitQuickCommentFormat, [index integerValue]];
+        NIMInputEmoticon *item = [[NIMInputEmoticonManager sharedManager] emoticonByID:ID];
+        if (item)
+        {
+            [items addObject:item];
+        }
+    }
+    
+    return [items copy];
 }
 
 - (BOOL)shouldHandleReceipt{
@@ -196,6 +299,21 @@
 
 - (BOOL)disableSelectedForMessage:(NIMMessage *)message {
     return ![NTESSessionUtil canMessageBeForwarded:message];
+}
+
+- (void)setThreadMessage:(NIMMessage *)message
+{
+    _threadMessage = message;
+}
+
+- (void)cleanThreadMessage
+{
+    _threadMessage = nil;
+}
+
+- (BOOL)clearThreadMessageAfterSent
+{
+    return YES;
 }
 
 @end

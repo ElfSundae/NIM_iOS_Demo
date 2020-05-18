@@ -249,4 +249,30 @@
     }
     return NO;
 }
+
+- (BOOL)shouldDisplayBubbleBackground:(NIMMessageModel *)model
+{
+    NIMMessage *message = model.message;
+    if (!message)
+    {
+        return NO;
+    }
+    
+    if ([self isSupportedCustomMessage:message])
+    {
+        return [_sessionCustomconfig enableBackgroundBubbleView:message];
+    }
+    
+    //检查是不是聊天室文本消息
+    if (message.session.sessionType == NIMSessionTypeChatroom)
+    {
+        if ([_chatroomTextConfig respondsToSelector:@selector(enableBackgroundBubbleView:)])
+        {
+            return [_chatroomTextConfig enableBackgroundBubbleView:message];
+        }
+        return NO;
+    }
+    
+    return [super shouldDisplayBubbleBackground:model];
+}
 @end

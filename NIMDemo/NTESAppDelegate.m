@@ -31,6 +31,8 @@
 #import "NTESPrivatizationManager.h"
 #import <TZLocationManager.h>
 #import "NTESDbExceptionHandler.h"
+#import "NTESBundleSetting.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @import PushKit;
 
@@ -50,6 +52,8 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
         [[TZLocationManager manager] startLocation];//sdk 获取wifi信息需要使用
     }
     
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+
     [self setupNIMSDK];
     [self setupServices];
     [self setupCrashlytics];
@@ -195,13 +199,13 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     
     //pushkit
-//    PKPushRegistry *pushRegistry = [[PKPushRegistry alloc] initWithQueue:dispatch_get_main_queue()];
-//    pushRegistry.delegate = self;
-//    pushRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+    PKPushRegistry *pushRegistry = [[PKPushRegistry alloc] initWithQueue:dispatch_get_main_queue()];
+    pushRegistry.delegate = self;
+    pushRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
 
     
     // 注册push权限，用于显示本地推送
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
 }
 
 
@@ -314,6 +318,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     self.sdkConfigDelegate = [[NTESSDKConfigDelegate alloc] init];
     [[NIMSDKConfig sharedConfig] setDelegate:self.sdkConfigDelegate];
     [[NIMSDKConfig sharedConfig] setShouldSyncUnreadCount:YES];
+    [[NIMSDKConfig sharedConfig] setShouldSyncStickTopSessionInfos:YES];
     [[NIMSDKConfig sharedConfig] setMaxAutoLoginRetryTimes:10];
     [[NIMSDKConfig sharedConfig] setMaximumLogDays:[[NTESBundleSetting sharedConfig] maximumLogDays]];
     [[NIMSDKConfig sharedConfig] setShouldCountTeamNotification:[[NTESBundleSetting sharedConfig] countTeamNotification]];
@@ -352,8 +357,12 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     [NIMDatabaseException registerExceptionHandler:handler];
     
     //场景配置
-    NSMutableDictionary *dict = @{@"nim_custom1":@1}.mutableCopy;
-    [[NIMSDK sharedSDK] setSceneDict:dict];
+    BOOL fileDownloadTokenEnabled = [NTESBundleSetting sharedConfig].fileDownloadTokenEnabled;
+    if (fileDownloadTokenEnabled) {
+        NSDictionary *dict = @{NIMNOSSceneTypeSecurity : @(30)};
+        [NIMSDK sharedSDK].sceneDict = (NSMutableDictionary *)dict;
+        NSLog(@"%@, %@", dict, [NIMSDK sharedSDK].sceneDict);
+    }
 }
 
 - (void)setupCrashlytics

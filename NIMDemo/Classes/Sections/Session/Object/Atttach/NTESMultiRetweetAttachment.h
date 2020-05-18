@@ -33,7 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) NSMutableArray <NTESMessageAbstract *> *abstracts;
 
-@property (nonatomic,copy) NSString *filePath;
+@property (nonatomic,copy) NSString *fileName;
+
+@property (nonatomic,readonly) NSString *filePath;
 
 - (NSString *)formatTitleMessage;
 

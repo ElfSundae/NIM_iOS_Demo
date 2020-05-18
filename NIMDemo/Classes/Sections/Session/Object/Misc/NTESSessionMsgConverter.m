@@ -128,14 +128,16 @@
 
 
 + (NIMMessage*)msgWithFilePath:(NSString*)path{
-    NIMFileObject *fileObject = [[NIMFileObject alloc] initWithSourcePath:path];
+    BOOL fileDownloadTokenEnabled = [NTESBundleSetting sharedConfig].fileDownloadTokenEnabled;
+    NSString *sence = fileDownloadTokenEnabled ? NIMNOSSceneTypeSecurity : NIMNOSSceneTypeMessage;
+    NIMFileObject *fileObject = [[NIMFileObject alloc] initWithSourcePath:path scene:sence];
     NSString *displayName     = path.lastPathComponent;
     fileObject.displayName    = displayName;
     NIMMessage *message       = [[NIMMessage alloc] init];
     message.messageObject     = fileObject;
     message.apnsContent = @"发来了一个文件".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
-    setting.scene = NIMNOSSceneTypeMessage;
+    setting.scene = sence;
     message.setting = setting;
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
@@ -144,7 +146,9 @@
 }
 
 + (NIMMessage*)msgWithFileData:(NSData*)data extension:(NSString*)extension{
-    NIMFileObject *fileObject = [[NIMFileObject alloc] initWithData:data extension:extension];
+    BOOL fileDownloadTokenEnabled = [NTESBundleSetting sharedConfig].fileDownloadTokenEnabled;
+    NSString *sence = fileDownloadTokenEnabled ? NIMNOSSceneTypeSecurity : NIMNOSSceneTypeMessage;
+    NIMFileObject *fileObject = [[NIMFileObject alloc] initWithData:data extension:extension scene:sence];
     NSString *displayName;
     if (extension.length) {
         displayName     = [NSString stringWithFormat:@"%@.%@",[NSUUID UUID].UUIDString.MD5String,extension];
@@ -156,7 +160,7 @@
     message.messageObject     = fileObject;
     message.apnsContent = @"发来了一个文件".ntes_localized;
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
-    setting.scene = NIMNOSSceneTypeMessage;
+    setting.scene = sence;
     message.setting = setting;
     return message;
 }

@@ -458,6 +458,15 @@
     return count == nil ? 3 : [count integerValue];
 }
 
+- (BOOL)fileDownloadTokenEnabled {
+    id setting = [[NSUserDefaults standardUserDefaults] objectForKey:@"file_download_token_enabled"];
+    if (setting) {
+        return [setting boolValue];
+    } else {
+        return NO;
+    }
+}
+
 - (BOOL)autoFetchAttachment
 {
     id setting = [[NSUserDefaults standardUserDefaults] objectForKey:@"auto_fetch_attachment"];
@@ -471,6 +480,12 @@
 - (NIMAsymEncryptionType)AsymEncryptionType {
     id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"nim_asym_crypto_type"];
     return (ret == nil ? 1 : [ret integerValue]);
+}
+
+- (NIMRSAPaddingMode)rsaPaddingMode
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"nim_rsa_padding_mode"];
+    return [ret integerValue];
 }
 
 - (NIMSymEncryptionType)SymEncryptionType {
@@ -518,6 +533,18 @@
 {
     id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_revoke_count"];
     return [ret boolValue];
+}
+
+- (BOOL)enablePullSubMessagesFromServer
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_thread_cloud_pull"];
+    return [ret boolValue];
+}
+
+- (BOOL)enableSyncStickTopSessionInfos
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_sync_stick_top_session"];
+    return ret ? [ret boolValue] : YES;
 }
 
 - (NSString *)description

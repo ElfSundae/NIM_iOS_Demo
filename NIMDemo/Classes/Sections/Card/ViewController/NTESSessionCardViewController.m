@@ -67,8 +67,7 @@
 
 - (void)buildData{
     BOOL needNotify    = [[NIMSDK sharedSDK].userManager notifyForNewMsg:self.session.sessionId];
-    NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:self.session];
-    BOOL isTop = [NTESSessionUtil recentSessionIsMark:recent type:NTESRecentSessionMarkTypeTop];
+    BOOL isTop = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:self.session] != nil;
     NSArray *data = @[
                       @{
                           HeaderTitle:@"",
@@ -130,10 +129,28 @@
         if (!recent) {
             [[NIMSDK sharedSDK].conversationManager addEmptyRecentSessionBySession:_session];
         }
-        [NTESSessionUtil addRecentSessionMark:_session type:NTESRecentSessionMarkTypeTop];
+        __weak typeof(self) wself = self;
+        NIMAddStickTopSessionParams *params = [[NIMAddStickTopSessionParams alloc] initWithSession:self.session];
+        [NIMSDK.sharedSDK.chatExtendManager addStickTopSession:params completion:^(NSError * _Nullable error, NIMStickTopSessionInfo * _Nullable newInfo) {
+            __weak typeof(self) sself = wself;
+            if (!sself) return;
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                switcher.on = !switcher.on;
+            }
+        }];
     } else {
         if (recent) {
-            [NTESSessionUtil removeRecentSessionMark:_session type:NTESRecentSessionMarkTypeTop];
+            __weak typeof(self) wself = self;
+            NIMStickTopSessionInfo *stickTopInfo = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:recent.session];
+            [NIMSDK.sharedSDK.chatExtendManager removeStickTopSession:stickTopInfo completion:^(NSError * _Nullable error, NIMStickTopSessionInfo * _Nullable removedInfo) {
+                __weak typeof(self) sself = wself;
+                if (!sself) return;
+                if (error) {
+                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    switcher.on = !switcher.on;
+                }
+            }];
         } else {}
     }
 }

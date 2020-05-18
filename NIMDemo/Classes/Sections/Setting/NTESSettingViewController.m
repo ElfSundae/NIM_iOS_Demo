@@ -30,6 +30,8 @@
 #import "NTESSessionUtil.h"
 #import "JRMFHeader.h"
 #import "NTESMigrateMessageViewController.h"
+#import "NTESCollectMessageListViewController.h"
+#import <NIMSDK/NIMSDK.h>
 
 @interface NTESSettingViewController ()<NIMUserManagerDelegate>
 
@@ -117,6 +119,11 @@
                       @{
                           HeaderTitle:@"",
                           RowContent :@[
+                                  @{
+                                      Title         : @"我的收藏".ntes_localized,
+                                      CellAction    : @"onTouchMyCollection:",
+                                      ShowAccessory : @(YES),
+                                   },
                                   @{
                                       Title         : @"我的钱包".ntes_localized,
                                       CellAction    : @"onTouchMyWallet:",
@@ -282,17 +289,20 @@
     [SVProgressHUD show];
     
     __weak typeof(self) weakSelf = self;
-    [_logUploader upload:^(NSString *urlString,NSError *error) {
+    [[NIMSDK sharedSDK] uploadLogsWithAttach:@"attach"
+                                      roomId:nil
+                                  completion:^(NSError * error, NSString * logUrl)
+     {
         __strong typeof(weakSelf) strongSelf = weakSelf;
 
-        if (error || !urlString)
+        if (error || !logUrl)
         {
             [strongSelf.view makeToast:@"上传日志失败".ntes_localized duration:3.0 position:CSToastPositionCenter];
             [SVProgressHUD dismiss];
             return;
         }
         
-        [[NIMSDK sharedSDK].resourceManager fetchNOSURLWithURL:urlString completion:^(NSError * _Nullable error, NSString * _Nullable urlString)
+        [[NIMSDK sharedSDK].resourceManager fetchNOSURLWithURL:logUrl completion:^(NSError * _Nullable error, NSString * _Nullable urlString)
         {
             [SVProgressHUD dismiss];
             if (error || !urlString)
@@ -334,6 +344,12 @@
      addAction:@"取消".ntes_localized style:UIAlertActionStyleCancel handler:nil];
     
     [vc show];
+}
+
+- (void)onTouchMyCollection:(id)sender
+{
+    NTESCollectMessageListViewController *vc = [[NTESCollectMessageListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)onTouchMyWallet:(id)sender

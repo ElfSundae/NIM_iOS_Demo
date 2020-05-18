@@ -359,6 +359,7 @@
     item.name           = [object displayName];
     item.itemId         = [message messageId];
     item.size           = [object size];
+    item.imagePath      = [object path];
     
     NIMSession *session = message.session;
     

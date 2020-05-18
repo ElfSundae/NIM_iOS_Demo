@@ -106,7 +106,7 @@
 {
     if (self.flag == CustomWhiteboardFlagClose) {
         return UIEdgeInsetsZero;
-    }else{
+    } else {
         CGFloat selfBubbleTopToContentForBoard     = 11.f;
         CGFloat selfBubbleLeftToContentForBoard    = 11.f;
         CGFloat selfContentButtomToBubbleForBoard  = 9.f;
@@ -129,6 +129,11 @@
     }
 }
 
+- (BOOL)canDisplayBubbleBackground:(NIMMessage *)message
+{
+    return NO;
+}
+
 - (BOOL)canBeForwarded
 {
     return NO;
@@ -138,6 +143,7 @@
 {
     return NO;
 }
+
 
 
 @end

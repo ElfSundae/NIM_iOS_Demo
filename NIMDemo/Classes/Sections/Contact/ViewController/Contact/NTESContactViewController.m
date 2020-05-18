@@ -440,8 +440,10 @@ static const NSString *contactCellUtilSelectorName = @"selName";
             }
         }
     }
-    
-    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    if (indexPaths.count > 0)
+    {
+        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 #pragma mark - Private

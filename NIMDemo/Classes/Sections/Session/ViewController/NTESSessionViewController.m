@@ -67,7 +67,12 @@
 #import "NTESSessionMultiRetweetContentView.h"
 #import "NTESMergeMessageViewController.h"
 #import "NTESMessageRetrieveResultVC.h"
+#import "NTESMessagePinListViewController.h"
 #import "NIMCommonTableData.h"
+#import "NIMReplyContentView.h"
+#import "NTESThreadTalkSessionViewController.h"
+#import "UIView+NIMToast.h"
+#import "NTESWhiteboardAttachment.h"
 
 @interface NTESSessionViewController ()
 <UIImagePickerControllerDelegate,
@@ -78,6 +83,8 @@ NIMMediaManagerDelegate,
 NTESTimerHolderDelegate,
 NIMEventSubscribeManagerDelegate,
 NIMTeamCardViewControllerDelegate,
+NIMMessagePinListViewControllerDelegate,
+NIMChatExtendManagerDelegate,
 UISearchBarDelegate>
 
 
@@ -94,6 +101,7 @@ UISearchBarDelegate>
 @property (nonatomic,strong)    NTESMergeForwardSession *mergeForwardSession;
 @property (nonatomic,strong)    UISearchController * searchController;
 @property (nonatomic,strong)    NTESMessageRetrieveResultVC * resultVC;
+
 @end
 
 
@@ -153,11 +161,19 @@ UISearchBarDelegate>
     self.mulSelectedSureBar.frame = self.sessionInputView.frame;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[NIMSDK sharedSDK].mediaManager addDelegate:self];
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NIMSDK sharedSDK].mediaManager stopRecord];
     [[NIMSDK sharedSDK].mediaManager stopPlay];
+    [[NIMSDK sharedSDK].mediaManager removeDelegate:self];
+
 }
 
 - (id<NIMSessionConfig>)sessionConfig
@@ -217,10 +233,12 @@ UISearchBarDelegate>
         if (!recent) {
             [[NIMSDK sharedSDK].conversationManager addEmptyRecentSessionBySession:self.session];
         }
-        [NTESSessionUtil addRecentSessionMark:self.session type:NTESRecentSessionMarkTypeTop];
+        NIMAddStickTopSessionParams *params = [[NIMAddStickTopSessionParams alloc] initWithSession:self.session];
+        [NIMSDK.sharedSDK.chatExtendManager addStickTopSession:params completion:nil];
     } else {
         if (recent) {
-            [NTESSessionUtil removeRecentSessionMark:self.session type:NTESRecentSessionMarkTypeTop];
+            NIMStickTopSessionInfo *stickTopInfo = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:self.session];
+            [NIMSDK.sharedSDK.chatExtendManager removeStickTopSession:stickTopInfo completion:nil];
         } else {}
     }
 }
@@ -258,10 +276,16 @@ UISearchBarDelegate>
     
 }
 
+#pragma mark - NIMMediaManagerDelegate
+
+
+- (void)playAudio:(NSString *)filePath progress:(float)value
+{
+    DDLogInfo(@"playAudio progress:%@", @(value));
+}
+
 
 #pragma mark - UISearchControllerDelegate
-
-
 
 - (void)onNTESTimerFired:(NTESTimerHolder *)holder
 {
@@ -297,6 +321,18 @@ UISearchBarDelegate>
     attachment.chartletId = chartletId;
     attachment.chartletCatalog = catalogId;
     [self sendMessage:[NTESSessionMsgConverter msgWithChartletAttachment:attachment]];
+}
+
+#pragma mark - PIN界面回调
+
+- (void)pinListViewController:(NIMMessagePinListViewController *)pinListVC didRequestViewMessage:(NIMMessage *)message
+{
+    [self scrollToMessage:message];
+}
+
+- (void)pinListViewController:(NIMMessagePinListViewController *)pinListVC didRemovePinItem:(NIMMessagePinItem *)item forMessage:(NIMMessage *)message
+{
+    [self uiUnpinMessage:message];
 }
 
 #pragma mark - 文本消息
@@ -371,6 +407,8 @@ UISearchBarDelegate>
         [self.navigationController pushViewController:vc animated:NO];
     }
 }
+
+
 
 #pragma mark - 视频聊天
 - (void)onTapMediaItemVideoChat:(NIMMediaItem *)item
@@ -564,6 +602,187 @@ UISearchBarDelegate>
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - 菜单
+
+- (void)onTapMenuItemReply:(NIMMediaItem *)item
+{
+    NIMMessage *menuMessage = [self messageForMenu];
+    if ([self.sessionConfig respondsToSelector:@selector(setThreadMessage:)])
+    {
+        [self.sessionConfig setThreadMessage:menuMessage];
+    }
+    
+    [self.advanceMenu dismiss];
+    [self.sessionInputView refreshStatus:NIMInputStatusText];
+    [self.sessionInputView.toolBar.inputTextView becomeFirstResponder];
+    [self.sessionInputView refreshReplyedContent:menuMessage];
+    [self.sessionInputView sizeToFit];
+    if (self.session.sessionType != NIMSessionTypeP2P &&
+        menuMessage)
+    {
+        [self.sessionInputView addAtItems:@[[NSString stringWithFormat:@"%@", menuMessage.from]]];
+    }
+}
+
+- (void)onTapMenuItemForword:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+    NIMMessage *message = [self messageForMenu];
+    message.setting.teamReceiptEnabled = NO;
+    __weak typeof(self) weakSelf = self;
+    [self selectForwardSessionCompletion:^(NIMSession *targetSession) {
+        [weakSelf forwardMessage:message toSession:targetSession];
+    }];
+}
+
+
+- (void)onTapMenuItemMark:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+    NIMMessage *message = [self messageForMenu];
+    NSData *messageData = [NIMSDK.sharedSDK.conversationManager encodeMessageToData:message];
+    NIMAddCollectParams *params = [[NIMAddCollectParams alloc] init];
+    params.data = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
+    params.type = 1;
+    params.uniqueId = message.messageId.MD5String;
+    __weak typeof(self) wself = self;
+    [[NIMSDK sharedSDK].chatExtendManager addCollect:params completion:^(NSError * _Nullable error, NIMCollectInfo * _Nullable collectInfo) {
+        __strong typeof(self) sself = wself;
+        if (!sself) return;
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"收藏失败".ntes_localized];
+            return;
+        }
+        [SVProgressHUD showSuccessWithStatus:@"已收藏".ntes_localized];
+    }];
+}
+
+- (void)onTapMenuItemPin:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+    NIMMessage *message = [self messageForMenu];
+    NIMMessagePinItem *pinItem = [[NIMMessagePinItem alloc] initWithMessage:message];
+    
+    __weak typeof(self) wself = self;
+    [[NIMSDK sharedSDK].chatExtendManager addMessagePin:pinItem completion:^(NSError * _Nullable error, NIMMessagePinItem * _Nullable item) {
+        __strong typeof(self) sself = wself;
+        if (!sself) return;
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"添加失败".ntes_localized];
+            return;
+        }
+        [sself uiPinMessage:message];
+    }];
+}
+
+- (void)onTapMenuItemUnpin:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+    NIMMessage *message = [self messageForMenu];
+    NIMMessagePinItem *pinItem = [NIMSDK.sharedSDK.chatExtendManager pinItemForMessage:message];
+    
+    __weak typeof(self) wself = self;
+    [[NIMSDK sharedSDK].chatExtendManager removeMessagePin:pinItem completion:^(NSError * _Nullable error, NIMMessagePinItem * _Nullable item) {
+        __strong typeof(self) sself = wself;
+        if (!sself) return;
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:@"取消标记失败".ntes_localized];
+            return;
+        }
+        [sself uiUnpinMessage:message];
+    }];
+    
+}
+
+- (void)onTapMenuItemRevoke:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+
+    NIMMessage *message = [self messageForMenu];
+       
+    __weak typeof(self) weakSelf = self;
+    NSString *collapseId = message.apnsPayload[@"apns-collapse-id"];
+    NSDictionary *payload = @{
+        @"apns-collapse-id": collapseId ? : @"",
+    };
+    
+    [[NIMSDK sharedSDK].chatManager revokeMessage:message
+                                     apnsContent:@"撤回一条消息"
+                                     apnsPayload:payload
+                                 shouldBeCounted:![[NTESBundleSetting sharedConfig] isIgnoreRevokeMessageCount]
+                                        completion:^(NSError * _Nullable error)
+     {
+       if (error) {
+           if (error.code == NIMRemoteErrorCodeDomainExpireOld) {
+               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送时间超过2分钟的消息，不能被撤回".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
+               [alert show];
+           } else {
+               DDLogError(@"revoke message eror code %zd",error.code);
+               [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
+           }
+       } else {
+           NIMMessageModel *model = [self uiDeleteMessage:message];
+           NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:nil]];
+           tip.timestamp = model.messageTime;
+           [self uiInsertMessages:@[tip]];
+           
+           tip.timestamp = message.timestamp;
+           // saveMessage 方法执行成功后会触发 onRecvMessages: 回调，但是这个回调上来的 NIMMessage 时间为服务器时间，和界面上的时间有一定出入，所以要提前先在界面上插入一个和被删消息的界面时间相符的 Tip, 当触发 onRecvMessages: 回调时，组件判断这条消息已经被插入过了，就会忽略掉。
+           [[NIMSDK sharedSDK].conversationManager saveMessage:tip forSession:message.session completion:nil];
+       }
+    }];
+}
+
+- (void)onTapMenuItemDelete:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+
+    NIMMessage *message    = [self messageForMenu];
+    BOOL deleteFromServer = [NTESBundleSetting sharedConfig].isDeleteMsgFromServer;
+    if (deleteFromServer)
+    {
+        __weak typeof(self) wSelf = self;
+        [[NIMSDK sharedSDK].conversationManager deleteMessageFromServer:message
+                                                                    ext:@"扩展字段"
+                                                             completion:^(NSError * _Nullable error)
+        {
+            if (error)
+            {
+                return;
+            }
+            
+            [wSelf uiDeleteMessage:message];
+        }];
+    }
+    else
+    {
+        [[NIMSDK sharedSDK].conversationManager deleteMessage:message];
+        [self uiDeleteMessage:message];
+    }
+}
+
+- (void)onTapMenuItemMutiSelect:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+
+    [self switchUIWithSessionState:NIMKitSessionStateSelect];
+}
+
+- (void)onTapMenuItemAudio2Text:(NIMMediaItem *)item
+{
+    [self.advanceMenu dismiss];
+
+    NIMMessage *message = [self messageForMenu];
+    __weak typeof(self) wself = self;
+    NTESAudio2TextViewController *vc = [[NTESAudio2TextViewController alloc] initWithMessage:message];
+    vc.completeHandler = ^(void){
+        [wself uiUpdateMessage:message];
+    };
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:vc
+                       animated:YES
+                     completion:nil];
+}
 
 #pragma mark - 消息发送时间截获
 - (void)sendMessage:(NIMMessage *)message didCompleteWithError:(NSError *)error
@@ -609,6 +828,7 @@ UISearchBarDelegate>
 {
     BOOL handled = [super onTapCell:event];
     NSString *eventName = event.eventName;
+    
     if ([eventName isEqualToString:NIMKitEventNameTapContent])
     {
         NIMMessage *message = event.messageModel.message;
@@ -621,6 +841,19 @@ UISearchBarDelegate>
                 handled = YES;
             }
         }
+    }
+    else if ([eventName isEqualToString:NIMKitEventNameTapRepliedContent])
+    {
+        handled = YES;
+        NIMMessageModel *model = event.messageModel;
+        NIMMessage *message = model.parentMessage;
+        if (!message)
+        {
+            [self.view makeToast:@"父消息不存在".ntes_localized];
+            return handled;
+        }
+        NTESThreadTalkSessionViewController *vc = [[NTESThreadTalkSessionViewController alloc] initWithThreadMessage:message];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     else if([eventName isEqualToString:NIMKitEventNameTapLabelLink])
     {
@@ -747,6 +980,13 @@ UISearchBarDelegate>
     }
 }
 
+- (void)onClickReplyButton:(NIMMessage *)message
+{
+    NTESThreadTalkSessionViewController *vc = [[NTESThreadTalkSessionViewController alloc] initWithThreadMessage:message];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 - (NSString *)messageSendSource:(NIMMessage *)message {
     return message.from;
 }
@@ -859,11 +1099,18 @@ UISearchBarDelegate>
         [weakSelf showDeleteSureVC];
     }];
     
+    UIAlertAction *viewPinnedMessageAction = [UIAlertAction actionWithTitle:@"查看标记消息".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NTESMessagePinListViewController *vc = [[NTESMessagePinListViewController alloc] initWithSession:weakSelf.session];
+        vc.delegate = weakSelf;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    }];
+    
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消".ntes_localized style:UIAlertActionStyleCancel handler:nil];
 
     return @[cloudMessageAction,
              searchLocalMessageAction,
              cleanLocalMessageAction,
+             viewPinnedMessageAction,
              cancel].mutableCopy;
 }
 
@@ -877,6 +1124,7 @@ UISearchBarDelegate>
         option.removeTable = removeTable;
         [[NIMSDK sharedSDK].conversationManager deleteAllmessagesInSession:weakSelf.session
                                                                     option:option];
+       
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消".ntes_localized
                                                      style:UIAlertActionStyleCancel
@@ -902,10 +1150,9 @@ UISearchBarDelegate>
 
 - (void)enterTeamCard:(id)sender {
     NIMTeamCardViewController *vc = nil;
-    NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:self.session];
     NIMTeamCardViewControllerOption *option = [[NIMTeamCardViewControllerOption alloc] init];
-    option.isTop = [NTESSessionUtil recentSessionIsMark:recent type:NTESRecentSessionMarkTypeTop];
-    
+    option.isTop = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:self.session] != nil;
+
     if (self.session.sessionType == NIMSessionTypeTeam) {
         NIMTeam *team = [[NIMSDK sharedSDK].teamManager teamById:self.session.sessionId];
         if (team.type == NIMTeamTypeNormal) {
@@ -933,9 +1180,9 @@ UISearchBarDelegate>
 
 - (void)enterSuperTeamCard:(id)sender{
     NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.session.sessionId];
-    NIMRecentSession *recent = [[NIMSDK sharedSDK].conversationManager recentSessionBySession:self.session];
     NIMTeamCardViewControllerOption *option = [[NIMTeamCardViewControllerOption alloc] init];
-    option.isTop = [NTESSessionUtil recentSessionIsMark:recent type:NTESRecentSessionMarkTypeTop];
+    option.isTop = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:self.session] != nil;
+
     NIMSuperTeamCardViewController *vc = [[NIMSuperTeamCardViewController alloc] initWithTeam:team
                                                                                       session:self.session
                                                                                        option:option];
@@ -1139,8 +1386,9 @@ UISearchBarDelegate>
     NIMMessage *message = [self messageForMenu];
     
     __weak typeof(self) weakSelf = self;
+    NSString *collapseId = message.apnsPayload[@"apns-collapse-id"];
     NSDictionary *payload = @{
-        @"apns-collapse-id": message.messageId,
+        @"apns-collapse-id": collapseId ? : @"",
     };
  
     [[NIMSDK sharedSDK].chatManager revokeMessage:message
@@ -1386,5 +1634,35 @@ UISearchBarDelegate>
     }
     return _searchController;
 }
+
+- (BOOL)shouldShowMenuByMessage:(NIMMessage *)message
+{
+    id<NIMMessageObject> messageObject = message.messageObject;
+    
+    
+    if (message.session.sessionType == NIMSessionTypeChatroom ||
+        message.messageType == NIMMessageTypeTip ||
+        message.messageType == NIMMessageTypeNotification ||
+        [self cancelMenuByMessageObject:messageObject])
+    {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)cancelMenuByMessageObject:(id<NIMMessageObject>) object
+{
+    if ([object isKindOfClass:[NIMCustomObject class]])
+    {
+        NIMCustomObject *custom = object;
+        id<NIMCustomAttachment>  attachment = custom.attachment;
+        if ([attachment isKindOfClass:[NTESWhiteboardAttachment class]])
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 @end

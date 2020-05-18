@@ -124,9 +124,13 @@
 
 - (NSInteger)chatroomRetryCount;                    //进聊天室重试次数
 
+- (BOOL)fileDownloadTokenEnabled;                   //文件下载权限控制
+
 - (BOOL)autoFetchAttachment;                        //自动下载附件。（接收消息，刷新消息，自动拿历史消息时）
 
 - (NIMAsymEncryptionType)AsymEncryptionType;     //非对称加密类型
+
+- (NIMRSAPaddingMode)rsaPaddingMode;         // RSA Padding算法
 
 - (NIMSymEncryptionType)SymEncryptionType;     //非对称加密类型
 
@@ -143,5 +147,9 @@
 - (BOOL)isDeleteMsgFromServer;
 
 - (BOOL)isIgnoreRevokeMessageCount;
+
+- (BOOL)enablePullSubMessagesFromServer;
+
+- (BOOL)enableSyncStickTopSessionInfos;
 
 @end
