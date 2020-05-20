@@ -1,6 +1,6 @@
 # 网易云信 iOS Demo App
 
-[![Build Status](https://img.shields.io/travis/ElfSundae/NIM_iOS_Demo/master.svg?style=flat-square)](https://travis-ci.org/ElfSundae/NIM_iOS_Demo)
+[![Build status](https://github.com/ElfSundae/NIM_iOS_Demo/workflows/Build/badge.svg)](https://github.com/ElfSundae/NIM_iOS_Demo/actions?query=workflow%3ABuild)
 
 - [云信 IM 开发文档](https://dev.yunxin.163.com/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E6%96%B0%E6%89%8B%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97)
 - [云信 Demo 源码下载](https://yunxin.163.com/im-sdk-demo)
