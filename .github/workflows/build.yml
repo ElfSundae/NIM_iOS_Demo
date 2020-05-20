@@ -34,5 +34,5 @@ jobs:
           set -o pipefail
           xcodebuild clean build \
             -workspace NIM.xcworkspace -scheme NIM \
-            -configuration Release CODE_SIGN_IDENTITY=- \
+            -configuration Debug CODE_SIGN_IDENTITY=- \
             -sdk iphonesimulator | xcpretty -c
