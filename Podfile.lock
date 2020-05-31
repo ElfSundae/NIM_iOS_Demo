@@ -10,7 +10,7 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - M80AttributedLabel (1.9.9)
-  - NIMKit/Core_Free (2.12.18):
+  - NIMKit/Core_Free (2.12.19):
     - FLAnimatedImage
     - M80AttributedLabel
     - SDWebImage
@@ -18,10 +18,10 @@ PODS:
     - TZImagePickerController
     - YYImage
     - YYImage/WebP
-  - NIMKit/Full_Free (2.12.18):
+  - NIMKit/Full_Free (2.12.19):
     - NIMKit/Core_Free
-    - NIMSDK (~> 7.6.0)
-  - NIMSDK (7.6.0)
+    - NIMSDK (~> 7.7.0)
+  - NIMSDK (7.7.0)
   - Reachability (3.2)
   - SDWebImage (5.8.0):
     - SDWebImage/Core (= 5.8.0)
@@ -32,7 +32,7 @@ PODS:
   - SSZipArchive (1.8.1)
   - SVProgressHUD (2.2.5)
   - Toast (3.1.0)
-  - TZImagePickerController (3.3.1)
+  - TZImagePickerController (3.3.2)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
@@ -77,17 +77,17 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
-  NIMKit: f2b01b2ef4dddcf2bdcebb4d8e8b590c35c339a0
-  NIMSDK: dc805c82d74f8acb4c60b5b7aa4d19b8b9119128
+  NIMKit: 3e94469d4eebca5e6c5b19b059e663c16f81fdd8
+  NIMSDK: ff59ed20bef8610a88ec04cb49bd088032b43add
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 84000f962cbfa70c07f19d2234cbfcf5d779b5dc
   SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
-  TZImagePickerController: 99f03b64145a8c92c55b9b1b931410967d9be4cb
+  TZImagePickerController: 36ca728ec681228918aa82e993aaab1962281b72
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
 PODFILE CHECKSUM: fbc8577079d2f61324458efa62130b94eb436695
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

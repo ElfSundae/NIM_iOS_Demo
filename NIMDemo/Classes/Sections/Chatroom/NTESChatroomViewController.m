@@ -162,5 +162,19 @@
     return _config;
 }
 
+- (void)onRecvMessages:(NSArray<NIMMessage *> *)messages
+{
+    [super onRecvMessages:messages];
+    for (NIMMessage *message in messages) {
+        NSLog(@"-Tester- receiveMessage:[%@]", message);
+    }
+}
+
+- (void)sendMessage:(NIMMessage *)message didCompleteWithError:(NSError *)error
+{
+    [super sendMessage:message didCompleteWithError:error];
+    NSLog(@"-Tester- sendMessage:[%@]", message);
+}
+
 
 @end
