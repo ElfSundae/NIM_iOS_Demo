@@ -10,6 +10,8 @@
 
 @interface NTESLiveViewController : UIViewController
 
+@property (nonatomic, readonly)   NIMChatroom *chatroom;
+
 - (instancetype)initWithChatroom:(NIMChatroom *)chatroom;
 
 @end

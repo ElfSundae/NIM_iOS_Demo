@@ -111,8 +111,7 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
                                                  {
                                                      [[NTESChatroomManager sharedInstance] cacheMyInfo:me roomId:chatroom.roomId];
                                                      
-                                                     NTESLiveViewController *vc = [[NTESLiveViewController alloc] initWithChatroom:chatroom];
-                                                     [self.navigationController pushViewController:vc animated:YES];
+                                                     [wself doEnterLiveroom:chatroom];
                                                  }
                                                  else
                                                  {
@@ -124,6 +123,11 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
                                                  }
 
                                              }];
+}
+
+-  (void)doEnterLiveroom:(NIMChatroom *)chatroom {
+    NTESLiveViewController *vc = [[NTESLiveViewController alloc] initWithChatroom:chatroom];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UICollectioMnViewDataSource
