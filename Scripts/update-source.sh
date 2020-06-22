@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Update source code from Netease official project:
 # https://yunxin.163.com/im-sdk-demo
-URL='https://yx-web-nosdn.netease.im/package/1591930041/NIM_iOS_Demo_v7.7.2.zip?download=NIM_iOS_Demo_v7.7.2.zip'
+URL='https://yx-web-nosdn.netease.im/package/1592804870/NIM_iOS_Demo_v7.7.4.zip?download=NIM_iOS_Demo_v7.7.4.zip'
 
 WORKING=working
 
