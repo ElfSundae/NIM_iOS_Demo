@@ -246,7 +246,7 @@ static char PresentingViewAddress;  //正在Present其他视图的view
     
 }
 
-- (void)doHideAnimate:(UIView*)alertView complete:(void(^)()) complete{
+- (void)doHideAnimate:(UIView*)alertView complete:(void(^)(void)) complete{
     if (!alertView) {
         return;
     }

@@ -266,16 +266,18 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 
 
 #pragma NIMLoginManagerDelegate
--(void)onKickout:(NIMLoginKickoutResult *)result
+
+- (void)onKickout:(NIMLoginKickoutResult *)result
 {
-    NSString *reason = @"你被踢下线".ntes_localized;
+    NSString *reason = nil;
     switch (result.reasonCode) {
         case NIMKickReasonByClient:
         case NIMKickReasonByClientManually:{
             NSString *clientName = [NTESClientUtil clientName:result.clientType];
-            reason = clientName.length ? [NSString stringWithFormat:@"%@%@%@",
+            reason = clientName.length ? [NSString stringWithFormat:@"%@%@ %@ %@",
                                           @"你的帐号被".ntes_localized,
                                           clientName,
+                                          @(result.customClientType),
                                           @"端踢出下线，请注意帐号信息安全".ntes_localized] : @"你的帐号被踢出下线，请注意帐号信息安全".ntes_localized;
             break;
         }
@@ -283,6 +285,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
             reason = result.reasonDesc;
             break;
         default:
+            reason = @"你被踢下线".ntes_localized;
             break;
     }
     [[[NIMSDK sharedSDK] loginManager] logout:^(NSError *error) {

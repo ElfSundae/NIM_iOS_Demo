@@ -152,4 +152,8 @@
 
 - (BOOL)enableSyncStickTopSessionInfos;
 
+- (NSInteger)customClientType;
+
+- (BOOL)isDeleteMsgFromDB;
+
 @end

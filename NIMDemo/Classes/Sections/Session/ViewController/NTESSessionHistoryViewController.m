@@ -147,7 +147,6 @@
 @property(nonatomic, strong) NTESSessionHistoryConfig *sessionConfig;
 @property(nonatomic, strong) NIMMessage *firstMsg;
 @property(nonatomic, assign) BOOL shouldResetMsg;
-@property (nonatomic,weak)    id<NIMSessionInteractor> interactor;
 
 @end
 

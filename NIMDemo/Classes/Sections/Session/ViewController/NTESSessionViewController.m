@@ -197,6 +197,8 @@ UISearchBarDelegate>
     NSString * keyword = searchBar.text;
     NIMMessageServerRetrieveOption * option = [[NIMMessageServerRetrieveOption alloc] init];
     option.keyword = keyword;
+    
+    __weak typeof(self) weakSelf = self;
     [[NIMSDK sharedSDK].conversationManager retrieveServerMessages:self.session
                                                             option:option
                                                             result:^(NSError * _Nullable error,
@@ -219,8 +221,8 @@ UISearchBarDelegate>
 
         dict[RowContent] = datas;
         
-        self.resultVC.datas = [NIMCommonTableSection sectionsWithData:@[dict]];
-        [self.resultVC.tableView reloadData];
+        weakSelf.resultVC.datas = [NIMCommonTableSection sectionsWithData:@[dict]];
+        [weakSelf.resultVC.tableView reloadData];
     }];
 }
 
@@ -574,12 +576,14 @@ UISearchBarDelegate>
 {
     UIAlertView *alert =[[UIAlertView alloc] initWithTitle:nil message:@"输入提醒".ntes_localized delegate:nil cancelButtonTitle:@"取消".ntes_localized otherButtonTitles:@"确定".ntes_localized, nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    __weak typeof(self) weakSelf = self;
     [alert showAlertWithCompletionHandler:^(NSInteger index) {
         switch (index) {
             case 1:{
                 UITextField *textField = [alert textFieldAtIndex:0];
                 NIMMessage *message = [NTESSessionMsgConverter msgWithTip:textField.text];
-                [self sendMessage:message];
+                [weakSelf sendMessage:message];
 
             }
                 break;
@@ -645,10 +649,7 @@ UISearchBarDelegate>
     params.data = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
     params.type = 1;
     params.uniqueId = message.messageId.MD5String;
-    __weak typeof(self) wself = self;
     [[NIMSDK sharedSDK].chatExtendManager addCollect:params completion:^(NSError * _Nullable error, NIMCollectInfo * _Nullable collectInfo) {
-        __strong typeof(self) sself = wself;
-        if (!sself) return;
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"收藏失败".ntes_localized];
             return;
@@ -665,8 +666,10 @@ UISearchBarDelegate>
     
     __weak typeof(self) wself = self;
     [[NIMSDK sharedSDK].chatExtendManager addMessagePin:pinItem completion:^(NSError * _Nullable error, NIMMessagePinItem * _Nullable item) {
-        __strong typeof(self) sself = wself;
-        if (!sself) return;
+        if (!wself) {
+            return;
+        }
+        __strong typeof(wself) sself = wself;
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"添加失败".ntes_localized];
             return;
@@ -683,8 +686,10 @@ UISearchBarDelegate>
     
     __weak typeof(self) wself = self;
     [[NIMSDK sharedSDK].chatExtendManager removeMessagePin:pinItem completion:^(NSError * _Nullable error, NIMMessagePinItem * _Nullable item) {
-        __strong typeof(self) sself = wself;
-        if (!sself) return;
+        if (!wself) {
+            return;
+        }
+        __strong typeof(wself) sself = wself;
         if (error) {
             [SVProgressHUD showErrorWithStatus:@"取消标记失败".ntes_localized];
             return;
@@ -721,10 +726,10 @@ UISearchBarDelegate>
                [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
            }
        } else {
-           NIMMessageModel *model = [self uiDeleteMessage:message];
+           NIMMessageModel *model = [weakSelf uiDeleteMessage:message];
            NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:nil]];
            tip.timestamp = model.messageTime;
-           [self uiInsertMessages:@[tip]];
+           [weakSelf uiInsertMessages:@[tip]];
            
            tip.timestamp = message.timestamp;
            // saveMessage 方法执行成功后会触发 onRecvMessages: 回调，但是这个回调上来的 NIMMessage 时间为服务器时间，和界面上的时间有一定出入，所以要提前先在界面上插入一个和被删消息的界面时间相符的 Tip, 当触发 onRecvMessages: 回调时，组件判断这条消息已经被插入过了，就会忽略掉。
@@ -756,7 +761,10 @@ UISearchBarDelegate>
     }
     else
     {
-        [[NIMSDK sharedSDK].conversationManager deleteMessage:message];
+        BOOL isDeleteFromDB = [NTESBundleSetting sharedConfig].isDeleteMsgFromDB;
+        NIMDeleteMessageOption *option = [[NIMDeleteMessageOption alloc] init];
+        option.removeFromDB = isDeleteFromDB;
+        [[NIMSDK sharedSDK].conversationManager deleteMessage:message option:option];
         [self uiDeleteMessage:message];
     }
 }
@@ -1406,10 +1414,10 @@ UISearchBarDelegate>
                 [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
             }
         } else {
-            NIMMessageModel *model = [self uiDeleteMessage:message];
+            NIMMessageModel *model = [weakSelf uiDeleteMessage:message];
             NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:nil]];
             tip.timestamp = model.messageTime;
-            [self uiInsertMessages:@[tip]];
+            [weakSelf uiInsertMessages:@[tip]];
             
             tip.timestamp = message.timestamp;
             // saveMessage 方法执行成功后会触发 onRecvMessages: 回调，但是这个回调上来的 NIMMessage 时间为服务器时间，和界面上的时间有一定出入，所以要提前先在界面上插入一个和被删消息的界面时间相符的 Tip, 当触发 onRecvMessages: 回调时，组件判断这条消息已经被插入过了，就会忽略掉。

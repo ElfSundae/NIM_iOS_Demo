@@ -89,6 +89,11 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
     [self.collectionView setCollectionViewLayout:layout animated:animated];
 }
 
+-  (void)doEnterLiveroom:(NIMChatroom *)chatroom {
+    NTESLiveViewController *vc = [[NTESLiveViewController alloc] initWithChatroom:chatroom];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -110,7 +115,6 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
                                                  if (error == nil)
                                                  {
                                                      [[NTESChatroomManager sharedInstance] cacheMyInfo:me roomId:chatroom.roomId];
-                                                     
                                                      [wself doEnterLiveroom:chatroom];
                                                  }
                                                  else
@@ -123,11 +127,6 @@ static NSString *ChatroomListReuseIdentity = @"ChatroomListReuseIdentity";
                                                  }
 
                                              }];
-}
-
--  (void)doEnterLiveroom:(NIMChatroom *)chatroom {
-    NTESLiveViewController *vc = [[NTESLiveViewController alloc] initWithChatroom:chatroom];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UICollectioMnViewDataSource

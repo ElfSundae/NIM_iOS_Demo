@@ -39,6 +39,8 @@ inline static bool isFloatZero(float value)
     return fabsf(value) <= 0.00001f;
 }
 
+static dispatch_once_t _readyToPlayToken;
+
 @interface NTESAVMoivePlayerController ()
 {
     BOOL _isPrerolling;
@@ -52,7 +54,6 @@ inline static bool isFloatZero(float value)
     BOOL _playbackBufferFull;
     BOOL _playingBeforeInterruption;
     
-    dispatch_once_t _readyToPlayToken;
     NSTimeInterval _seekingTime;
 }
 @property (nonatomic, strong) NSURL *playUrl;

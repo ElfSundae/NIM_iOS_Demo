@@ -171,6 +171,9 @@
     _currentRedpacketFrom = nil;
 }
 
+- (void)dojrmfActionDidSendEnvelopedWithID:(NSString *)envId Name:(NSString *)envName Message:(NSString *)envMsg Stat:(jrmfSendStatus)jrmfStat packType:(JrmfRedPacketType)type {}
+
+
 #pragma mark - NIMLoginManagerDelegate
 
 - (void)onLogin:(NIMLoginStep)step

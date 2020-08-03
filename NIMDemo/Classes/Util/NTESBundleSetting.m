@@ -529,6 +529,12 @@
     return [ret boolValue];
 }
 
+- (BOOL)isDeleteMsgFromDB
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"menu_delete_msg_from_db"];
+    return [ret boolValue];
+}
+
 - (BOOL)isIgnoreRevokeMessageCount
 {
     id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_revoke_count"];
@@ -545,6 +551,11 @@
 {
     id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_sync_stick_top_session"];
     return ret ? [ret boolValue] : YES;
+}
+
+- (NSInteger)customClientType {
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"custom_client_type"];
+    return ret ? [ret integerValue] : 0;
 }
 
 - (NSString *)description
@@ -598,20 +609,20 @@
                 [self videochatVideoCrop],
                 [self videochatAutoRotateRemoteVideo],
                 [self preferredVideoQuality],
-                [self startWithBackCamera],
+                (NSInteger)[self startWithBackCamera],
                 [self perferredVideoEncoder],
                 [self perferredVideoDecoder],
                 [self videoMaxEncodeKbps],
                 [self localRecordVideoKbps],
                 [self localRecordVideoQuality],
-                [self autoDeactivateAudioSession],
-                [self audioDenoise],
-                [self voiceDetect],
-                [self preferHDAudio],
+                (NSInteger)[self autoDeactivateAudioSession],
+                (NSInteger)[self audioDenoise],
+                (NSInteger)[self voiceDetect],
+                (NSInteger)[self preferHDAudio],
                 [self scene],
                 [self chatroomRetryCount],
-                [self enableSyncWhenFetchRemoteMessages],
-                [self isIgnoreRevokeMessageCount]
+                (NSInteger)[self enableSyncWhenFetchRemoteMessages],
+                (NSInteger)[self isIgnoreRevokeMessageCount]
             ];
 }
 

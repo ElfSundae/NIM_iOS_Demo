@@ -133,15 +133,15 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     switch (component) {
         case 0:         //年
-            return [NSString stringWithFormat:@"%d",row+NTESBrithMinYear];
+            return [NSString stringWithFormat:@"%zd",(NSInteger)(row+NTESBrithMinYear)];
         case 1:         //小时说明文字
             return @"年".ntes_localized;
         case 2:
-            return [NSString stringWithFormat:@"%d",row+1];
+            return [NSString stringWithFormat:@"%zd",(NSInteger)(row+1)];
         case 3:
             return @"月".ntes_localized;
         case 4:
-            return [NSString stringWithFormat:@"%d",row+1];
+            return [NSString stringWithFormat:@"%zd",(NSInteger)(row+1)];
         case 5:
             return @"日".ntes_localized;
         default:

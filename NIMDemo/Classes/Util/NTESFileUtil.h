@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NTESFileUtil : NSObject
 
-+ (NSString *)fileMD5:(NSString *)filepath;
++ (nullable NSString *)fileMD5:(NSString *)filepath;
 
 + (void)fileMD5:(NSString *)filepath completion:(void(^)(NSString *MD5))completion;
 

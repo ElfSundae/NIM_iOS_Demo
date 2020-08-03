@@ -12,7 +12,7 @@
 @implementation NTESMessageUtil
 
 + (NSString *)messageContent:(NIMMessage *)message {
-    NSString *text = @"[未知消息]".ntes_localized;
+    NSString *text = nil;
     if (message.messageType == NIMMessageTypeCustom) {
         text = [self customMessageContent:message];
     } else {
@@ -22,7 +22,7 @@
 }
 
 + (NSString *)customMessageContent:(NIMMessage *)message {
-    NSString *text = @"[未知消息]".ntes_localized;
+    NSString *text = nil;
     NIMCustomObject *object = message.messageObject;
     if ([object.attachment isKindOfClass:[NTESSnapchatAttachment class]])
     {

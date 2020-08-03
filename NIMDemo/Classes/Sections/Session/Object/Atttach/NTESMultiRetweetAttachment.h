@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) NSString *fileName;
 
-@property (nonatomic,readonly) NSString *filePath;
+@property (nonatomic,readonly) NSString * _Nullable filePath;
 
 - (NSString *)formatTitleMessage;
 
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)abstractWithDictionary:(NSDictionary *)content;
 
-- (NSDictionary *)abstractDictionary;
+- (nullable NSDictionary *)abstractDictionary;
 
 @end
 

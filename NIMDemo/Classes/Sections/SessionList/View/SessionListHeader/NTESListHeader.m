@@ -64,9 +64,17 @@
         //目前的踢人逻辑是web和pc不能共存，移动端不能共存，所以这里取第一个显示就可以了
         NIMLoginClient *client = clients.firstObject;
         NSString *name = [NTESClientUtil clientName:client.type];
-        text = name.length? [NSString stringWithFormat:@"%@ %@",
-                             @"正在使用云信".ntes_localized,
-                             name] : @"正在使用云信未知版本".ntes_localized;
+        
+        if (client.customClientType != 0) {
+            text = name.length? [NSString stringWithFormat:@"%@ %@（%@）",
+                                 @"正在使用云信".ntes_localized,
+                                 name, @(client.customClientType)] : [NSString stringWithFormat:@"正在使用云信未知版本 (%@)".ntes_localized, @(client.customClientType)];
+        } else {
+            text = name.length? [NSString stringWithFormat:@"%@ %@",
+                                 @"正在使用云信".ntes_localized,
+                                 name] : @"正在使用云信未知版本".ntes_localized;
+        }
+
     }
     [self addRow:ListHeaderTypeLoginClients content:text viewClassName:@"NTESMutiClientsHeaderView"];
 }

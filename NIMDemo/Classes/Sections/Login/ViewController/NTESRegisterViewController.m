@@ -101,7 +101,7 @@ NTES_USE_CLEAR_BAR
                                                    [weakSelf.delegate registDidComplete:nil password:nil];
                                                }
                                                
-                                               NSString *toast = [NSString stringWithFormat:@"注册失败".ntes_localized];
+                                               NSString *toast = @"注册失败".ntes_localized;
                                                if ([errorMsg isKindOfClass:[NSString class]] &&errorMsg.length) {
                                                    toast = [toast stringByAppendingFormat:@": %@",errorMsg];
                                                }

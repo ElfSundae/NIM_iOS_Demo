@@ -83,7 +83,7 @@
     
     BOOL isMe   = _session.sessionType == NIMSessionTypeP2P
     && [_session.sessionId isEqualToString:[[NIMSDK sharedSDK].loginManager currentAccount]];
-    NSArray *items = @[];
+    NSArray *items = nil;
     
     if (isMe)
     {

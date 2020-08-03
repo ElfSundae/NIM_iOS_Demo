@@ -154,7 +154,7 @@ IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_base(const char *fragment_sha
     
 fail:
     
-    if (renderer->program)
+    if (renderer && renderer->program)
         IJK_GLES2_printProgramInfo(renderer->program);
     
     NTES_IJK_GLES2_Renderer_free(renderer);
@@ -386,10 +386,10 @@ GLboolean NTES_IJK_GLES2_Renderer_renderOverlay(IJK_GLES2_Renderer *renderer, SD
     glClear(GL_COLOR_BUFFER_BIT);               IJK_GLES2_checkError_TRACE("glClear");
     
     GLsizei visible_width  = renderer->frame_width;
-    GLsizei visible_height = renderer->frame_height;
+    //GLsizei visible_height = renderer->frame_height;
     if (overlay){
         visible_width  = overlay->w;
-        visible_height = overlay->h;
+        GLsizei visible_height = overlay->h;
         if (renderer->frame_width   != visible_width    ||
             renderer->frame_height  != visible_height   ||
             renderer->frame_sar_num != overlay->sar_num ||

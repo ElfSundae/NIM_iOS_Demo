@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pullDataWithAttachment:(NTESMultiRetweetAttachment *)attachment
                     completion:(void (^)(NSString *msg))complete;
 
-- (NSIndexPath *)updateMessage:(NIMMessage *)message;
+- (NSIndexPath * _Nullable)updateMessage:(NIMMessage *)message;
 
 - (NTESMessageModel *)setupMessageModel:(NIMMessage *)message;
 

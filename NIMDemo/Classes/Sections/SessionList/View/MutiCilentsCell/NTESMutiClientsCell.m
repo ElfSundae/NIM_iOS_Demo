@@ -30,7 +30,17 @@
 
 - (NSString *)nameWithClient:(NIMLoginClient *)client{
     NSString *name = [NTESClientUtil clientName:client.type];
-    return name.length? [NSString stringWithFormat:@"%@ %@",@"正在使用云信".ntes_localized, name] : @"正在使用云信未知版本".ntes_localized;
+    NSString *text = @"";
+    if (client.customClientType != 0) {
+        text = name.length? [NSString stringWithFormat:@"%@ %@（%@）",
+                             @"正在使用云信".ntes_localized,
+                             name, @(client.customClientType)] : [NSString stringWithFormat:@"正在使用云信未知版本 (%@)".ntes_localized, @(client.customClientType)];
+    } else {
+        text = name.length? [NSString stringWithFormat:@"%@ %@",
+                             @"正在使用云信".ntes_localized,
+                             name] : @"正在使用云信未知版本".ntes_localized;
+    }
+    return text;
 }
 
 - (void)layoutSubviews{

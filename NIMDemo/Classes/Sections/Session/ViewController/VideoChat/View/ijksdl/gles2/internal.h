@@ -82,23 +82,23 @@ typedef struct IJK_GLES_Matrix
 } IJK_GLES_Matrix;
 void NTES_IJK_GLES2_loadOrtho(IJK_GLES_Matrix *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
 
-const char *NTES_IJK_GLES2_getVertexShader_default();
-const char *NTES_IJK_GLES2_getFragmentShader_yuv420p();
-const char *NTES_IJK_GLES2_getFragmentShader_yuv444p10le();
-const char *NTES_IJK_GLES2_getFragmentShader_yuv420sp();
-const char *NTES_IJK_GLES2_getFragmentShader_rgb();
+const char *NTES_IJK_GLES2_getVertexShader_default(void);
+const char *NTES_IJK_GLES2_getFragmentShader_yuv420p(void);
+const char *NTES_IJK_GLES2_getFragmentShader_yuv444p10le(void);
+const char *NTES_IJK_GLES2_getFragmentShader_yuv420sp(void);
+const char *NTES_IJK_GLES2_getFragmentShader_rgb(void);
 
-const GLfloat *NTES_IJK_GLES2_getColorMatrix_bt709();
-const GLfloat *NTES_IJK_GLES2_getColorMatrix_bt601();
+const GLfloat *NTES_IJK_GLES2_getColorMatrix_bt709(void);
+const GLfloat *NTES_IJK_GLES2_getColorMatrix_bt601(void);
 
 IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_base(const char *fragment_shader_source);
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv420p();
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv444p10le();
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv420sp();
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv420p(void);
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv444p10le(void);
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv420sp(void);
 IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_yuv420sp_vtb(SDL_VoutOverlay *overlay);
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_rgb565();
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_rgb888();
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_rgbx8888();
-IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_bgra8888();
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_rgb565(void);
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_rgb888(void);
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_rgbx8888(void);
+IJK_GLES2_Renderer *NTES_IJK_GLES2_Renderer_create_bgra8888(void);
 
 #endif

@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)initWithDefaultConfig;
 
-+ (instancetype)initWithRawContent:(NSData *)data;
++ (nullable instancetype)initWithRawContent:(NSData *)data;
 
 - (nullable NSData *)toRawContent;
 

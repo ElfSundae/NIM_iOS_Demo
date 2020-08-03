@@ -22,7 +22,7 @@ static JRMFSington * sington = nil;
 }
 
 - (instancetype)init {
-    if ([super init]) {
+    if (self = [super init]) {
         //数据初始化
         [self PacketDataFormat];
     }

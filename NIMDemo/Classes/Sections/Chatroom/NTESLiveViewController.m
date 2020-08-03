@@ -21,7 +21,7 @@
 
 @interface NTESLiveViewController ()<NTESLiveActionViewDataSource,NTESLiveActionViewDelegate,NIMChatroomManagerDelegate>
 
-@property (nonatomic, copy)   NIMChatroom *chatroom;
+@property (nonatomic, strong)   NIMChatroom *chatroom;
 
 @property (nonatomic, strong) NTESChatroomViewController *chatroomViewController;
 
@@ -213,7 +213,6 @@ NTES_USE_CLEAR_BAR
 
 #pragma mark - Private
 - (NSArray *)makeChildViewControllers{
-    self.chatroomViewController = [[NTESChatroomViewController alloc] initWithChatroom:self.chatroom];
     NTESChatroomMemberListViewController *memberListVC = [[NTESChatroomMemberListViewController alloc] initWithChatroom:self.chatroom];
     NTESLiveInfoViewController *liveInfoVC = [[NTESLiveInfoViewController alloc] initWithChatroom:self.chatroom];
     return @[self.chatroomViewController,liveInfoVC,memberListVC];
@@ -247,6 +246,13 @@ NTES_USE_CLEAR_BAR
 #pragma mark - Rotate
 - (BOOL)shouldAutorotate{
     return NO;
+}
+
+- (NTESChatroomViewController *)chatroomViewController {
+    if (!_chatroomViewController) {
+        _chatroomViewController = [[NTESChatroomViewController alloc] initWithChatroom:self.chatroom];
+    }
+    return _chatroomViewController;
 }
 
 @end

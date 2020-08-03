@@ -97,7 +97,11 @@
             cell.textLabel.attributedText = [self showNameWithTeam:team];
             return cell;
         } else {
-            return nil;
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"defaultCell"];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
+            }
+            return cell;
         }
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];

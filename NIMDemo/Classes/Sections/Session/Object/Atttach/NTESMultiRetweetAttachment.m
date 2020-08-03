@@ -41,7 +41,7 @@
     NSData *data = [NSJSONSerialization dataWithJSONObject:dict
                                                    options:0
                                                      error:nil];
-    NSString *content = nil;
+    NSString *content = @"";
     if (data) {
         content = [[NSString alloc] initWithData:data
                                         encoding:NSUTF8StringEncoding];

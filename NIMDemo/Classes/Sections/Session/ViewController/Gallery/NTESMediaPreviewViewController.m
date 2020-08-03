@@ -158,6 +158,8 @@
         reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
         NSString *title = [_titles objectAtIndex:indexPath.section];
         [reusableView refresh:title];
+    } else {
+        reusableView = [[NTESMediaPreviewViewHeader alloc] init];
     }
     return reusableView;
 }
@@ -372,7 +374,7 @@ FOUNDATION_STATIC_INLINE NSUInteger NTESCacheCostForImage(UIImage *image) {
         if (!duration)
         {
             NSInteger seconds  = (object.duration+500)/1000; //四舍五入
-            duration = [NSString stringWithFormat:@"%02zd:%02zd",seconds / 60,seconds % 60];
+            duration = [NSString stringWithFormat:@"%02zd:%02zd",(NSInteger)(seconds / 60),(NSInteger)(seconds % 60)];
             [durationCache setObject:duration forKey:object.thumbPath];
         }
         self.durationLabel.text = duration;

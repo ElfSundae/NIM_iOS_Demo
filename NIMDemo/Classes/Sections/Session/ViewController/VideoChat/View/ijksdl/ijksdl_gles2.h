@@ -61,7 +61,7 @@ void      NTES_IJK_GLES2_Renderer_reset(IJK_GLES2_Renderer *renderer);
 void      NTES_IJK_GLES2_Renderer_free(IJK_GLES2_Renderer *renderer);
 void      NTES_IJK_GLES2_Renderer_freeP(IJK_GLES2_Renderer **renderer);
 
-GLboolean NTES_IJK_GLES2_Renderer_setupGLES();
+GLboolean NTES_IJK_GLES2_Renderer_setupGLES(void);
 GLboolean NTES_IJK_GLES2_Renderer_isValid(IJK_GLES2_Renderer *renderer);
 GLboolean NTES_IJK_GLES2_Renderer_isFormat(IJK_GLES2_Renderer *renderer, int format);
 GLboolean NTES_IJK_GLES2_Renderer_use(IJK_GLES2_Renderer *renderer);
