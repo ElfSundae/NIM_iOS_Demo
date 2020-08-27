@@ -199,9 +199,9 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     
     
     //pushkit
-    PKPushRegistry *pushRegistry = [[PKPushRegistry alloc] initWithQueue:dispatch_get_main_queue()];
-    pushRegistry.delegate = self;
-    pushRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+//    PKPushRegistry *pushRegistry = [[PKPushRegistry alloc] initWithQueue:dispatch_get_main_queue()];
+//    pushRegistry.delegate = self;
+//    pushRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
 
     
     // 注册push权限，用于显示本地推送
