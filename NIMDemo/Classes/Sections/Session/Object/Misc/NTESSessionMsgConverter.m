@@ -28,7 +28,7 @@
     textMessage.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     textMessage.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
     textMessage.apnsMemberOption.forcePush = [[NTESBundleSetting sharedConfig] enableTeamAPNsForce];
-    
+    textMessage.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return textMessage;
 }
 
@@ -62,6 +62,7 @@
     setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
     message.apnsMemberOption.forcePush = [[NTESBundleSetting sharedConfig] enableTeamAPNsForce];
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -75,6 +76,7 @@
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -91,6 +93,7 @@
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = NIMNOSSceneTypeMessage;
     message.setting = setting;
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -106,6 +109,7 @@
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
     message.apnsMemberOption.forcePush = [[NTESBundleSetting sharedConfig] enableTeamAPNsForce];
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -122,6 +126,8 @@
     setting.roamingEnabled = NO;
     setting.syncEnabled    = NO;
     message.setting = setting;
+    
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     
     return message;
 }
@@ -142,6 +148,7 @@
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
     message.apnsMemberOption.forcePush = [[NTESBundleSetting sharedConfig] enableTeamAPNsForce];
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -162,6 +169,7 @@
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.scene = sence;
     message.setting = setting;
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -176,6 +184,7 @@
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
     message.apnsMemberOption.forcePush = [[NTESBundleSetting sharedConfig] enableTeamAPNsForce];
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -190,7 +199,7 @@
     setting.apnsEnabled        = NO;
     message.setting            = setting;
     
-
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -205,6 +214,7 @@
     setting.apnsEnabled        = NO;
     setting.shouldBeCounted    = NO;
     message.setting            = setting;
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -221,7 +231,7 @@
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.historyEnabled     = NO;
     message.setting            = setting;
-
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 
@@ -237,7 +247,7 @@
     setting.shouldBeCounted    = NO;
     setting.historyEnabled     = NO;
     message.setting            = setting;
-
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     
     return message;
 }
@@ -252,6 +262,7 @@
     message.setting.apnsWithPrefix = [[NTESBundleSetting sharedConfig] enableAPNsPrefix];
     message.apnsMemberOption = [[NIMMessageApnsMemberOption alloc] init];
     message.apnsMemberOption.forcePush = [[NTESBundleSetting sharedConfig] enableTeamAPNsForce];
+    message.env = [[NTESBundleSetting sharedConfig] messageEnv];
     return message;
 }
 

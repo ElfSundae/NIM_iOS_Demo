@@ -11,6 +11,9 @@
 #import "UIView+NTES.h"
 #import <UIView+Toast.h>
 #import "NTESSessionViewController.h"
+#import "NIMSessionListCell.h"
+#import "NTESNoticationUtil.h"
+#import "NIMKitUtil.h"
 
 @interface NTESSessionServiceListVC () <NIMConversationManagerDelegate>
 @property (nonatomic,strong) UIButton * moreButton;
@@ -113,6 +116,29 @@
     return nil;
 }
 
+- (NSAttributedString *)contentForRecentSession:(NIMRecentSession *)recent{
+    if (recent.lastMessageType == NIMLastMsgTypeRevokeNotication) {
+        NSString *content = [self messageContentWithRevokeNote:recent.lastRevokeNotification];
+        return [[NSAttributedString alloc] initWithString:content ?: @""];
+    } else {
+        return [super contentForRecentSession:recent];;
+    }
+}
+
+- (NSString *)messageContentWithRevokeNote:(NIMRevokeMessageNotification *)revokeNote {
+    NSString *text = [NTESNoticationUtil revokeNoticationContent:revokeNote];
+    if (revokeNote.session.sessionType == NIMSessionTypeP2P)
+    {
+        return text;
+    }
+    else
+    {
+        NSString *from = revokeNote.fromUserId;
+        NSString *nickName = [NIMKitUtil showNick:from inSession:revokeNote.session];
+        return nickName.length ? [nickName stringByAppendingFormat:@" : %@",text] : @"";
+    }
+}
+
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __weak typeof(self) weakSelf = self;
@@ -123,7 +149,7 @@
                 [weakSelf.recentSessions removeObject:recentSession];
                 [weakSelf.tableView reloadData];
             } else {
-                [self.view makeToast:@"删除失败" duration:1 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:@"删除失败" duration:1 position:CSToastPositionCenter];
             }
         }];
         [tableView setEditing:NO animated:YES];
@@ -140,19 +166,42 @@
             
         [[NIMSDK sharedSDK].conversationManager updateServerSessionExt:newServerExt session:recentSession.session completion:^(NSError * _Nullable error) {
             if (error) {
-                [self.view makeToast:@"更新失败" duration:1 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:@"更新失败" duration:1 position:CSToastPositionCenter];
                 return;
             } else {
-                [self.view makeToast:recentSession.serverExt duration:3 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:recentSession.serverExt duration:3 position:CSToastPositionCenter];
             }
             recentSession.serverExt = newServerExt;
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
         }];
         
         [tableView setEditing:NO animated:YES];
     }];
     
-    return @[delete,update];
+
+    UITableViewRowAction *show = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"详情" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        NIMRecentSession *recentSession = weakSelf.recentSessions[indexPath.row];
+        NSString *content = [NSString stringWithFormat:@"%@", recentSession];
+        [weakSelf showInfo:content];
+        [tableView setEditing:NO animated:YES];
+    }];
+    
+    return @[delete,update, show];
+}
+
+- (void)showInfo:(NSString *)info {
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+    NSDictionary * attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14.0],
+                                  NSParagraphStyleAttributeName : paragraphStyle};
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:info];
+    [attributedTitle addAttributes:attributes range:NSMakeRange(0, info.length)];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"详情" message:info preferredStyle:UIAlertControllerStyleAlert];
+    [alert setValue:attributedTitle forKey:@"attributedMessage"];
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:sure];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)onTouchAvatar:(id)sender{

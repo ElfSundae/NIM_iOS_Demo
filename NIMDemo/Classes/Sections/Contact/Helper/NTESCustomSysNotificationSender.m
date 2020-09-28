@@ -8,6 +8,7 @@
 
 #import "NTESCustomSysNotificationSender.h"
 #import "NIMKitInfoFetchOption.h"
+#import "NTESBundleSetting.h"
 
 @interface NTESCustomSysNotificationSender ()
 @property (nonatomic,strong)    NSDate *lastTime;
@@ -32,6 +33,7 @@
     NIMCustomSystemNotification *notification = [[NIMCustomSystemNotification alloc] initWithContent:json];
     notification.apnsContent = content;
     notification.sendToOnlineUsersOnly = NO;
+    notification.env = [[NTESBundleSetting sharedConfig] messageEnv];
     NIMCustomSystemNotificationSetting *setting = [[NIMCustomSystemNotificationSetting alloc] init];
     setting.apnsEnabled = YES;
     notification.setting = setting;
@@ -65,6 +67,7 @@
         
         NIMCustomSystemNotification *notification = [[NIMCustomSystemNotification alloc] initWithContent:content];
         notification.sendToOnlineUsersOnly = YES;
+        notification.env = [[NTESBundleSetting sharedConfig] messageEnv];
         NIMCustomSystemNotificationSetting *setting = [[NIMCustomSystemNotificationSetting alloc] init];
         setting.apnsEnabled  = NO;
         notification.setting = setting;
@@ -104,7 +107,7 @@
                                            encoding:NSUTF8StringEncoding];
     NIMCustomSystemNotification *notification = [[NIMCustomSystemNotification alloc] initWithContent:content];
     notification.sendToOnlineUsersOnly = NO;
-    
+    notification.env = [[NTESBundleSetting sharedConfig] messageEnv];
     NIMKitInfoFetchOption *option = [[NIMKitInfoFetchOption alloc] init];
     option.session = [NIMSession session:teamId type:NIMSessionTypeTeam];
     NIMKitInfo *me = [[NIMKit sharedKit] infoByUser:[NIMSDK sharedSDK].loginManager.currentAccount option:option];

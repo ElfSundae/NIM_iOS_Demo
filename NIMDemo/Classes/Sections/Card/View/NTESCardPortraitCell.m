@@ -34,20 +34,20 @@
     if (self) {
         CGFloat avatarWidth = 55.f;
         _avatar = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, avatarWidth, avatarWidth)];
-        [self addSubview:_avatar];
+        [self.contentView addSubview:_avatar];
         _nameLabel      = [[UILabel alloc] initWithFrame:CGRectZero];
         _nameLabel.font = [UIFont systemFontOfSize:18.f];
-        [self addSubview:_nameLabel];
+        [self.contentView addSubview:_nameLabel];
         _nickNameLabel  = [[UILabel alloc] initWithFrame:CGRectZero];
         _nickNameLabel.font = [UIFont systemFontOfSize:13.f];
         _nickNameLabel.textColor = [UIColor grayColor];
-        [self addSubview:_nickNameLabel];
+        [self.contentView addSubview:_nickNameLabel];
         _accountLabel   = [[UILabel alloc] initWithFrame:CGRectZero];
         _accountLabel.font = [UIFont systemFontOfSize:13.f];
         _accountLabel.textColor = [UIColor grayColor];
-        [self addSubview:_accountLabel];
+        [self.contentView addSubview:_accountLabel];
         _genderIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 14, 14)];
-        [self addSubview:_genderIcon];
+        [self.contentView addSubview:_genderIcon];
     }
     return self;
 }

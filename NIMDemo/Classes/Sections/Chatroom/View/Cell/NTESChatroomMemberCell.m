@@ -25,8 +25,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self addSubview:self.avatarImageView];
-        [self addSubview:self.roleImageView];
+        [self.contentView addSubview:self.avatarImageView];
+        [self.contentView addSubview:self.roleImageView];
     }
     return self;
 }

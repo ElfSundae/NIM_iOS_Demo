@@ -24,7 +24,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _badgeView = [NTESBadgeView viewWithBadgeTip:@""];
-        [self addSubview:_badgeView];
+        [self.contentView addSubview:_badgeView];
     }
     return self;
 }

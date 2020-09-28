@@ -54,6 +54,15 @@ NSString *const NIMDemoEventNameCloseSnapPicture = @"NIMDemoEventNameCloseSnapPi
     self.imageView.image               = attachment.showCoverImage;
     self.label.hidden                  = attachment.isFired;
     self.longpressGesture.enabled      = !attachment.isFired;
+    
+    //禁用掉NIMMessageCell中的长按手势，防止手势冲突
+    [self disableMessageCellGesture:!attachment.isFired];
+}
+
+- (void)disableMessageCellGesture:(BOOL)disable {
+    if ([self.delegate respondsToSelector:@selector(disableLongPress:)]) {
+        [self.delegate disableLongPress:disable];
+    }
 }
 
 - (void)layoutSubviews{

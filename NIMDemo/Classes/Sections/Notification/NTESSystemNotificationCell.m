@@ -25,7 +25,7 @@
     self.detailTextLabel.backgroundColor = [UIColor clearColor];
     self.detailTextLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
     self.avatarImageView = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    [self addSubview:self.avatarImageView];
+    [self.contentView addSubview:self.avatarImageView];
 }
 
 - (void)update:(NIMSystemNotification *)notification{

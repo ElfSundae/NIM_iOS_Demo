@@ -19,7 +19,7 @@
         _textField.clearButtonMode = UITextFieldViewModeAlways;
         _textField.font            = [UIFont systemFontOfSize:17.f];
         _textField.textColor       = UIColorFromRGB(0x333333);
-        [self addSubview:_textField];
+        [self.contentView addSubview:_textField];
     }
     return self;
 }

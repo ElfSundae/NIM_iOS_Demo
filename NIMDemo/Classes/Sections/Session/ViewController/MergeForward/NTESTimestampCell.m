@@ -24,8 +24,8 @@
         [self.timeBGView removeFromSuperview];
         self.timeLabel.textColor = [NIMKit sharedKit].config.nickColor;
         self.backgroundColor = UIColorFromRGB(0xfefefe);
-        [self addSubview:self.lineLeft];
-        [self addSubview:self.lineRight];
+        [self.contentView addSubview:self.lineLeft];
+        [self.contentView addSubview:self.lineRight];
     }
     return self;
 }

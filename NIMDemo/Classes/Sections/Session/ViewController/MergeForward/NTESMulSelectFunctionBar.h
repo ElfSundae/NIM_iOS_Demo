@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NTESMulSelectFunctionBar : UIView
 
 @property (nonatomic, strong) UIButton *sureBtn;
+@property (nonatomic, strong) UIButton *deleteButton;
 
 @end
 

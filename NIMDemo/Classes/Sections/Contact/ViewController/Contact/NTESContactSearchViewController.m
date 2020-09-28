@@ -122,7 +122,7 @@
             NIMUser *user = [_sections[indexPath.section] objectAtIndex:indexPath.row];
             NTESPersonalCardViewController *vc = [[NTESPersonalCardViewController alloc] initWithUserId:user.userId];
             [self showVC:vc];
-        } else if (indexPath.section == 0) {
+        } else if (indexPath.section == 1) {
             NIMTeam *team = [_sections[indexPath.section] objectAtIndex:indexPath.row];
             NIMSession *session = [NIMSession session:team.teamId type:NIMSessionTypeTeam];
             NTESSessionViewController *vc = [[NTESSessionViewController alloc] initWithSession:session];

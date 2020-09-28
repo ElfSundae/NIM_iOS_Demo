@@ -8,6 +8,8 @@
 
 #import "NIMSessionViewController.h"
 
+extern NSString *kNTESDemoRevokeMessageFromMeNotication;
+
 @interface NTESSessionViewController : NIMSessionViewController
 
 @property (nonatomic,assign) BOOL disableCommandTyping;  //需要在导航条上显示“正在输入”

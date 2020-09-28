@@ -1,7 +1,7 @@
 platform :ios, '9.0'
 
 target 'NIM' do
-    pod 'NIMKit/Full_Free', '~> 2.12'
+    pod 'NIMKit/Full_Free', '~> 3.0'
     pod 'Toast', '~> 3.0'
 
     pod 'SDWebImageFLPlugin'

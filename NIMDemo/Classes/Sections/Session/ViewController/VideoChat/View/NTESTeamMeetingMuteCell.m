@@ -29,16 +29,16 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _avatarImageView = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
-        [self addSubview:_avatarImageView];
+        [self.contentView addSubview:_avatarImageView];
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self addSubview:_nameLabel];
+        [self.contentView addSubview:_nameLabel];
         _micButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _micButton.size = CGSizeMake(35, 35);
         [_micButton setImage:[UIImage imageNamed:@"btn_meeting_mute_disable_normal"] forState:UIControlStateNormal];
         [_micButton setImage:[UIImage imageNamed:@"btn_meeting_mute_disable_pressed"] forState:UIControlStateHighlighted];
         [_micButton setImage:[UIImage imageNamed:@"btn_meeting_mute_disable_selected"] forState:UIControlStateSelected];
         [_micButton setImage:[UIImage imageNamed:@"btn_meeting_mute_disable_selected_pressed"] forState:UIControlStateSelected | UIControlStateHighlighted];
-        [self addSubview:_micButton];
+        [self.contentView addSubview:_micButton];
     }
     return self;
 }

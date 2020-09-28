@@ -20,10 +20,11 @@
 #import "NTESSessionSearchViewController.h"
 #import "NSString+NTES.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <Toast/UIView+Toast.h>
 
 #define SessionListTitle @"云信 Demo".ntes_localized
 
-@interface NTESSessionListViewController ()<NIMLoginManagerDelegate,NTESListHeaderDelegate,NIMEventSubscribeManagerDelegate,UIViewControllerPreviewingDelegate,NIMChatExtendManagerDelegate>
+@interface NTESSessionListViewController ()<NIMLoginManagerDelegate,NTESListHeaderDelegate,NIMEventSubscribeManagerDelegate,UIViewControllerPreviewingDelegate,NIMChatExtendManagerDelegate, NIMConversationManagerDelegate>
 
 @property (nonatomic,strong) NTESListHeader *header;
 
@@ -51,6 +52,7 @@
 - (void)dealloc{
     [[NIMSDK sharedSDK].loginManager removeDelegate:self];
     [[NIMSDK sharedSDK].chatExtendManager removeDelegate:self];
+    [[NIMSDK sharedSDK].conversationManager removeDelegate:self];
 }
 
 
@@ -61,6 +63,7 @@
     [[NIMSDK sharedSDK].loginManager addDelegate:self];
     [[NIMSDK sharedSDK].subscribeManager addDelegate:self];
     [[NIMSDK sharedSDK].chatExtendManager addDelegate:self];
+    [[NIMSDK sharedSDK].conversationManager addDelegate:self];
 
     self.header = [[NTESListHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0)];
     self.header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -410,6 +413,16 @@
             self.stickTopInfos[obj.session] = obj;
         }];
         [self refresh];
+    }
+}
+
+#pragma mark - NIMConversationManagerDelegate
+- (void)onMarkMessageReadCompleteInSession:(NIMSession *)session error:(NSError *)error {
+    if (error) {
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        NSString *msg = [NSString stringWithFormat:@"session %@ type %@ mark fail.code:%@",
+                         session.sessionId, @(session.sessionType), @(error.code)];
+        [keyWindow makeToast:msg duration:2 position:CSToastPositionCenter];
     }
 }
 

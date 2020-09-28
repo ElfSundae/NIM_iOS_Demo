@@ -74,6 +74,8 @@
 #import "UIView+NIMToast.h"
 #import "NTESWhiteboardAttachment.h"
 
+NSString *kNTESDemoRevokeMessageFromMeNotication = @"kNTESDemoRevokeMessageFromMeNotication";
+
 @interface NTESSessionViewController ()
 <UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
@@ -86,7 +88,6 @@ NIMTeamCardViewControllerDelegate,
 NIMMessagePinListViewControllerDelegate,
 NIMChatExtendManagerDelegate,
 UISearchBarDelegate>
-
 
 @property (nonatomic,strong)    NTESCustomSysNotificationSender *notificaionSender;
 @property (nonatomic,strong)    NTESSessionConfig       *sessionConfig;
@@ -139,6 +140,11 @@ UISearchBarDelegate>
     //批量转发
     _mergeForwardSession = [[NTESMergeForwardSession alloc] init];
 //    [self setupSearchVC];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onRevokeMessageFromMe:)
+                                                 name:kNTESDemoRevokeMessageFromMeNotication
+                                               object:nil];
 }
 
 - (void)dealloc
@@ -150,6 +156,7 @@ UISearchBarDelegate>
         [[NTESSubscribeManager sharedManager] unsubscribeTempUserOnlineState:self.session.sessionId];
     }
     [_fpsLabel invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -702,40 +709,75 @@ UISearchBarDelegate>
 - (void)onTapMenuItemRevoke:(NIMMediaItem *)item
 {
     [self.advanceMenu dismiss];
-
     NIMMessage *message = [self messageForMenu];
-       
+    BOOL enableRevokePostscript = [[NTESBundleSetting sharedConfig] enableRevokeMsgPostscript];
+    if (enableRevokePostscript) {
+        [self doShowInputRevokePostscriptAlert:message];
+    } else {
+        [self doRevokeMessage:message postscript:nil];
+    }
+}
+
+- (void)doShowInputRevokePostscriptAlert:(NIMMessage *)message {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"撤回附言"
+                                                                     message:nil
+                                                              preferredStyle:UIAlertControllerStyleAlert];
+    [alertVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入附言";
+    }];
+    __weak typeof(self) weakSelf = self;
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *input = alertVC.textFields.firstObject;
+        [weakSelf doRevokeMessage:message postscript:input.text];
+    }];
+    [alertVC addAction:sure];
+    [self presentViewController:alertVC animated:YES completion:nil];
+}
+
+- (void)doRevokeMessage:(NIMMessage *)message postscript:(NSString *)postscript{
     __weak typeof(self) weakSelf = self;
     NSString *collapseId = message.apnsPayload[@"apns-collapse-id"];
     NSDictionary *payload = @{
         @"apns-collapse-id": collapseId ? : @"",
     };
-    
-    [[NIMSDK sharedSDK].chatManager revokeMessage:message
-                                     apnsContent:@"撤回一条消息"
-                                     apnsPayload:payload
-                                 shouldBeCounted:![[NTESBundleSetting sharedConfig] isIgnoreRevokeMessageCount]
-                                        completion:^(NSError * _Nullable error)
-     {
-       if (error) {
-           if (error.code == NIMRemoteErrorCodeDomainExpireOld) {
-               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送时间超过2分钟的消息，不能被撤回".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
-               [alert show];
-           } else {
-               DDLogError(@"revoke message eror code %zd",error.code);
-               [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
-           }
-       } else {
-           NIMMessageModel *model = [weakSelf uiDeleteMessage:message];
-           NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:nil]];
-           tip.timestamp = model.messageTime;
-           [weakSelf uiInsertMessages:@[tip]];
-           
-           tip.timestamp = message.timestamp;
-           // saveMessage 方法执行成功后会触发 onRecvMessages: 回调，但是这个回调上来的 NIMMessage 时间为服务器时间，和界面上的时间有一定出入，所以要提前先在界面上插入一个和被删消息的界面时间相符的 Tip, 当触发 onRecvMessages: 回调时，组件判断这条消息已经被插入过了，就会忽略掉。
-           [[NIMSDK sharedSDK].conversationManager saveMessage:tip forSession:message.session completion:nil];
-       }
+    NIMRevokeMessageOption *option = [[NIMRevokeMessageOption alloc] init];
+    option.apnsContent = @"撤回一条消息";
+    option.apnsPayload = payload;
+    option.shouldBeCounted = ![[NTESBundleSetting sharedConfig] isIgnoreRevokeMessageCount];
+    option.postscript = postscript;
+    [[NIMSDK sharedSDK].chatManager revokeMessage:message option:option completion:^(NSError * _Nullable error) {
+        if (error) {
+            if (error.code == NIMRemoteErrorCodeDomainExpireOld) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送时间超过2分钟的消息，不能被撤回".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
+                [alert show];
+            } else {
+                DDLogError(@"revoke message eror code %zd",error.code);
+                [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
+            }
+        } else {
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            userInfo[@"msg"] = message;
+            userInfo[@"postscript"] = postscript;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNTESDemoRevokeMessageFromMeNotication
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
     }];
+}
+
+- (void)onRevokeMessageFromMe:(NSNotification *)note {
+    NIMMessage *message = note.userInfo[@"msg"];
+    NSString *postscript = note.userInfo[@"postscript"];
+    if (message) {
+        NIMMessageModel *model = [self uiDeleteMessage:message];
+        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevokedLocal:postscript]];
+        tip.timestamp = model.messageTime;
+        [self uiInsertMessages:@[tip]];
+        
+        tip.timestamp = message.timestamp;
+        // saveMessage 方法执行成功后会触发 onRecvMessages: 回调，但是这个回调上来的 NIMMessage 时间为服务器时间，和界面上的时间有一定出入，所以要提前先在界面上插入一个和被删消息的界面时间相符的 Tip, 当触发 onRecvMessages: 回调时，组件判断这条消息已经被插入过了，就会忽略掉。
+        [[NIMSDK sharedSDK].conversationManager saveMessage:tip forSession:message.session completion:nil];
+    }
 }
 
 - (void)onTapMenuItemDelete:(NIMMediaItem *)item
@@ -1104,7 +1146,29 @@ UISearchBarDelegate>
     }];
     
     UIAlertAction *cleanLocalMessageAction = [UIAlertAction actionWithTitle:@"清空本地聊天记录".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [weakSelf showDeleteSureVC];
+        [weakSelf showDeleteSureVCWithTitle:@"确定清空聊天记录?".ntes_localized confirmBlock:^{
+            BOOL removeRecentSession = [NTESBundleSetting sharedConfig].removeSessionWhenDeleteMessages;
+            BOOL removeTable = [NTESBundleSetting sharedConfig].dropTableWhenDeleteMessages;
+            NIMDeleteMessagesOption *option = [[NIMDeleteMessagesOption alloc] init];
+            option.removeSession = removeRecentSession;
+            option.removeTable = removeTable;
+            [[NIMSDK sharedSDK].conversationManager deleteAllmessagesInSession:weakSelf.session
+                                                                        option:option];
+        }];
+    }];
+    
+    UIAlertAction *cleanRemoteMessagesAction = [UIAlertAction actionWithTitle:@"清空远端聊天记录".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf showDeleteSureVCWithTitle:@"确定清空聊天记录?".ntes_localized confirmBlock:^{
+            NIMSessionDeleteAllRemoteMessagesOptions *options = [[NIMSessionDeleteAllRemoteMessagesOptions alloc] init];
+            options.removeOtherClients = YES;
+            [NIMSDK.sharedSDK.conversationManager deleteAllRemoteMessagesInSession:weakSelf.session options:options completion:^(NSError * _Nullable error) {
+                if (error) {
+                    [weakSelf.view makeToast:[NSString stringWithFormat: @"删除失败:%@",error.localizedDescription]];
+                    return;
+                }
+                [weakSelf refreshMessages];
+            }];
+        }];
     }];
     
     UIAlertAction *viewPinnedMessageAction = [UIAlertAction actionWithTitle:@"查看标记消息".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -1118,26 +1182,21 @@ UISearchBarDelegate>
     return @[cloudMessageAction,
              searchLocalMessageAction,
              cleanLocalMessageAction,
+             cleanRemoteMessagesAction,
              viewPinnedMessageAction,
              cancel].mutableCopy;
 }
 
-- (void)showDeleteSureVC {
-    __weak typeof(self) weakSelf = self;
+- (void)showDeleteSureVCWithTitle:(NSString *)title confirmBlock:(void(^)(void))confirmBlock {
     UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定".ntes_localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        BOOL removeRecentSession = [NTESBundleSetting sharedConfig].removeSessionWhenDeleteMessages;
-        BOOL removeTable = [NTESBundleSetting sharedConfig].dropTableWhenDeleteMessages;
-        NIMDeleteMessagesOption *option = [[NIMDeleteMessagesOption alloc] init];
-        option.removeSession = removeRecentSession;
-        option.removeTable = removeTable;
-        [[NIMSDK sharedSDK].conversationManager deleteAllmessagesInSession:weakSelf.session
-                                                                    option:option];
-       
+        if (confirmBlock) {
+            confirmBlock();
+        }
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消".ntes_localized
                                                      style:UIAlertActionStyleCancel
                                                    handler:nil];
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"确定清空聊天记录？".ntes_localized message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [sheet addAction:sure];
     [sheet addAction:cancel];
     [self presentViewController:sheet animated:YES completion:nil];
@@ -1319,6 +1378,22 @@ UISearchBarDelegate>
         [weakSelf doMergerForwardToSession:targetSession];
         //返回正常页面
         [weakSelf switchUIWithSessionState:NIMKitSessionStateNormal];
+    }];
+}
+
+- (void)confirmDelete:(id)sender
+{
+    [self showDeleteSureVCWithTitle:@"确定删除？".ntes_localized confirmBlock:^{
+        [NIMSDK.sharedSDK.conversationManager deleteRemoteMessages:_selectedMessages
+                                                              exts: nil
+                                                        completion:^(NSError * _Nullable error) {
+            [self.view makeToast:error.localizedDescription ?: @"删除成功".ntes_localized];
+            if (!error) {
+                [self.interactor resetMessages:^(NSError *error) {
+                    [self switchUIWithSessionState:NIMKitSessionStateNormal];
+                }];
+            }
+        }];
     }];
 }
 
@@ -1606,6 +1681,9 @@ UISearchBarDelegate>
         [_mulSelectedSureBar.sureBtn addTarget:self
                                         action:@selector(confirmSelected:)
                               forControlEvents:UIControlEventTouchUpInside];
+        [_mulSelectedSureBar.deleteButton addTarget:self
+                                             action:@selector(confirmDelete:)
+                                   forControlEvents:UIControlEventTouchUpInside];
     }
     return _mulSelectedSureBar;
 }

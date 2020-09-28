@@ -29,14 +29,14 @@
     if (self) {
         CGFloat avatarWidth = 55.f;
         _avatar = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, avatarWidth, avatarWidth)];
-        [self addSubview:_avatar];
+        [self.contentView addSubview:_avatar];
         _nameLabel      = [[UILabel alloc] initWithFrame:CGRectZero];
         _nameLabel.font = [UIFont systemFontOfSize:18.f];
-        [self addSubview:_nameLabel];
+        [self.contentView addSubview:_nameLabel];
         _accountLabel   = [[UILabel alloc] initWithFrame:CGRectZero];
         _accountLabel.font = [UIFont systemFontOfSize:14.f];
         _accountLabel.textColor = [UIColor grayColor];
-        [self addSubview:_accountLabel];
+        [self.contentView addSubview:_accountLabel];
     }
     return self;
 }

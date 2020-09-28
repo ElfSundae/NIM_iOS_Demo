@@ -237,6 +237,14 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
     return [NTESSessionUtil dictByJsonData:data];
 }
 
++ (NSString *)tipOnMessageRevokedLocal:(NSString *)postscript {
+    NSString *tip = @"你".ntes_localized;
+    NSString *msg = [NSString stringWithFormat:@"%@撤回了一条消息".ntes_localized, tip];
+    if (postscript.length != 0) {
+        msg = [NSString stringWithFormat:@"%@撤回了一条消息.附言:%@".ntes_localized, tip, postscript];
+    }
+    return msg;
+}
 
 + (NSString *)tipOnMessageRevoked:(NIMRevokeMessageNotification *)notification
 {
@@ -254,7 +262,11 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
         tip = [self tipTitleFromMessageRevokeNotificationP2P:notification];
     } while (false);
     
-    return [NSString stringWithFormat:@"%@撤回了一条消息".ntes_localized, tip];
+    NSString *msg = [NSString stringWithFormat:@"%@撤回了一条消息".ntes_localized, tip];
+    if (notification.postscript.length != 0) {
+        msg = [NSString stringWithFormat:@"%@撤回了一条消息.附言:%@".ntes_localized, tip, notification.postscript];
+    }
+    return msg;
 }
 
 + (NSString *)tipTitleFromMessageRevokeNotificationP2P:(NIMRevokeMessageNotification *)notification {

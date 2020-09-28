@@ -48,18 +48,18 @@ CGFloat SearchCellContentMinHeight      = 15.f; //cell的高度是由文本高�
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _avatar                     = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        [self addSubview:_avatar];
+        [self.contentView addSubview:_avatar];
         _titleLabel                 = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLabel.font            = [UIFont systemFontOfSize:13.f];
-        [self addSubview:_titleLabel];
+        [self.contentView addSubview:_titleLabel];
         _contentLabel               = [[UILabel alloc] initWithFrame:CGRectZero];
         _contentLabel.font          = [UIFont systemFontOfSize:12.f];
         _contentLabel.textColor     = [UIColor grayColor];
         _contentLabel.numberOfLines = 0;
-        [self addSubview:_contentLabel];
+        [self.contentView addSubview:_contentLabel];
         _timeLabel                  = [[UILabel alloc] initWithFrame:CGRectZero];
         _timeLabel.font             = [UIFont systemFontOfSize:12.f];
-        [self addSubview:_timeLabel];
+        [self.contentView addSubview:_timeLabel];
     }
     return self;
 }

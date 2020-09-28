@@ -558,6 +558,15 @@
     return ret ? [ret integerValue] : 0;
 }
 
+- (BOOL)enableRevokeMsgPostscript {
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"enable_revoke_msg_ps"];
+    return [ret boolValue];
+}
+
+- (NSString *)messageEnv {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"nim_test_msg_env"];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:

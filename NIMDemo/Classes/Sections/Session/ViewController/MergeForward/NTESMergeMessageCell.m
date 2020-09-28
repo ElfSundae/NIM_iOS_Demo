@@ -32,8 +32,8 @@
         [self.readButton removeFromSuperview];
         [self.selectButton removeFromSuperview];
         [self.selectButtonMask removeFromSuperview];
-        [self addSubview:self.timeLab];
-        [self addSubview:self.line];
+        [self.contentView addSubview:self.timeLab];
+        [self.contentView addSubview:self.line];
     }
     return self;
 }

@@ -27,11 +27,11 @@
     if (self) {
         _avatarImageView = [[NIMAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         [_avatarImageView addTarget:self action:@selector(onTouchAvatar:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_avatarImageView];
+        [self.contentView addSubview:_avatarImageView];
         _sep = [[UIView alloc] initWithFrame:CGRectZero];
         _sep.backgroundColor = [UIColor lightGrayColor];
         _sep.height = .5f;
-        [self addSubview:_sep];
+        [self.contentView addSubview:_sep];
     }
     return self;
 }

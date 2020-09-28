@@ -40,6 +40,7 @@
 
 "你" = "You";
 "%@撤回了一条消息" = "%@ revoked a message";
+"%@撤回了一条消息.附言:%@" = "%@ revoked a message.ps:%@";
 "对方" = "The Other side";
 "群主" = "Owner";
 "管理员" = "Administrator";
@@ -356,8 +357,10 @@
 "云消息记录" = "Cloud message record";
 "搜索本地消息记录" = "Search local message records";
 "清空本地聊天记录" = "Clear local chat history";
+"清空远端聊天记录" = "Clear remote chat history";
 "查看标记消息" = "View pinned messages";
 "确定清空聊天记录？" = "Confirm to clear chat history?";
+"确定删除？" = "Confirm to delete?";
 "选择操作" = "Select operate";
 "转发" = "Forward";
 "多选" = "Choose";

@@ -12,6 +12,7 @@
 #import "NIMCellLayoutConfig.h"
 #import "NTESBundleSetting.h"
 #import "NTESCellLayoutConfig.h"
+#import "NTESSessionUtil.h"
 
 #pragma mark - Remote View Controller
 @interface NTESSessionRemoteHistoryViewController ()<NTESRemoteSessionDelegate>
@@ -31,7 +32,7 @@
 {
     self = [super initWithSession:session];
     if (self) {
-        self.config = [[NTESRemoteSessionConfig alloc] initWithSession:session];
+        self.config = config;
         self.config.delegate = self;
         self.disableCommandTyping = YES;
         self.disableOnlineState = YES;
@@ -76,13 +77,51 @@
     return nil;
 }
 
+- (void)doRevokeMessage:(NIMMessage *)message postscript:(NSString *)postscript{
+    __weak typeof(self) weakSelf = self;
+    NSString *collapseId = message.apnsPayload[@"apns-collapse-id"];
+    NSDictionary *payload = @{
+        @"apns-collapse-id": collapseId ? : @"",
+    };
+    NIMRevokeMessageOption *option = [[NIMRevokeMessageOption alloc] init];
+    option.apnsContent = @"撤回一条消息";
+    option.apnsPayload = payload;
+    option.shouldBeCounted = ![[NTESBundleSetting sharedConfig] isIgnoreRevokeMessageCount];
+    option.postscript = postscript;
+    [[NIMSDK sharedSDK].chatManager revokeMessage:message option:option completion:^(NSError * _Nullable error) {
+        if (error) {
+            if (error.code == NIMRemoteErrorCodeDomainExpireOld) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发送时间超过2分钟的消息，不能被撤回".ntes_localized delegate:nil cancelButtonTitle:@"确定".ntes_localized otherButtonTitles:nil, nil];
+                [alert show];
+            } else {
+                DDLogError(@"revoke message eror code %zd",error.code);
+                [weakSelf.view makeToast:@"消息撤回失败，请重试".ntes_localized duration:2.0 position:CSToastPositionCenter];
+            }
+        } else {
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            userInfo[@"msg"] = message;
+            userInfo[@"postscript"] = postscript;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNTESDemoRevokeMessageFromMeNotication
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    }];
+}
+
+- (void)onRevokeMessageFromMe:(NSNotification *)note {
+    NIMMessage *message = note.userInfo[@"msg"];
+    if (message) {
+        [self uiDeleteMessage:message];
+    }
+}
+
 #pragma mark - NIMMessageCellDelegate
 
-- (BOOL)onLongPressCell:(NIMMessage *)message
-                 inView:(UIView *)view
-{
-    return YES;
-}
+//- (BOOL)onLongPressCell:(NIMMessage *)message
+//                 inView:(UIView *)view
+//{
+//    return YES;
+//}
 
 - (void)onClickEmoticon:(NIMMessage *)message
                 comment:(NIMQuickComment *)comment
@@ -174,7 +213,16 @@
 
 - (NSArray<NIMMediaItem *> *)menuItemsWithMessage:(NIMMessage *)message
 {
-    return nil;
+    NSMutableArray *items = [NSMutableArray array];
+    
+    NIMMediaItem *revoke = [NIMMediaItem item:@"onTapMenuItemRevoke:"
+                                  normalImage:[UIImage imageNamed:@"menu_revoke"]
+                                selectedImage:nil
+                                        title:@"撤回".ntes_localized];
+    if ([NTESSessionUtil canMessageBeRevoked:message]) {
+        [items addObject:revoke];
+    }
+    return items;
 }
 
 

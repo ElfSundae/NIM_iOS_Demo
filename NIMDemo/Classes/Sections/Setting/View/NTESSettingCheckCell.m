@@ -30,7 +30,7 @@
         [_checkBox setImage:[UIImage imageNamed:@"icon_checkbox_unselected"] forState:UIControlStateNormal];
         [_checkBox setImage:[UIImage imageNamed:@"icon_checkbox_selected"] forState:UIControlStateSelected];
         [_checkBox setImage:[UIImage imageNamed:@"icon_checkbox_selected"] forState:UIControlStateHighlighted];
-        [self addSubview:_checkBox];
+        [self.contentView addSubview:_checkBox];
         
     }
     return self;

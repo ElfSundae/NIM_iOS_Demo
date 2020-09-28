@@ -25,7 +25,7 @@
         _button = [[NTESColorButton alloc] initWithFrame:CGRectZero];
         _button.size = [_button sizeThatFits:CGSizeMake(self.width, CGFLOAT_MAX)];
         _button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self addSubview:_button];
+        [self.contentView addSubview:_button];
     }
     return self;
 }
