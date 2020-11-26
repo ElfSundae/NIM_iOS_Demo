@@ -32,15 +32,6 @@ targets:
         INFOPLIST_FILE: NIMDemo/Supporting Files/English.lproj/Info.plist
         GCC_PREFIX_HEADER: NIMDemo/NIMDemo-Prefix.pch
         ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME: LaunchImage
-        OTHER_LDFLAGS: '$(inherited) -lSPaySDK -lWeChatSDK'
-        LIBRARY_SEARCH_PATHS: >-
-          $(inherited)
-          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK"
-          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/WXSDK"
-        HEADER_SEARCH_PATHS: >-
-          $(inherited)
-          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/SPaySDK/include"
-          "$(PROJECT_DIR)/NIMDemo/Classes/Vendors/WXChatSDK/WXSDK"
         # Fix warning for Xcode 11.3: Enable "Missing Localizability"
         CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
       configs:
