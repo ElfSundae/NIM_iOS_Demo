@@ -269,6 +269,7 @@
     searchOpt.currentMessage = message;
     searchOpt.limit      = self.limit;
     searchOpt.sync       =  [NTESBundleSetting sharedConfig].enableSyncWhenFetchRemoteMessages;
+    searchOpt.createRecentSessionIfNotExists = NTESBundleSetting.sharedConfig.enableCreateRecentSessionsWhenSyncRemoteMessages;
     [[NIMSDK sharedSDK].conversationManager fetchMessageHistory:self.session option:searchOpt result:^(NSError *error, NSArray *messages) {
         if (handler) {
             handler(error,messages.reverseObjectEnumerator.allObjects);

@@ -84,7 +84,17 @@
 			<key>Key</key>
 			<string>sync_when_remote_fetch_messages</string>
 			<key>Title</key>
-			<string>获取远程消息的时候同步到本地</string>
+			<string>获取云端消息时同步到本地</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>create_recent_when_sync_remote_messages</string>
+			<key>Title</key>
+			<string>同步云端消息时是否创建最近会话</string>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>

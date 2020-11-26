@@ -241,7 +241,6 @@
 - (void)showSearchData:(NIMMessageSearchOption *)option loadMore:(BOOL)loadMore{
     __weak typeof(self) wself = self;
     [[NIMSDK sharedSDK].conversationManager searchMessages:self.session option:option result:^(NSError *error, NSArray *messages) {
-        messages = [NTESBundleSetting sharedConfig].localSearchOrderByTimeDesc == NIMMessageSearchOrderAsc ? messages.reverseObjectEnumerator.allObjects : messages;
         NSMutableArray *array = [[NSMutableArray alloc]init];
         for (NIMMessage *message in messages) {
             NTESSearchLocalHistoryObject *obj = [[NTESSearchLocalHistoryObject alloc] initWithMessage:message];

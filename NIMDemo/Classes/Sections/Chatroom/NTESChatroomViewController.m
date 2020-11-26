@@ -60,10 +60,6 @@
        handled = YES;
     }
     
-    if (!handled)
-    {
-        NSAssert(0, @"invalid event");
-    }
     return handled;
 }
 

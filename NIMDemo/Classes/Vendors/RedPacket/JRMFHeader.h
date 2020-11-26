@@ -12,4 +12,3 @@
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "JRMFSington.h"
-#import "SPayClient.h"

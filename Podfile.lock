@@ -10,7 +10,7 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - M80AttributedLabel (1.9.9)
-  - NIMKit/Core_Free (3.0.1):
+  - NIMKit/Core_Free (3.1.1):
     - FLAnimatedImage
     - M80AttributedLabel
     - SDWebImage
@@ -18,21 +18,21 @@ PODS:
     - TZImagePickerController
     - YYImage
     - YYImage/WebP
-  - NIMKit/Full_Free (3.0.1):
+  - NIMKit/Full_Free (3.1.1):
     - NIMKit/Core_Free
-    - NIMSDK (~> 8.0.1)
-  - NIMSDK (8.0.1)
+    - NIMSDK (~> 8.1.0)
+  - NIMSDK (8.1.0)
   - Reachability (3.2)
-  - SDWebImage (5.9.4):
-    - SDWebImage/Core (= 5.9.4)
-  - SDWebImage/Core (5.9.4)
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
   - SDWebImageFLPlugin (0.4.0):
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.6)
   - SSZipArchive (1.8.1)
   - SVProgressHUD (2.2.5)
   - Toast (3.1.0)
-  - TZImagePickerController (3.4.8)
+  - TZImagePickerController (3.5.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
@@ -77,15 +77,15 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
-  NIMKit: 04098781b1dfa7105326e9ec5e1b764084ef376f
-  NIMSDK: bbc22ae661e61588035a521d69c899831f9aa23a
+  NIMKit: 3429ceca7b51f82eb9ecc287cd084b88a81d1e65
+  NIMSDK: e39b7cf60fb2ee77d3633955ed51b311ae0ae806
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
-  TZImagePickerController: 6685e6d81b8fd5453e80ba369dd4ebd6e97276ee
+  TZImagePickerController: 891421e1fa0d8dfa295388e1f8a8ce2d5152ae88
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
 PODFILE CHECKSUM: 72b08344235ed66d94d5095e58f23a05a893c593

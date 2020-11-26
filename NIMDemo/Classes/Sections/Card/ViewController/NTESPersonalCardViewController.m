@@ -308,7 +308,9 @@
     [alert showAlertWithCompletionHandler:^(NSInteger index) {
         if (index == 1) {
             [SVProgressHUD show];
-            [[NIMSDK sharedSDK].userManager deleteFriend:wself.userId completion:^(NSError *error) {
+            [[NIMSDK sharedSDK].userManager deleteFriend:wself.userId
+                                             removeAlias:[[NTESBundleSetting sharedConfig] autoRemoveAlias]
+                                              completion:^(NSError *error) {
                 [SVProgressHUD dismiss];
                 if (!error) {
                     [wself.view makeToast:@"删除成功".ntes_localized duration:2.0f position:CSToastPositionCenter];

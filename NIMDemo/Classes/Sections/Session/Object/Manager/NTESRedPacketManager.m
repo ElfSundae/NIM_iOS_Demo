@@ -234,7 +234,6 @@
         }];
     }
     
-    [[SPayClient sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
 - (void)application:(UIApplication *)app
@@ -250,17 +249,11 @@
         }];
     }
     
-    [[SPayClient sharedInstance]application:app openURL:url options:options];
 }
 
 - (void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[SPayClient sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-}
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return [[SPayClient sharedInstance] application:application handleOpenURL:url];
 }
 
 #pragma mark - Private

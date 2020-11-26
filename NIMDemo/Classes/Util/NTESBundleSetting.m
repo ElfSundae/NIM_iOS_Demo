@@ -201,6 +201,11 @@
     return [[[NSUserDefaults standardUserDefaults] objectForKey:@"sync_when_remote_fetch_messages"] boolValue];
 }
 
+- (BOOL)enableCreateRecentSessionsWhenSyncRemoteMessages
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"create_recent_when_sync_remote_messages"] boolValue];
+}
+
 - (BOOL)countTeamNotification
 {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:@"count_team_notification"] boolValue];

@@ -53,6 +53,8 @@
 
 - (BOOL)enableSyncWhenFetchRemoteMessages;          //拉取云消息时是否需要存储到本地
 
+- (BOOL)enableCreateRecentSessionsWhenSyncRemoteMessages; //同步云消息到本地时是否创建最近会话
+
 - (BOOL)countTeamNotification;                      //是否将群通知计入未读
 
 - (NSInteger)maximumLogDays;                        //日志最大存在天数
