@@ -51,6 +51,6 @@ if ! [[ -x "$(command -v xcodegen)" ]]; then
     exit 1
 fi
 
-xcodegen
+xcodegen --use-cache
 
 pod update
