@@ -920,6 +920,7 @@ UISearchBarDelegate>
         }
         UIView *sender = event.data;
         self.currentSingleSnapView = [NTESGalleryViewController alertSingleSnapViewWithMessage:object.message baseView:sender];
+        self.isPreviewSnappicture = YES;
         handled = YES;
     }
     else if([eventName isEqualToString:NIMDemoEventNameCloseSnapPicture])
@@ -928,7 +929,7 @@ UISearchBarDelegate>
         NIMCustomObject *object = event.messageModel.message.messageObject;
         UIView *senderView = event.data;
         [senderView dismissPresentedView:YES complete:nil];
-        
+        self.isPreviewSnappicture = NO;
         NTESSnapchatAttachment *attachment = (NTESSnapchatAttachment *)object.attachment;
         if(attachment.isFired){
             return handled;

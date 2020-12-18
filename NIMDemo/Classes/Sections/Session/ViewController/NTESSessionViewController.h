@@ -16,4 +16,7 @@ extern NSString *kNTESDemoRevokeMessageFromMeNotication;
 
 @property (nonatomic,assign) BOOL disableOnlineState;  //需要在导航条上显示在线状态
 
+/// 是否正在查看阅后即焚
+@property(assign,nonatomic)BOOL isPreviewSnappicture;
+
 @end

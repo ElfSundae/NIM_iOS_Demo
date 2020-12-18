@@ -403,6 +403,10 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
 {
     NTESMainTabController *tabVC = [NTESMainTabController instance];
     UINavigationController *nav = tabVC.selectedViewController;
+    if ([nav.topViewController isKindOfClass:[NTESSessionViewController class]]) {
+        NTESSessionViewController *sessionVC = (NTESSessionViewController *)nav.topViewController;
+        return sessionVC.isPreviewSnappicture;
+    }
     return [nav.topViewController isKindOfClass:[NTESNetChatViewController class]] ||
     [tabVC.presentedViewController isKindOfClass:[NTESWhiteboardViewController class]] ||
     [tabVC.presentedViewController isKindOfClass:[NTESTeamMeetingCallingViewController class]] ||
