@@ -187,7 +187,11 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
 
 - (void)onRecvRevokeMessageNotification:(NIMRevokeMessageNotification *)notification
 {
-    NIMMessage *tipMessage = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:notification]];
+    //撤回消息中收到的attach和callbackExt字段需要获取出来存放到message中去
+    DDLogInfo(@"onRecvRevokeMessageNotification attach:%@ callbackExt:%@", notification.attach, notification.callbackExt);
+    NIMMessage *tipMessage = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevoked:notification]
+                                                    revokeAttach:notification.attach
+                                               revokeCallbackExt:notification.callbackExt];
     NIMMessageSetting *setting = [[NIMMessageSetting alloc] init];
     setting.shouldBeCounted = NO;
     tipMessage.setting = setting;
@@ -224,16 +228,17 @@ NIMRTSManagerDelegate,NIMChatManagerDelegate,NIMBroadcastManagerDelegate, NIMSig
     
 }
 
-- (void)onRecvMessageDeleted:(NIMMessage *)message ext:(NSString *)ext
-{
-
+- (void)onRecvMessagesDeleted:(NSArray<NIMMessage *> *)messages exts:(NSDictionary<NSString *,NSString *> *)exts {
+    
     NTESMainTabController *tabVC = [NTESMainTabController instance];
     UINavigationController *nav = tabVC.selectedViewController;
-
+    
     for (NTESSessionViewController *vc in nav.viewControllers) {
-        if ([vc isKindOfClass:[NTESSessionViewController class]]
-            && [vc.session.sessionId isEqualToString:message.session.sessionId]) {
-            [vc uiDeleteMessage:message];
+        for (NIMMessage *message in messages) {
+            if ([vc isKindOfClass:[NTESSessionViewController class]]
+                && [vc.session.sessionId isEqualToString:message.session.sessionId]) {
+                [vc uiDeleteMessage:message];
+            }
         }
     }
 }

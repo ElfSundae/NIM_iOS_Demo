@@ -745,6 +745,7 @@ UISearchBarDelegate>
     option.apnsPayload = payload;
     option.shouldBeCounted = ![[NTESBundleSetting sharedConfig] isIgnoreRevokeMessageCount];
     option.postscript = postscript;
+    option.attach = _revokeAttach;
     [[NIMSDK sharedSDK].chatManager revokeMessage:message option:option completion:^(NSError * _Nullable error) {
         if (error) {
             if (error.code == NIMRemoteErrorCodeDomainExpireOld) {
@@ -770,7 +771,10 @@ UISearchBarDelegate>
     NSString *postscript = note.userInfo[@"postscript"];
     if (message) {
         NIMMessageModel *model = [self uiDeleteMessage:message];
-        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevokedLocal:postscript]];
+        //主动撤回场景下，将之前填充的attach内容再次填充保存
+        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevokedLocal:postscript]
+                                                 revokeAttach:_revokeAttach
+                                            revokeCallbackExt:nil];
         tip.timestamp = model.messageTime;
         [self uiInsertMessages:@[tip]];
         

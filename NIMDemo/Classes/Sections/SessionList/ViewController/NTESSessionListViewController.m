@@ -182,7 +182,20 @@
 - (void)onDeleteRecentAtIndexPath:(NIMRecentSession *)recent atIndexPath:(NSIndexPath *)indexPath
 {
     id<NIMConversationManager> manager = [[NIMSDK sharedSDK] conversationManager];
-    [manager deleteRecentSession:recent];
+    NIMDeleteRecentSessionOption *option = [[NIMDeleteRecentSessionOption alloc] init];
+    option.isDeleteRoamMessage = self.autoRemoveRemoteSession;
+    [manager deleteRecentSession:recent option:option completion:^(NSError * _Nullable error) {
+        NSLog(@"deleteRecentSessionError:%@",error);
+        if (!error) {
+            //清理本地数据
+            [self.recentSessions removeObject:recent];
+            self.recentSessions = [self customSortRecents:self.recentSessions];
+            [self refresh];
+        }
+    }];
+    
+//    [manager deleteRecentSession:recent];
+    
 }
 
 - (void)onTopRecentAtIndexPath:(NIMRecentSession *)recent
