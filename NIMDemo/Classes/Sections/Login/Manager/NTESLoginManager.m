@@ -12,6 +12,8 @@
 
 #define NIMAccount      @"account"
 #define NIMToken        @"token"
+#define NIMAuthType     @"authType"
+#define NIMLoginExt     @"loginExt"
 
 @interface NTESLoginData ()<NSCoding>
 
@@ -24,6 +26,8 @@
     if (self = [super init]) {
         _account = [aDecoder decodeObjectForKey:NIMAccount];
         _token = [aDecoder decodeObjectForKey:NIMToken];
+        _authType = [[aDecoder decodeObjectForKey:NIMAuthType] intValue];
+        _loginExtension = [aDecoder decodeObjectForKey:NIMLoginExt];
     }
     return self;
 }
@@ -36,7 +40,29 @@
     if ([_token length]) {
         [encoder encodeObject:_token forKey:NIMToken];
     }
+    [encoder encodeObject:@(_authType) forKey:NIMAuthType];
+    if ([_loginExtension length]) {
+        [encoder encodeObject:_loginExtension forKey:NIMLoginExt];
+    }
 }
+
+- (BOOL)isValid {
+    if (_authType == NIMSDKAuthTypeDefault) {
+        return [_account length] && [_token length];
+    }
+
+    if (_authType == NIMSDKAuthTypeDynamicToken) {
+        return [_account length] && [_token length];
+    }
+
+    if (_authType == NIMSDKAuthTypeThirdParty) {
+        return [_account length] && [_token length] && [_loginExtension length];
+    }
+
+    return NO;
+}
+
+
 @end
 
 @interface NTESLoginManager ()

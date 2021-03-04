@@ -572,6 +572,12 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"nim_test_msg_env"];
 }
 
+- (BOOL)disableTraceroute
+{
+    id ret = [[NSUserDefaults standardUserDefaults] objectForKey:@"nim_test_disable_traceroute"];
+    return ret ? [ret boolValue] : NO;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:

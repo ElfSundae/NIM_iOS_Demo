@@ -7,7 +7,6 @@
 //
 
 #import "NTESSystemNotificationCell.h"
-#import "NTESSessionUtil.h"
 #import "UIView+NTES.h"
 #import "NIMAvatarImageView.h"
 
@@ -140,6 +139,8 @@
             id object = self.notification.attachment;
             if ([object isKindOfClass:[NIMUserAddAttachment class]]) {
                 NIMUserOperation operation = [(NIMUserAddAttachment *)object operationType];
+                NSString *serverExt = [(NIMUserAddAttachment *)object serverExt];
+
                 switch (operation) {
                     case NIMUserOperationAdd:
                         text = @"已添加你为好友".ntes_localized;
@@ -156,7 +157,12 @@
                     default:
                         break;
                 }
+
+                if (serverExt && [serverExt length]) {
+                    text = [NSString stringWithFormat:@"%@（%@）", text, serverExt];
+                }
             }
+
             self.detailTextLabel.text = text;
         }
             break;

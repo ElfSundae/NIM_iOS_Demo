@@ -212,15 +212,17 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 - (void)setupMainViewController
 {
     NTESLoginData *data = [[NTESLoginManager sharedManager] currentLoginData];
-    NSString *account = [data account];
-    NSString *token = [data token];
     
     //如果有缓存用户名密码推荐使用自动登录
-    if ([account length] && [token length])
+    if ([data isValid])
     {
         NIMAutoLoginData *loginData = [[NIMAutoLoginData alloc] init];
-        loginData.account = account;
-        loginData.token = token;
+        loginData.account = [data account];
+        loginData.token = [data token];
+        loginData.authType = [data authType];
+        if (loginData.authType == NIMSDKAuthTypeThirdParty) {
+            loginData.loginExtension = [data loginExtension];
+        }
         
         [[[NIMSDK sharedSDK] loginManager] autoLogin:loginData];
         [[NTESServiceManager sharedManager] start];
@@ -302,6 +304,28 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     [self showAutoLoginErrorAlert:error];
 }
 
+ - (NSString *)provideDynamicTokenForAccount:(NSString *)account {
+     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://imtest.netease.im/nimserver/god/mockDynamicToken.action"]];
+     request.timeoutInterval = 10;
+     [request setHTTPMethod:@"POST"];
+     [request setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+     [request setHTTPBody:[[NSString stringWithFormat:@"appkey=%@&accid=%@", @"fe416640c8e8a72734219e1847ad2547", account] dataUsingEncoding:NSUTF8StringEncoding]];
+
+     NSData *responseObject = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+     NSError *error;
+     if (!responseObject) {
+         return @"";
+     }
+
+     NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[responseStr dataUsingEncoding:NSUTF8StringEncoding]
+                                                          options:kNilOptions error:&error];
+     if ([[json valueForKey:@"code"] intValue] != 200) {
+         return @"";
+     }
+
+     return [json valueForKey:@"data"];
+ }
 
 #pragma mark - logic impl
 - (void)setupServices
@@ -329,6 +353,9 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     [[NIMSDKConfig sharedConfig] setFetchAttachmentAutomaticallyAfterReceiving:[[NTESBundleSetting sharedConfig] autoFetchAttachment]];
     [[NIMSDKConfig sharedConfig] setFetchAttachmentAutomaticallyAfterReceivingInChatroom:[[NTESBundleSetting sharedConfig] autoFetchAttachment]];
     [[NIMSDKConfig sharedConfig] setAsyncLoadRecentSessionEnabled:[NTESBundleSetting sharedConfig].asyncLoadRecentSessionEnabled];
+    
+    BOOL disableTraceroute = [[NTESBundleSetting sharedConfig] disableTraceroute];
+    [[NIMSDKConfig sharedConfig] setDisableTraceroute:disableTraceroute];
     
     
     //多端登录时，告知其他端，这个端的登录类型，目前对于android的TV端，手表端使用。

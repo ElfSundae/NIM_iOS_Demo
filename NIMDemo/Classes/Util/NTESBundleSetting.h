@@ -162,4 +162,7 @@
 
 - (NSString *)messageEnv;  //环境变量，用于指向不同的抄送、第三方回调等配置
 
+/// 禁用 traceroute
+- (BOOL)disableTraceroute;
+
 @end

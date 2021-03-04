@@ -26,6 +26,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) IBOutlet UIImageView *logo;
+@property (strong, nonatomic) IBOutlet UITextField *loginExtTextField;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *authTypeSegmentControl;
 @end
 
 @implementation NTESLoginViewController
@@ -57,9 +59,15 @@ NTES_USE_CLEAR_BAR
     [pwdClearButton setImage:[UIImage imageNamed:@"login_icon_clear"] forState:UIControlStateNormal];
     UIButton *userNameClearButton = [self.usernameTextField valueForKey:@"_clearButton"];
     [userNameClearButton setImage:[UIImage imageNamed:@"login_icon_clear"] forState:UIControlStateNormal];
-    
+
+    self.loginExtTextField.tintColor = [UIColor whiteColor];
+    self.loginExtTextField.hidden = YES;
+    [_authTypeSegmentControl setTitleTextAttributes:@{UITextAttributeTextColor: [UIColor whiteColor]} forState:UIControlStateNormal];
+    [_authTypeSegmentControl setTitleTextAttributes:@{UITextAttributeTextColor: [UIColor systemBlueColor]} forState:UIControlStateSelected];
+    _authTypeSegmentControl.tintColor = [UIColor whiteColor];
+
     [_registerButton setHidden:![[NIMSDK sharedSDK] isUsingDemoAppKey]];
-    
+
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
@@ -135,10 +143,13 @@ NTES_USE_CLEAR_BAR
     //用户APP的帐号体系和 NIM SDK 并没有直接关系
     //DEMO中使用 username 作为 NIM 的account ，md5(password) 作为 token
     //开发者需要根据自己的实际情况配置自身用户系统和 NIM 用户系统的关系
-    
-    
+
+    int authType = (int) [_authTypeSegmentControl selectedSegmentIndex];
+    NSString *loginExt = _loginExtTextField.text;
     [[[NIMSDK sharedSDK] loginManager] login:loginAccount
                                        token:loginToken
+                                    authType:authType
+                                    loginExt:loginExt
                                   completion:^(NSError *error) {
                                       [SVProgressHUD dismiss];
                                       if (error == nil)
@@ -146,6 +157,8 @@ NTES_USE_CLEAR_BAR
                                           NTESLoginData *sdkData = [[NTESLoginData alloc] init];
                                           sdkData.account   = loginAccount;
                                           sdkData.token     = loginToken;
+                                          sdkData.authType  = authType;
+                                          sdkData.loginExtension = loginExt;
                                           [[NTESLoginManager sharedManager] setCurrentLoginData:sdkData];
                                           
                                           [[NTESServiceManager sharedManager] start];
@@ -164,6 +177,11 @@ NTES_USE_CLEAR_BAR
 
 - (IBAction)onTouchLogin:(id)sender {
     [self doLogin];
+}
+
+- (IBAction)onAuthTypeChanged:(id)sender {
+    int authType = [sender selectedSegmentIndex];
+    self.loginExtTextField.hidden = authType != NIMSDKAuthTypeThirdParty;
 }
 
 - (void)prepareShowLog:(UILongPressGestureRecognizer *)gesuture{

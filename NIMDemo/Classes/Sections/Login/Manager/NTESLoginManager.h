@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface NTESLoginData : NSObject
+
 @property (nonatomic,copy)  NSString *account;
 @property (nonatomic,copy)  NSString *token;
+@property (nonatomic)       int authType;
+@property (nonatomic,copy)  NSString *loginExtension;
+
+- (BOOL)isValid;
+
 @end
 
 @interface NTESLoginManager : NSObject
