@@ -10,7 +10,7 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - M80AttributedLabel (1.9.9)
-  - NIMKit/Core_Free (3.2.1):
+  - NIMKit/Core_Free (3.3.1):
     - FLAnimatedImage
     - M80AttributedLabel
     - SDWebImage
@@ -18,10 +18,10 @@ PODS:
     - TZImagePickerController
     - YYImage
     - YYImage/WebP
-  - NIMKit/Full_Free (3.2.1):
+  - NIMKit/Full_Free (3.3.1):
     - NIMKit/Core_Free
-    - NIMSDK (~> 8.2.1)
-  - NIMSDK (8.2.5)
+    - NIMSDK (~> 8.3.1)
+  - NIMSDK (8.3.1)
   - Reachability (3.2)
   - SDWebImage (5.10.4):
     - SDWebImage/Core (= 5.10.4)
@@ -77,8 +77,8 @@ SPEC CHECKSUMS:
   FLAnimatedImage: dd3db277b17e909ec3c7fd41adfce79b321d960e
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
-  NIMKit: 595ecf03e287fb957c02925e4839e0be1ef5c38f
-  NIMSDK: 06cab2e2aed03eed830594e95ec95eadf69825de
+  NIMKit: b8634e875af4e5a463f72ff1546ac00b2e3f1e5b
+  NIMSDK: a78cb1ff95c7ad1a13c8c84cad8cf1d7db8fbe9a
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7

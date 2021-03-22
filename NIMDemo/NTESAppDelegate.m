@@ -18,8 +18,6 @@
 #import "NTESLoginManager.h"
 #import "NTESCustomAttachmentDecoder.h"
 #import "NTESClientUtil.h"
-#import "NTESNotificationCenter.h"
-#import "NIMKit.h"
 #import "NTESSDKConfigDelegate.h"
 #import "NTESCellLayoutConfig.h"
 #import "NTESSubscribeManager.h"
@@ -31,7 +29,6 @@
 #import "NTESPrivatizationManager.h"
 #import <TZLocationManager.h>
 #import "NTESDbExceptionHandler.h"
-#import "NTESBundleSetting.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @import PushKit;
@@ -353,6 +350,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     [[NIMSDKConfig sharedConfig] setFetchAttachmentAutomaticallyAfterReceiving:[[NTESBundleSetting sharedConfig] autoFetchAttachment]];
     [[NIMSDKConfig sharedConfig] setFetchAttachmentAutomaticallyAfterReceivingInChatroom:[[NTESBundleSetting sharedConfig] autoFetchAttachment]];
     [[NIMSDKConfig sharedConfig] setAsyncLoadRecentSessionEnabled:[NTESBundleSetting sharedConfig].asyncLoadRecentSessionEnabled];
+    [[NIMSDKConfig sharedConfig] setExceptionOptimizationEnabled:[NTESBundleSetting sharedConfig].exceptionLogUploadEnabled];
     
     BOOL disableTraceroute = [[NTESBundleSetting sharedConfig] disableTraceroute];
     [[NIMSDKConfig sharedConfig] setDisableTraceroute:disableTraceroute];
