@@ -768,11 +768,10 @@ UISearchBarDelegate>
 
 - (void)onRevokeMessageFromMe:(NSNotification *)note {
     NIMMessage *message = note.userInfo[@"msg"];
-    NSString *postscript = note.userInfo[@"postscript"];
     if (message) {
         NIMMessageModel *model = [self uiDeleteMessage:message];
         //主动撤回场景下，将之前填充的attach内容再次填充保存
-        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevokedLocal:postscript]
+        NIMMessage *tip = [NTESSessionMsgConverter msgWithTip:[NTESSessionUtil tipOnMessageRevokedLocal]
                                                  revokeAttach:_revokeAttach
                                             revokeCallbackExt:nil];
         tip.timestamp = model.messageTime;
@@ -1251,13 +1250,13 @@ UISearchBarDelegate>
 }
 
 - (void)enterSuperTeamCard:(id)sender{
-    NIMTeam *team = [[NIMSDK sharedSDK].superTeamManager teamById:self.session.sessionId];
-    NIMTeamCardViewControllerOption *option = [[NIMTeamCardViewControllerOption alloc] init];
-    option.isTop = [NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:self.session] != nil;
+NIMTeam *team =[[NIMSDK sharedSDK].superTeamManager teamById:self.session.sessionId];
+    NIMTeamCardViewControllerOption *option =[[NIMTeamCardViewControllerOption alloc] init];
+    option.isTop =[NIMSDK.sharedSDK.chatExtendManager stickTopInfoForSession:self.session] != nil;
 
-    NIMSuperTeamCardViewController *vc = [[NIMSuperTeamCardViewController alloc] initWithTeam:team
-                                                                                      session:self.session
-                                                                                       option:option];
+    NIMSuperTeamCardViewController *vc =[[NIMSuperTeamCardViewController alloc] initWithTeam:team session:self.session option:option];
+    vc.delegate = self;
+
     [self.navigationController pushViewController:vc animated:YES];
 }
 

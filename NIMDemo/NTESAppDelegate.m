@@ -31,6 +31,7 @@
 #import "NTESDbExceptionHandler.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
+@import Firebase;
 @import PushKit;
 
 NSString *NTESNotificationLogout = @"NTESNotificationLogout";
@@ -44,7 +45,8 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [FIRApp configure];
+
     if (@available(iOS 13.0, *)) {
         [[TZLocationManager manager] startLocation];//sdk 获取wifi信息需要使用
     }
@@ -343,6 +345,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
     [[NIMSDKConfig sharedConfig] setDelegate:self.sdkConfigDelegate];
     [[NIMSDKConfig sharedConfig] setShouldSyncUnreadCount:YES];
     [[NIMSDKConfig sharedConfig] setShouldSyncStickTopSessionInfos:YES];
+    [[NIMSDKConfig sharedConfig] setShouldConsiderRevokedMessageUnreadCount:YES];
     [[NIMSDKConfig sharedConfig] setMaxAutoLoginRetryTimes:10];
     [[NIMSDKConfig sharedConfig] setMaximumLogDays:[[NTESBundleSetting sharedConfig] maximumLogDays]];
     [[NIMSDKConfig sharedConfig] setShouldCountTeamNotification:[[NTESBundleSetting sharedConfig] countTeamNotification]];

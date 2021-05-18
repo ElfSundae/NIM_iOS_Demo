@@ -237,12 +237,9 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
     return [NTESSessionUtil dictByJsonData:data];
 }
 
-+ (NSString *)tipOnMessageRevokedLocal:(NSString *)postscript {
++ (NSString *)tipOnMessageRevokedLocal {
     NSString *tip = @"你".ntes_localized;
     NSString *msg = [NSString stringWithFormat:@"%@撤回了一条消息".ntes_localized, tip];
-    if (postscript.length != 0) {
-        msg = [NSString stringWithFormat:@"%@撤回了一条消息.附言:%@".ntes_localized, tip, postscript];
-    }
     return msg;
 }
 
@@ -263,9 +260,6 @@ static NSString *const NTESRecentSessionTopMark = @"NTESRecentSessionTopMark";
     } while (false);
     
     NSString *msg = [NSString stringWithFormat:@"%@撤回了一条消息".ntes_localized, tip];
-    if (notification.postscript.length != 0) {
-        msg = [NSString stringWithFormat:@"%@撤回了一条消息.附言:%@".ntes_localized, tip, notification.postscript];
-    }
     return msg;
 }
 
