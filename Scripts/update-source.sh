@@ -3,13 +3,16 @@ set -euo pipefail
 
 # Update source code from Netease official project:
 # https://yunxin.163.com/im-sdk-demo
-URL='https://yx-web-nosdn.netease.im/package/1619531899/NIM_iOS_Demo_v8.4.0.zip?download=NIM_iOS_Demo_v8.4.0.zip'
+# URL='https://yx-web-nosdn.netease.im/package/1619531899/NIM_iOS_Demo_v8.4.0.zip?download=NIM_iOS_Demo_v8.4.0.zip'
+
+# 最新版的 Demo 源码放在 GitHub 上了
+URL='https://github.com/netease-kit/NIM_iOS_Demo/archive/refs/heads/master.zip'
 
 WORKING=working
 
 download()
 {
-    destFile="$WORKING/$(basename "${1%\?*}")"
+    destFile="$WORKING/${2:-$(basename "${1%\?*}")}"
     tempFile="$destFile.tmp"
 
     if [[ ! -f "$destFile" ]]; then
@@ -30,7 +33,12 @@ downloadedFile=$(download "$URL")
 
 srcRoot=${downloadedFile%.zip}
 rm -rf "$srcRoot"
-unzip -q "$downloadedFile" -d "$srcRoot"
+
+# unzip -q "$downloadedFile" -d "$srcRoot"
+# Use `ditto` to fix Chinese filenames
+ditto -x -k --sequesterRsrc "$downloadedFile" "$srcRoot"
+
+srcRoot="${srcRoot}/NIM_iOS_Demo-master"
 
 rsync -a --delete "$srcRoot/NIMDemo/NIMDemo" .
 rsync -a --delete "$srcRoot/NIMDemo/NotificationScene" .

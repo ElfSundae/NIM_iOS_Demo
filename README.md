@@ -10,3 +10,4 @@
 - [NIMKit 非官方优化版](https://github.com/ElfSundae/NIM_iOS_UIKit)
 - [#177 只使用 NIMKit UI ，不使用 NIMSDK](https://github.com/netease-im/NIM_iOS_UIKit/issues/177#issuecomment-545157710)
 - [云信信令](https://dev.yunxin.163.com/docs/product/%E4%BF%A1%E4%BB%A4/%E6%96%B0%E6%89%8B%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97)
+- [最新版 NIM_iOS_Demo 源码](https://github.com/netease-kit/NIM_iOS_Demo)
