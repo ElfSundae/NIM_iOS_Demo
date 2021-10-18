@@ -29,9 +29,9 @@ PODS:
     - NIMSDK_LITE (~> 8.4.4)
   - NIMSDK_LITE (8.4.4)
   - Reachability (3.2)
-  - SDWebImage (5.12.0):
-    - SDWebImage/Core (= 5.12.0)
-  - SDWebImage/Core (5.12.0)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
   - SDWebImageFLPlugin (0.5.0):
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.10)
@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   NIMKit: 5493258207e52ad9dc72c953da8b4492d96eb1ca
   NIMSDK_LITE: a976c1f1cf65ec271601e91d154c94fae0f7331b
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: 4ea20cca2986adc5aacde07aa686742fd4c67a37
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
