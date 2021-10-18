@@ -15,6 +15,10 @@ download()
     destFile="$WORKING/${2:-$(basename "${1%\?*}")}"
     tempFile="$destFile.tmp"
 
+    if [[ "$(basename "$destFile")" == "master.zip" ]]; then
+        rm -rf "$destFile" "$tempFile"
+    fi
+
     if [[ ! -f "$destFile" ]]; then
         wget "$1" -c -O "$tempFile" && mv "$tempFile" "$destFile" \
             || rm -f "$tempFile"
