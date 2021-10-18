@@ -6,7 +6,7 @@ options:
   indentWidth: 4
   tabWidth: 4
   deploymentTarget:
-    iOS: '9.0'
+    iOS: '10.0'
 
 attributes:
   CLASSPREFIX: NTES
@@ -28,6 +28,7 @@ targets:
         type: folder
     settings:
       base:
+        MARKETING_VERSION: 1.0.0
         PRODUCT_BUNDLE_IDENTIFIER: com.netease.NIM.demo
         INFOPLIST_FILE: NIMDemo/Supporting Files/English.lproj/Info.plist
         GCC_PREFIX_HEADER: NIMDemo/NIMDemo-Prefix.pch
