@@ -11,12 +11,12 @@ PODS:
   - FMDB/standard (2.7.5)
   - M80AttributedLabel (1.9.9)
   - Masonry (1.1.0)
-  - NERtcCallKit (1.3.0):
-    - NERtcSDK (= 4.0.7)
-    - NIMSDK_LITE (= 8.4.4)
+  - NERtcCallKit (1.4.2):
+    - NERtcSDK (~> 4.2.115)
+    - NIMSDK_LITE (>= 8.5.5)
     - YXAlog_iOS (= 1.0.6)
-  - NERtcSDK (4.0.7)
-  - NIMKit/Core_Free (3.4.4):
+  - NERtcSDK (4.2.204)
+  - NIMKit/Core_Free (3.7.0):
     - FLAnimatedImage
     - M80AttributedLabel
     - SDWebImage
@@ -24,10 +24,10 @@ PODS:
     - TZImagePickerController
     - YYImage
     - YYImage/WebP
-  - NIMKit/Lite_Free (3.4.4):
+  - NIMKit/Lite_Free (3.7.0):
     - NIMKit/Core_Free
-    - NIMSDK_LITE (~> 8.4.4)
-  - NIMSDK_LITE (8.4.4)
+    - NIMSDK_LITE (~> 8.7.0)
+  - NIMSDK_LITE (8.7.2)
   - Reachability (3.2)
   - SDWebImage (5.12.1):
     - SDWebImage/Core (= 5.12.1)
@@ -91,10 +91,10 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  NERtcCallKit: 7123766d194749239f82d77dff7f2b5ba2940c37
-  NERtcSDK: f36f54e724aa02b89c475a4132182730c25af0d0
-  NIMKit: 5493258207e52ad9dc72c953da8b4492d96eb1ca
-  NIMSDK_LITE: a976c1f1cf65ec271601e91d154c94fae0f7331b
+  NERtcCallKit: e01b8d5ae1a4715441006cca8a0e83291350247e
+  NERtcSDK: 4c613906a50225c91b6673f1fe2a0ad58a1db9b5
+  NIMKit: 02112371337a8f7e605f035db5aa3341446578c0
+  NIMSDK_LITE: e6aa51eda2e5568956adae6c726063fb6d411cc4
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
