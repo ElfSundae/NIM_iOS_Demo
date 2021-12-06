@@ -15,7 +15,7 @@ PODS:
     - NERtcSDK (~> 4.2.115)
     - NIMSDK_LITE (>= 8.5.5)
     - YXAlog_iOS (= 1.0.6)
-  - NERtcSDK (4.2.204)
+  - NERtcSDK (4.2.206)
   - NIMKit/Core_Free (3.7.0):
     - FLAnimatedImage
     - M80AttributedLabel
@@ -92,8 +92,8 @@ SPEC CHECKSUMS:
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   NERtcCallKit: e01b8d5ae1a4715441006cca8a0e83291350247e
-  NERtcSDK: 4c613906a50225c91b6673f1fe2a0ad58a1db9b5
-  NIMKit: 02112371337a8f7e605f035db5aa3341446578c0
+  NERtcSDK: 7a774788cadfa85881285424902a175c4f1751d8
+  NIMKit: e504181bb24c2a7033c33bbb08a31cea266bdacd
   NIMSDK_LITE: e6aa51eda2e5568956adae6c726063fb6d411cc4
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
