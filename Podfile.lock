@@ -27,7 +27,7 @@ PODS:
   - NIMKit/Lite_Free (3.7.0):
     - NIMKit/Core_Free
     - NIMSDK_LITE (~> 8.7.0)
-  - NIMSDK_LITE (8.7.2)
+  - NIMSDK_LITE (8.7.6)
   - Reachability (3.2)
   - SDWebImage (5.12.1):
     - SDWebImage/Core (= 5.12.1)
@@ -93,8 +93,8 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   NERtcCallKit: e01b8d5ae1a4715441006cca8a0e83291350247e
   NERtcSDK: 7a774788cadfa85881285424902a175c4f1751d8
-  NIMKit: e504181bb24c2a7033c33bbb08a31cea266bdacd
-  NIMSDK_LITE: e6aa51eda2e5568956adae6c726063fb6d411cc4
+  NIMKit: 02112371337a8f7e605f035db5aa3341446578c0
+  NIMSDK_LITE: c7ffe934cd226142c9ef891f6a72af2932f3d1d5
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
