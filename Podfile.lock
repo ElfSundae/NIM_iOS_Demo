@@ -1,7 +1,7 @@
 PODS:
-  - CocoaLumberjack (3.7.2):
-    - CocoaLumberjack/Core (= 3.7.2)
-  - CocoaLumberjack/Core (3.7.2)
+  - CocoaLumberjack (3.7.4):
+    - CocoaLumberjack/Core (= 3.7.4)
+  - CocoaLumberjack/Core (3.7.4)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
@@ -11,7 +11,7 @@ PODS:
   - FMDB/standard (2.7.5)
   - M80AttributedLabel (1.9.9)
   - Masonry (1.1.0)
-  - NERtcCallKit (1.4.2):
+  - NERtcCallKit (1.5.0):
     - NERtcSDK (~> 4.2.115)
     - NIMSDK_LITE (>= 8.5.5)
     - YXAlog_iOS (= 1.0.6)
@@ -29,16 +29,16 @@ PODS:
     - NIMSDK_LITE (~> 8.7.0)
   - NIMSDK_LITE (8.7.6)
   - Reachability (3.2)
-  - SDWebImage (5.12.1):
-    - SDWebImage/Core (= 5.12.1)
-  - SDWebImage/Core (5.12.1)
+  - SDWebImage (5.12.2):
+    - SDWebImage/Core (= 5.12.2)
+  - SDWebImage/Core (5.12.2)
   - SDWebImageFLPlugin (0.5.0):
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.10)
   - SSZipArchive (1.8.1)
   - SVProgressHUD (2.2.5)
   - Toast (3.1.0)
-  - TZImagePickerController (3.6.7)
+  - TZImagePickerController (3.7.2)
   - YXAlog_iOS (1.0.6)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
@@ -84,24 +84,24 @@ SPEC REPOS:
     - YYImage
 
 SPEC CHECKSUMS:
-  CocoaLumberjack: b7e05132ff94f6ae4dfa9d5bce9141893a21d9da
+  CocoaLumberjack: 543c79c114dadc3b1aba95641d8738b06b05b646
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   M80AttributedLabel: 77fedfe63804c989a6de0fa4d400ea8cad3ab441
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  NERtcCallKit: e01b8d5ae1a4715441006cca8a0e83291350247e
+  NERtcCallKit: 51261c78bd4772e163c98745f7c9755a3e5dbe0f
   NERtcSDK: 7a774788cadfa85881285424902a175c4f1751d8
   NIMKit: 02112371337a8f7e605f035db5aa3341446578c0
   NIMSDK_LITE: c7ffe934cd226142c9ef891f6a72af2932f3d1d5
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
+  SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
-  TZImagePickerController: 679ae9fa11e189a9a81291ae96f0a4463be8edc1
+  TZImagePickerController: 0f926234c46362d3c4ed128832b6da59b2d9917e
   YXAlog_iOS: 3948d6f7c0173c9dc0117a9445fc9411f97b314e
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
