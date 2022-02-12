@@ -27,8 +27,7 @@
 {
     if (self = [super init])
     {
-        
-        _appKey = @"<#请输入网易云信控制台获取的App Key#>";
+        _appKey = @"45c6af3c98409b18a84451215d0bdd6e";
         _apiURL = @"https://app.netease.im/api";
 #ifdef DEBUG
         _apnsCername = @"DEVELOPER";
