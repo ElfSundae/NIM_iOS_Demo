@@ -134,7 +134,6 @@
 		68086391F2730CEAEDCABEC0 /* NTESPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4244B5B62FB68EB6E83CA89C /* NTESPageView.m */; };
 		682C34AA98D93092E56B9E55 /* NTESMergeMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9DD739BF012538E715F323 /* NTESMergeMessageCell.m */; };
 		6855676CD9FC2969F655B407 /* NTESMigrateCompleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7008ABE1C4A0971F31D1A4 /* NTESMigrateCompleteView.m */; };
-		69F3B97C12F6E849645A48D1 /* libPods-NIM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BC62C26D0DF341231580B0 /* libPods-NIM.a */; };
 		6A15CE2E228D5A086983A250 /* NTESMessageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 13457BF07DE2C2AB287ED7C6 /* NTESMessageUtil.m */; };
 		6EAC3A78221C58F47DB74D21 /* NTESJanKenPonAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB5FD2E621C24C2179ABFD2 /* NTESJanKenPonAttachment.m */; };
 		7154E9F802F1A4C13F4E6902 /* NECustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DF116693DC3DE14A5B26BD02 /* NECustomNavigationBar.m */; };
@@ -169,6 +168,7 @@
 		90384B4820EFD2F4EADE4F21 /* NTESDemoFetchChatroomTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 40ECAC7AC522CB8741300AFB /* NTESDemoFetchChatroomTask.m */; };
 		921BD3D09083E173246D9984 /* NTESMutiClientsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0CA9FFBC6C89865A8088F1 /* NTESMutiClientsCell.xib */; };
 		9357A6B177CAE0183541AA51 /* NTESDbExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F558975BD476ECCAE321D9D /* NTESDbExceptionHandler.m */; };
+		936AE34738EEBAAD9CE0721E /* libPods-NIM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9A7B050EF82C89F640EA0A3 /* libPods-NIM.a */; };
 		9379104E7D4887EAAD5167D6 /* NTESCustomNotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B63D52F612534342F45FC17E /* NTESCustomNotificationObject.m */; };
 		93CFAFA3F7620B70AED77F95 /* NTESSearchLocalHistoryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D8B9A0B7E31D039A7B014F /* NTESSearchLocalHistoryObject.m */; };
 		94C1D602BC5AE667282DD119 /* NTESNoDisturbTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6217AC2B65FC818C7A7E738 /* NTESNoDisturbTimeCell.m */; };
@@ -307,7 +307,6 @@
 		07ADB77FD1E50D7937EBDCBC /* NTESContactSearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESContactSearchViewController.m; sourceTree = "<group>"; };
 		080D34BB5FB23B373871A0E5 /* NTESMainTabController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESMainTabController.h; sourceTree = "<group>"; };
 		088B50E127B91D1D47AD9FB9 /* UIResponder+NTESFirstResponder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+NTESFirstResponder.m"; sourceTree = "<group>"; };
-		08BC62C26D0DF341231580B0 /* libPods-NIM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NIM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D9BF1EBD22CF2DEF8788C5 /* NTESSystemNotificationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NTESSystemNotificationViewController.xib; sourceTree = "<group>"; };
 		08F8B762C303DA0300240D69 /* NTESPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESPageView.h; sourceTree = "<group>"; };
 		09953581524A0C129D6874DD /* NTESSearchCellLayoutConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESSearchCellLayoutConstant.h; sourceTree = "<group>"; };
@@ -416,6 +415,7 @@
 		3AB347EFB11D2CD893C15B03 /* NTESSmsLoginParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESSmsLoginParams.m; sourceTree = "<group>"; };
 		3AF9E2752CDFD563FA882507 /* XMLTemplate.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = XMLTemplate.xml; sourceTree = "<group>"; };
 		3B463DBA913AC87F135A1845 /* NTESJanKenPonAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESJanKenPonAttachment.h; sourceTree = "<group>"; };
+		3B8C25C1E398B57C9569738E /* Pods-NIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NIM.debug.xcconfig"; path = "Target Support Files/Pods-NIM/Pods-NIM.debug.xcconfig"; sourceTree = "<group>"; };
 		3BAFEECA2A6A46F70F29AB15 /* NTESUserInfoSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESUserInfoSettingViewController.h; sourceTree = "<group>"; };
 		3BBEA30B9514C98916431A2E /* ijksdl_misc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ijksdl_misc.h; sourceTree = "<group>"; };
 		3BE31F55B5FC3B3F91E32534 /* NSDictionary+NTESJson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NTESJson.h"; sourceTree = "<group>"; };
@@ -501,7 +501,6 @@
 		5F3FD7EC7C6A6536203EBA49 /* NTESVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESVideoViewController.h; sourceTree = "<group>"; };
 		5F4D8B04CF2C2ED185F9F6DD /* JResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = JResource.bundle; sourceTree = "<group>"; };
 		5F51AEE8ED04FFE1100EC391 /* NTESSmsLoginParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESSmsLoginParams.h; sourceTree = "<group>"; };
-		5F63C9F1E31714D7B1DDB9E6 /* Pods-NIM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NIM.release.xcconfig"; path = "Target Support Files/Pods-NIM/Pods-NIM.release.xcconfig"; sourceTree = "<group>"; };
 		5FB2B837B8B754E27E07B4B5 /* NTESThreadTalkSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESThreadTalkSessionViewController.m; sourceTree = "<group>"; };
 		60A1EF81078DB52E3763A627 /* NTESSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESSessionViewController.m; sourceTree = "<group>"; };
 		60D0149F8A008715312EFD1F /* NTESMessageCellFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESMessageCellFactory.m; sourceTree = "<group>"; };
@@ -558,6 +557,7 @@
 		7A547F17935D554624381235 /* NTESRedPacketAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESRedPacketAttachment.h; sourceTree = "<group>"; };
 		7A8D7443ED8A4F1293CF2ECE /* NTESSDKConfigDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESSDKConfigDelegate.m; sourceTree = "<group>"; };
 		7B75CE2318F54EC19AA95A5D /* NTESMeetingMember.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESMeetingMember.m; sourceTree = "<group>"; };
+		7CB3FF0E9E15071C41F663D9 /* Pods-NIM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NIM.release.xcconfig"; path = "Target Support Files/Pods-NIM/Pods-NIM.release.xcconfig"; sourceTree = "<group>"; };
 		7CB8A1DC3DF4868ED2B9FD88 /* NTESChartletAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESChartletAttachment.m; sourceTree = "<group>"; };
 		7D036392435BF061E7A17204 /* NTESSessionFileStatusProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESSessionFileStatusProtocol.h; sourceTree = "<group>"; };
 		7E2FCE6D095E352DE0AD0501 /* NTESTeamMeetingCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESTeamMeetingCollectionViewCell.h; sourceTree = "<group>"; };
@@ -666,6 +666,7 @@
 		B8B355A8F505D585BBDC004C /* NTESSessionChartletContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESSessionChartletContentView.m; sourceTree = "<group>"; };
 		B90591394557D5CE649570A8 /* NTESRegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESRegisterViewController.h; sourceTree = "<group>"; };
 		B99CF40F1A6143B0015C9445 /* renderer_yuv444p10le.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = renderer_yuv444p10le.c; sourceTree = "<group>"; };
+		B9A7B050EF82C89F640EA0A3 /* libPods-NIM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NIM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9D6410FF720FE8FBB694C6C /* NTESCADisplayLinkHolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESCADisplayLinkHolder.h; sourceTree = "<group>"; };
 		B9E13655BD62A8E47DE0A4A4 /* ijksdl_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ijksdl_ios.h; sourceTree = "<group>"; };
 		BA461DD79755951F92276D60 /* NTESSmsLoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NTESSmsLoginViewController.xib; sourceTree = "<group>"; };
@@ -727,7 +728,6 @@
 		D696992592E81879E474D9AF /* NTESGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESGLView.m; sourceTree = "<group>"; };
 		D6C2E0EF495D7A8F44C86D6F /* NECallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NECallViewController.h; sourceTree = "<group>"; };
 		D6CF52692AB88A77BAAD151B /* UIViewController+Swizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Swizzling.h"; sourceTree = "<group>"; };
-		D71DE77BBE927B572BC755E9 /* Pods-NIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NIM.debug.xcconfig"; path = "Target Support Files/Pods-NIM/Pods-NIM.debug.xcconfig"; sourceTree = "<group>"; };
 		D7688618843CE4633900A1A2 /* NTESSessionJankenponContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTESSessionJankenponContentView.h; sourceTree = "<group>"; };
 		D7A97CFD7D5A33E95DC406F3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/NTESMutiClientsCell.strings"; sourceTree = "<group>"; };
 		D7C98979FC1EA8068A7D1CAB /* NTESUserUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTESUserUtil.m; sourceTree = "<group>"; };
@@ -839,7 +839,7 @@
 				8C995C4E37565609AD712A79 /* CallKit.framework in Frameworks */,
 				73D1202C31E4D6B696CE2A66 /* UserNotifications.framework in Frameworks */,
 				4ECB367041FE7B3C37242258 /* UserNotificationsUI.framework in Frameworks */,
-				69F3B97C12F6E849645A48D1 /* libPods-NIM.a in Frameworks */,
+				936AE34738EEBAAD9CE0721E /* libPods-NIM.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,16 +878,6 @@
 				00393CCB6BB232F32D9C49FD /* NTESTeamMeetingCallerInfo.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		0D9A80FCD433EA1BCAB32C1C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D71DE77BBE927B572BC755E9 /* Pods-NIM.debug.xcconfig */,
-				5F63C9F1E31714D7B1DDB9E6 /* Pods-NIM.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		0E81C09D51CE696CE091ABB9 /* View */ = {
@@ -1293,7 +1283,7 @@
 				ADF7401961BA747F57F67951 /* NIMDemo */,
 				FC856B816490F7F44C6AC5B4 /* Frameworks */,
 				C0D3E623DC95C1A894DBA357 /* Products */,
-				0D9A80FCD433EA1BCAB32C1C /* Pods */,
+				DBFEC8A7BEDDD70F0812E736 /* Pods */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -1922,6 +1912,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		DBFEC8A7BEDDD70F0812E736 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B8C25C1E398B57C9569738E /* Pods-NIM.debug.xcconfig */,
+				7CB3FF0E9E15071C41F663D9 /* Pods-NIM.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DD454F923B7DF20E327CAD66 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2078,7 +2078,7 @@
 				6247211CA2CFA13551FA2700 /* Security.framework */,
 				669F88F4A34639D8A5D30C43 /* UserNotifications.framework */,
 				0B1024162F4092B4BA99A33C /* UserNotificationsUI.framework */,
-				08BC62C26D0DF341231580B0 /* libPods-NIM.a */,
+				B9A7B050EF82C89F640EA0A3 /* libPods-NIM.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2105,13 +2105,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F951AF686496E714849389A /* Build configuration list for PBXNativeTarget "NIM" */;
 			buildPhases = (
-				4E022B546B2724D5E73EC2EF /* [CP] Check Pods Manifest.lock */,
+				ADB53BFB8210795CD9E8663B /* [CP] Check Pods Manifest.lock */,
 				99B15E3BBA70840C8FF0FE0A /* Sources */,
 				72583A880B840264CDEC70A7 /* Resources */,
 				856337F6113CD80B83A716E5 /* Frameworks */,
 				06AE928E0C8A08E03F1AC68E /* Run Fabric */,
-				FC9C5F4EABE876DE44877BFC /* [CP] Embed Pods Frameworks */,
-				32E450C80AF4321F1DE1DA9A /* [CP] Copy Pods Resources */,
+				A990FFE0C40D482022EA08A0 /* [CP] Embed Pods Frameworks */,
+				48E67F222D1445C3367072E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2223,7 +2223,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" d395159c291c627c9d4ff9139bf8f0a700b98732 67e6161c740f31f9fbe224ccde008e034af47dfdaa04c97cc8f46111d523cb76";
 		};
-		32E450C80AF4321F1DE1DA9A /* [CP] Copy Pods Resources */ = {
+		48E67F222D1445C3367072E5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2240,7 +2240,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4E022B546B2724D5E73EC2EF /* [CP] Check Pods Manifest.lock */ = {
+		A990FFE0C40D482022EA08A0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADB53BFB8210795CD9E8663B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2260,23 +2277,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FC9C5F4EABE876DE44877BFC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NIM/Pods-NIM-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2702,7 +2702,7 @@
 		};
 		A4E016AE63D0C6636147FE3C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F63C9F1E31714D7B1DDB9E6 /* Pods-NIM.release.xcconfig */;
+			baseConfigurationReference = 7CB3FF0E9E15071C41F663D9 /* Pods-NIM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2793,7 +2793,7 @@
 		};
 		EE90181A52FA7946FEE2DF07 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D71DE77BBE927B572BC755E9 /* Pods-NIM.debug.xcconfig */;
+			baseConfigurationReference = 3B8C25C1E398B57C9569738E /* Pods-NIM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
